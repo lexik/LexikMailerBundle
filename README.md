@@ -6,6 +6,8 @@ You can also create some layouts to decorate your email.
 
 **Twig 1.2.0 or later is required.**
 
+[![Build Status](https://secure.travis-ci.org/lexik/LexikMailerBundle.png?branch=master)](http://travis-ci.org/lexik/LexikMailerBundle)
+
 Documentation
 =============
 
