@@ -13,22 +13,24 @@ if (!is_dir($vendorDir)) {
 }
 
 $deps = array(
-    array('symfony',         'https://github.com/symfony/symfony.git'),
-    array('doctrine-common', 'https://github.com/doctrine/common.git'),
-    array('doctrine-dbal',   'https://github.com/doctrine/dbal.git'),
-    array('doctrine',        'https://github.com/doctrine/doctrine2.git'),
-    array('swiftmailer',     'https://github.com/swiftmailer/swiftmailer.git'),
-    array('twig',            'https://github.com/fabpot/Twig.git'),
+    array('symfony',           'https://github.com/symfony/symfony.git'),
+    array('doctrine-common',   'https://github.com/doctrine/common.git'),
+    array('doctrine-dbal',     'https://github.com/doctrine/dbal.git'),
+    array('doctrine',          'https://github.com/doctrine/doctrine2.git'),
+    array('doctrine-fixtures', 'https://github.com/doctrine/data-fixtures.git'),
+    array('swiftmailer',       'https://github.com/swiftmailer/swiftmailer.git'),
+    array('twig',              'https://github.com/fabpot/Twig.git'),
 );
 
 $revs = array(
     'v2.0.12' => array(
-        'symfony'         => 'v2.0.12',
-        'doctrine-common' => '2.1.4',
-        'doctrine-dbal'   => '2.1.6',
-        'doctrine'        => '2.1.6',
-        'swiftmailer'     => 'v4.1.5',
-        'twig'            => 'v1.6.2',
+        'symfony'           => 'v2.0.12',
+        'doctrine-common'   => '2.1.4',
+        'doctrine-dbal'     => '2.1.6',
+        'doctrine'          => '2.1.6',
+        'doctrine-fixtures' => 'origin/master',
+        'swiftmailer'       => 'v4.1.5',
+        'twig'              => 'v1.6.2',
     ),
 );
 

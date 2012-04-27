@@ -52,7 +52,7 @@ class MessageFactoryTest extends BaseUnitTestCase
         $body = <<<EOF
 An error occured while trying to send an email.
 You tried to use a reference that does not exist : "this-reference-does-not-exixt"
-in "{$file}" at line 54
+in "{$file}" at line 58
 EOF;
 
         $message = $factory->get('this-reference-does-not-exixt', 'chuk@email.fr', array('name' => 'chuck'));
