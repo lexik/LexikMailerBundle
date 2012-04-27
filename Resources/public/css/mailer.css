@@ -1,0 +1,12 @@
+body {
+    position: relative;
+    padding-top: 50px;
+}
+
+#mailer_email_translation_body,
+#mailer_layout_translation_body {
+    width: 80%;
+}
+#mailer_email_translation_subject {
+    width: 80%;
+}

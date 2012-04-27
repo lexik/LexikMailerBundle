@@ -1,0 +1,54 @@
+lexik_mailer:
+    email:
+        id:                       "Id"
+        description:              "Description"
+        reference:                "Référence"
+        bcc:                      "Copie Cachée"
+        languages:                "Langues"
+        actions:                  "Actions"
+        list:                     "Liste des Emails"
+        action:
+            edit:                 "Editer"
+            delete:               "Supprimer"
+
+    new:
+        group_common:             "Options générales"
+        group_translation:        "Traductions"
+        submit:                   "Valider"
+        group_languages:          "Gestion des langues"
+        default_lang:             "Langue par défaut"
+
+    edit:
+        action_delete:            "Supprimer"
+        table:
+            lang:                 "Langue"
+            subject:              "Sujet"
+            action:               "Action"
+        lang:                     "Langue"
+
+    link:
+        new:                      "Nouveau"
+        list:                     "Retour à la liste"
+        preview:                  "Aperçu"
+
+    list:
+        from %from%:              "De: %from%"
+
+    layout:
+        id:                       "Id"
+        description:              "Description"
+        reference:                "Référence"
+        list:                     "Liste des layouts"
+        languages:                "Langues"
+        actions:                  "Actions"
+        action:
+            edit:                 "Editer"
+            delete:               "Supprimer"
+
+    translation_delete:
+        confirm:                  "Confirmer la suppression de la langue ?"
+
+    preview:
+        subject:                  "Sujet"
+        from_name:                "Expéditeur"
+        body:                     "Corps"

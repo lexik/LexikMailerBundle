@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="lexik_mailer.default_options" type="collection">
+            <parameter key="email_class">%lexik_mailer.email_entity.class%</parameter>
+            <parameter key="admin_email">%lexik_mailer.admin_email%</parameter>
+            <parameter key="default_locale">%locale%</parameter>
+        </parameter>
+    </parameters>
+
+    <services>
+        <!-- Annotation -->
+        <service id="lexik_mailer.annotation_driver" class="%lexik_mailer.annotation_driver.class%" public="false">
+            <argument type="service" id="annotation_reader" />
+        </service>
+
+        <!-- Template -->
+        <service id="lexik_mailer.templating.loader" class="Twig_Loader_Array" public="false">
+            <argument type="collection" />
+        </service>
+
+        <service id="lexik_mailer.templating" class="%twig.class%" public="false" >
+            <argument type="service" id="lexik_mailer.templating.loader" />
+            <call method="addExtension">
+                <argument type="service" id="twig.extension.routing" />
+            </call>
+        </service>
+        
+        <service id="lexik_mailer.message_renderer" class="%lexik_mailer.message_renderer.class%">
+            <argument type="service" id="lexik_mailer.templating" />
+        </service>
+
+        <!-- Factory -->
+        <service id="lexik_mailer.message_factory" class="%lexik_mailer.message_factory.class%">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument type="service" id="lexik_mailer.message_renderer" />
+            <argument type="service" id="lexik_mailer.annotation_driver" />
+            <argument type="service" id="swiftmailer.transport.eventdispatcher" />
+            <argument>%lexik_mailer.default_options%</argument>
+        </service>
+    </services>
+
+</container>

@@ -1,0 +1,44 @@
+{% extends layout %}
+
+{% form_theme form 'LexikMailerBundle:Form:form_layout.html.twig' %}
+
+{% block content %}
+<div>
+    <form action="{{ path('lexik_mailer.email_new') }}" method="post" class="form-horizontal">
+        {{ form_errors(form) }}
+
+        <fieldset>
+            <legend>
+                {{ 'lexik_mailer.new.group_common' | trans({}, 'LexikMailerBundle') }}
+            </legend>
+            {{ form_row(form.reference) }}
+            {{ form_row(form.layout) }}
+            {{ form_row(form.bcc) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.spool) }}
+        </fieldset>
+        <fieldset>
+            <legend>
+                {{ 'lexik_mailer.new.group_translation' | trans({}, 'LexikMailerBundle') }}
+            </legend>
+            <div class="control-group">
+                <label class="control-label"><strong>{{ 'lexik_mailer.new.default_lang' | trans({}, 'LexikMailerBundle') }}:</strong></label>
+                <div class="controls">
+                    <input type="text" disabled="disabled" value="{{ lang }}" />
+                </div>
+            </div>
+            {{ form_row(form.translation.fromName) }}
+            {{ form_row(form.translation.fromAddress) }}
+            {{ form_row(form.translation.subject) }}
+            {{ form_row(form.translation.body) }}
+        </fieldset>
+
+        {{ form_rest(form) }}
+
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary" value="{{ 'lexik_mailer.new.submit' | trans({}, 'LexikMailerBundle') }}" />
+            <a href="{{ path('lexik_mailer.email_list') }}" class="btn">{{ 'lexik_mailer.link.list' | trans({}, 'LexikMailerBundle') }}</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+lexik_mailer:
+    email:
+        id:                       "Id"
+        description:              "Description"
+        reference:                "Reference"
+        bcc:                      "Hidden Copy"
+        languages:                "Languages"
+        actions:                  "Actions"
+        list:                     "Email List"
+        action:
+            edit:                 "Update"
+            delete:               "Delete"
+
+    new:
+        group_common:             "General options"
+        group_translation:        "Translations"
+        submit:                   "Save"
+        group_languages:          "Manage languages"
+        default_lang:             "Default language"
+
+    edit:
+        action_delete:            "Delete"
+        table:
+            lang:                 "Language"
+            subject:              "Subject"
+            action:               "Action"
+        lang:                     "Language"
+
+    link:
+        new:                      "New"
+        list:                     "Back to list"
+        preview:                  "Preview"
+
+    list:
+        from %from%:              "From: %from%"
+
+    layout:
+        id:                       "Id"
+        description:              "Description"
+        reference:                "Reference"
+        list:                     "Layout List"
+        languages:                "Languages"
+        actions:                  "Actions"
+        action:
+            edit:                 "Update"
+            delete:               "Delete"
+
+    translation_delete:
+        confirm:                  "Do you confirm the language deletion ?"
+
+    preview:
+        subject:                  "Subject"
+        from_name:                "Sender"
+        body:                     "Body"
