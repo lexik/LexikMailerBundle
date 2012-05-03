@@ -66,13 +66,50 @@ LexikMailerBundle:
     prefix:   /my-prefix
 ```
 
-Email templates list url:  /my-prefix/email/list
-Layouts template list url: /my-prefix/layout/list
+CRUDs urls:
+
+* Email templates:  /my-prefix/email/list
+* Layouts template: /my-prefix/layout/list
 
 ___________________
 
 Usage
 =====
+
+Fields in which you can use Twig syntax:
+----------------------------------------
+
+Layout:
+
+* body
+
+Emails:
+
+* from name
+* subject
+* body
+
+How to link a layout template with an email template :
+------------------------------------------------------
+
+Suppose we have a layout template with `super-layout` as reference and with the following body:
+
+```
+<div>Header</div>
+    {% block content %}{% endblock %}
+<div>Footer</div>
+```
+
+Now in the email template edition page select the `super-layout` layout, and fill in the body field without specifying any extends clause:
+
+```
+<div>email body :)</div>
+```
+
+When you select a layout, we will automaticaly make the email template extend the layout template you select and place it in a block named 'content' during the Swift_Message generation.
+
+Generate e Swift_Massage from a given template:
+-----------------------------------------------
 
 Once you created some templates, you can create some Swift_Message instances from a given template reference by using the `lexik_mailer.message_factory` service:
 
@@ -123,4 +160,3 @@ class User
     }
 }
 ```
-    
