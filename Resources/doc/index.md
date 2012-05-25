@@ -108,7 +108,7 @@ Now in the email template edition page select the `super-layout` layout, and fil
 
 When you select a layout, we will automaticaly make the email template extend the layout template you select and place it in a block named 'content' during the Swift_Message generation.
 
-Generate e Swift_Massage from a given template:
+Generate a Swift_Message from a given template:
 -----------------------------------------------
 
 Once you created some templates, you can create some Swift_Message instances from a given template reference by using the `lexik_mailer.message_factory` service:
