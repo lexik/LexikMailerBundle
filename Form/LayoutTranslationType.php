@@ -3,7 +3,8 @@
 namespace Lexik\Bundle\MailerBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * @author Laurent Heurtault <l.heurtault@lexik.fr>
@@ -13,7 +14,7 @@ class LayoutTranslationType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('body', null, array(
                     'attr' => array('rows' => 30)
@@ -29,12 +30,14 @@ class LayoutTranslationType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
-            'data_class'            => 'Lexik\Bundle\MailerBundle\Entity\LayoutTranslation',
-            'with_language'         => true,
-        );
+        parent::setDefaultOptions($resolver);
+
+        $resolver->setDefaults(array(
+            'data_class'    => 'Lexik\Bundle\MailerBundle\Entity\LayoutTranslation',
+            'with_language' => true,
+        ));
     }
 
     /**
