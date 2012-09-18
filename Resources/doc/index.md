@@ -68,8 +68,8 @@ LexikMailerBundle:
 
 CRUDs urls:
 
-* Email templates:  /my-prefix/email/list
-* Layouts template: /my-prefix/layout/list
+* Email templates:  `/my-prefix/email/list`
+* Layouts template: `/my-prefix/layout/list`
 
 ___________________
 
