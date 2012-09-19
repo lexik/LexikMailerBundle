@@ -21,9 +21,9 @@
         <tr class="{{ cycle(['', 'odd-row'], key) }}">
             <td><a href="{{ path('lexik_mailer.email_edit', { 'emailId' : email.id }) }}">{{ email.id }}</a></td>
             <td>
-                {{ email.getTranslation(app.session.locale).subject }}<br />
+                {{ email.getTranslation(app.request.locale).subject }}<br />
                 {{ email.description }}<br />
-                {{ 'lexik_mailer.list.from %from%' | trans({ '%from%' : email.getTranslation(app.session.locale).fromAddress }, 'LexikMailerBundle') }}
+                {{ 'lexik_mailer.list.from %from%' | trans({ '%from%' : email.getTranslation(app.request.locale).fromAddress }, 'LexikMailerBundle') }}
             </td>
             <td>{{ email.reference }}</td>
             <td>{{ email.bcc }}</td>
