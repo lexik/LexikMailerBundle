@@ -3,6 +3,7 @@
 namespace Lexik\Bundle\MailerBundle\Tests\Unit;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\DefaultQuoteStrategy;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\Common\Annotations\AnnotationReader;
@@ -83,6 +84,9 @@ abstract class BaseUnitTestCase extends \PHPUnit_Framework_TestCase
         $config->expects($this->any())
             ->method('getDefaultRepositoryClassName')
             ->will($this->returnValue('Doctrine\\ORM\\EntityRepository'));
+        $config->expects($this->any())
+            ->method('getQuoteStrategy')
+            ->will($this->returnValue(new DefaultQuoteStrategy()));
 
         $conn = array(
             'driver' => 'pdo_sqlite',
