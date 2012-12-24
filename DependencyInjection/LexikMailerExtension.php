@@ -6,6 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -30,6 +31,12 @@ class LexikMailerExtension extends Extension
 
         foreach ($config['classes'] as $name => $class) {
             $container->setParameter(sprintf('lexik_mailer.%s.class', $name), $class);
+        }
+
+        $templating = $container->findDefinition('lexik_mailer.templating');
+
+        foreach ($config['templating_extensions'] as $extensionsId) {
+            $templating->addMethodCall('addExtension', array(new Reference($extensionsId)));
         }
     }
 }

@@ -44,13 +44,38 @@ ___________________
 Configuration
 =============
 
-This is the full configuration tree with default values, only the `admin_email` option is required:
+The only required option is the `admin_email` option:
 
 ```yaml
 # app/config/config.yml
 lexik_mailer:
-    admin_email: %your_admin_email%                     # 
-    base_layout: "LexikMailerBundle::layout.html.twig"  # 
+    admin_email: %your_admin_email%     # Admin email used to notify email templates errors
+```
+
+Change the default layout used with email template:
+
+```yaml
+# app/config/config.yml
+lexik_mailer:
+    base_layout: "ProjectBundle:path:template.html.twg" # default value is "LexikMailerBundle::layout.html.twig"
+```
+
+Add some Twig extensions to the templating service.
+By default the templating service used by the mailer only load the routing extension.
+
+```yaml
+# app/config/config.yml
+lexik_mailer:
+    templating_extensions:
+        - 'twig.extension.trans' # load the translation extension
+        - ...
+```
+
+Customize some classes from the bundle:
+
+```yaml
+# app/config/config.yml
+lexik_mailer:
     classes:
         email_entity:      "Lexik\Bundle\MailerBundle\Entity\Email"               # the email entity to use to represent an email template
         annotation_driver: "Lexik\Bundle\MailerBundle\Mapping\Driver\Annotation"  # annotation driver used to get the user's name and email

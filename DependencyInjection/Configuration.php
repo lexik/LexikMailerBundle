@@ -23,15 +23,23 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->addDefaultsIfNotSet()
             ->children()
-                ->scalarNode('admin_email')->isRequired()->end()
+                ->scalarNode('admin_email')
+                    ->isRequired()
+                ->end()
 
                 ->scalarNode('base_layout')
                     ->cannotBeEmpty()
                     ->defaultValue('LexikMailerBundle::layout.html.twig')
                 ->end()
 
+                ->arrayNode('templating_extensions')
+                    ->defaultValue(array())
+                    ->prototype('scalar')
+                    ->end()
+                ->end()
+
                 ->arrayNode('classes')
-                   ->addDefaultsIfNotSet()
+                    ->addDefaultsIfNotSet()
                     ->children()
                         ->scalarNode('email_entity')
                             ->cannotBeEmpty()
