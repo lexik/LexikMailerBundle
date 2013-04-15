@@ -18,23 +18,29 @@
             <argument type="service" id="annotation_reader" />
         </service>
 
-        <!-- Template -->
-        <service id="lexik_mailer.templating.loader" class="Twig_Loader_Chain" public="false">
+        <!-- Loader -->
+        <service id="lexik_mailer.templating.loader_array" class="Twig_Loader_Array" public="false">
             <argument type="collection" />
         </service>
 
+        <service id="lexik_mailer.templating.loader_chain" class="Twig_Loader_Chain" public="false">
+            <argument type="collection">
+                <argument type="service" id="twig.loader" />
+                <argument type="service" id="lexik_mailer.templating.loader_array" />
+            </argument>
+        </service>
+
+        <!-- Template -->
         <service id="lexik_mailer.templating" class="%twig.class%" public="false" >
-            <argument type="service" id="lexik_mailer.templating.loader" />
+            <argument type="service" id="lexik_mailer.templating.loader_chain" />
             <call method="addExtension">
                 <argument type="service" id="twig.extension.routing" />
             </call>
         </service>
-        
+
         <service id="lexik_mailer.message_renderer" class="%lexik_mailer.message_renderer.class%">
             <argument type="service" id="lexik_mailer.templating" />
-            <argument type="collection">
-                <argument type="service" id="twig.loader" />
-            </argument>
+            <argument type="service" id="lexik_mailer.templating.loader_array" />
         </service>
 
         <!-- Factory -->

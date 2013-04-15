@@ -17,9 +17,9 @@ class MessageRenderer
     private $templating;
     
     /**
-     * @var array
+     * @var \Twig_Loader_Array
      */
-    private $loaders = array();
+    private $arrayLoader;
     
     /**
      * Construct
@@ -27,33 +27,13 @@ class MessageRenderer
      * @param \Twig_Environment $templating
      * @param array $defaultOptions
      */
-    public function __construct(\Twig_Environment $templating, $loaders = null)
+    public function __construct(\Twig_Environment $templating, \Twig_Loader_Array $arrayLoader)
     {
         $this->templating = $templating;
 
         $this->templating->enableStrictVariables();
-        
-        if(is_array($loaders))
-        {
-            $this->loaders = $loaders;
-        }
-    }
-    
-    /**
-     * Adds an additional twig loader to the chain loader
-     * 
-     * @param \Twig_LoaderInterface $loader
-     */
-    public function addTwigLoader(\Twig_LoaderInterface $loader)
-    {
-        $chain_loader = new \Twig_Loader_Chain();
-    	foreach($this->loaders as $original_loader)
-    	{
-    		$chain_loader->addLoader($original_loader);
-    	}
-    	$chain_loader->addLoader($loader);
-    	
-    	$this->templating->setLoader($chain_loader);
+
+        $this->arrayLoader = $arrayLoader;
     }
 
     /**
@@ -63,17 +43,14 @@ class MessageRenderer
      */
     public function loadTemplates(EmailInterface $email)
     {
+        $this->arrayLoader->setTemplate('subject', $email->getSubject());
+        $this->arrayLoader->setTemplate('from_name', $email->getFromName());
+
         $layout = $email->getLayoutBody();
-    	$content = empty($layout) ? $email->getBody() : '{% extends \'layout\' %} {% block content %}' . $email->getBody() . '{% endblock %}';
-    	
-    	$loader = new \Twig_Loader_Array(array(
-			'subject'   => $email->getSubject(),
-			'from_name' => $email->getFromName(),
-			'layout'    => $email->getLayoutBody(),
-			'content'   => $content 
-    	));
-        
-    	$this->addTwigLoader($loader);
+        $this->arrayLoader->setTemplate('layout', $layout);
+
+        $content = empty($layout) ? $email->getBody() : '{% extends \'layout\' %} {% block content %}' . $email->getBody() . '{% endblock %}';
+        $this->arrayLoader->setTemplate('content', $content);
     }
 
     /**
