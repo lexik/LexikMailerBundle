@@ -15,18 +15,25 @@ class MessageRenderer
      * @var \Twig_Environment
      */
     private $templating;
-
+    
+    /**
+     * @var \Twig_Loader_Array
+     */
+    private $arrayLoader;
+    
     /**
      * Construct
      *
      * @param \Twig_Environment $templating
      * @param array $defaultOptions
      */
-    public function __construct(\Twig_Environment $templating)
+    public function __construct(\Twig_Environment $templating, \Twig_Loader_Array $arrayLoader)
     {
         $this->templating = $templating;
 
         $this->templating->enableStrictVariables();
+
+        $this->arrayLoader = $arrayLoader;
     }
 
     /**
@@ -36,14 +43,14 @@ class MessageRenderer
      */
     public function loadTemplates(EmailInterface $email)
     {
-        $this->templating->getLoader()->setTemplate('subject', $email->getSubject());
-        $this->templating->getLoader()->setTemplate('from_name', $email->getFromName());
+        $this->arrayLoader->setTemplate('subject', $email->getSubject());
+        $this->arrayLoader->setTemplate('from_name', $email->getFromName());
 
         $layout = $email->getLayoutBody();
-        $this->templating->getLoader()->setTemplate('layout', $layout);
+        $this->arrayLoader->setTemplate('layout', $layout);
 
         $content = empty($layout) ? $email->getBody() : '{% extends \'layout\' %} {% block content %}' . $email->getBody() . '{% endblock %}';
-        $this->templating->getLoader()->setTemplate('content', $content);
+        $this->arrayLoader->setTemplate('content', $content);
     }
 
     /**
