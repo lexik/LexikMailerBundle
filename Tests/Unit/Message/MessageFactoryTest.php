@@ -98,8 +98,9 @@ EOF;
             'default_locale' => 'fr',
         );
 
-        $templating = new \Twig_Environment(new \Twig_Loader_Array(array()), array());
-        $renderer = new \Lexik\Bundle\MailerBundle\Message\MessageRenderer($templating);
+        $loader = new \Twig_Loader_Array(array());
+        $templating = new \Twig_Environment($loader, array());
+        $renderer = new \Lexik\Bundle\MailerBundle\Message\MessageRenderer($templating, $loader);
 
         $reder = new \Doctrine\Common\Annotations\AnnotationReader();
         $annotationDriver = new \Lexik\Bundle\MailerBundle\Mapping\Driver\Annotation($reder);
