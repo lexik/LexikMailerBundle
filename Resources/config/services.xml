@@ -9,6 +9,10 @@
             <parameter key="admin_email">%lexik_mailer.admin_email%</parameter>
             <parameter key="default_locale">%locale%</parameter>
         </parameter>
+        <parameter key="lexik_mailer.templating.default_options" type="collection">
+            <parameter key="cache">%kernel.cache_dir%/twig</parameter>
+            <parameter key="debug">%kernel.debug%</parameter>
+        </parameter>
     </parameters>
 
     <services>
@@ -32,6 +36,7 @@
         <!-- Template -->
         <service id="lexik_mailer.templating" class="%twig.class%" public="false" >
             <argument type="service" id="lexik_mailer.templating.loader_chain" />
+            <argument>%lexik_mailer.templating.default_options%</argument>
             <call method="addExtension">
                 <argument type="service" id="twig.extension.routing" />
             </call>
