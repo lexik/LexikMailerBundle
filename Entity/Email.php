@@ -356,4 +356,12 @@ class Email implements EmailInterface
 
         return $bccs;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUpdatedAt()
+    {
+        return $this->currentTranslation->getUpdatedAt();
+    }
 }
