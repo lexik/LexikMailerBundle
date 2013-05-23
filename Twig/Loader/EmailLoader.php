@@ -23,30 +23,31 @@ class EmailLoader extends \Twig_Loader_Array
      */
     public function setEmailTemplates(EmailInterface $email)
     {
-        $emailSuffix = md5($email->getReference());
-        $layoutSuffix = md5($email->getLayout()->getReference());
+        if ($email->getLayout()) {
+            $layoutSuffix = md5($email->getLayout()->getReference());
 
-        $layoutBody = $email->getLayoutBody();
+            $this->setTemplate(sprintf('layout_%s', $layoutSuffix), $email->getLayoutBody());
+            $this->updateDates[sprintf('layout_%s', $layoutSuffix)] = $email->getLayout()->getUpdatedAt()->format('U');
 
-        if (empty($layoutBody)) {
-            $content = $email->getBody();
-        } else {
-            $content = strtr('{% extends <layout> %} {% block content %} <content> {% endblock %}', array(
+            $content = strtr('{% extends \'<layout>\' %} {% block content %} <content> {% endblock %}', array(
                 '<layout>'  => sprintf('layout_%s', $layoutSuffix),
                 '<content>' => $email->getBody(),
             ));
+
+        } else {
+            $content = $email->getBody();
         }
 
-        $this->setTemplate(sprintf('content_%s', $suffix), $content);
-        $this->setTemplate(sprintf('subject_%s', $suffix), $email->getSubject());
-        $this->setTemplate(sprintf('from_name_%s', $suffix), $email->getFromName());
-        $this->setTemplate(sprintf('layout_%s', $layoutSuffix), $layoutBody);
+        $emailSuffix = md5($email->getReference());
+
+        $this->setTemplate(sprintf('content_%s', $emailSuffix), $content);
+        $this->setTemplate(sprintf('subject_%s', $emailSuffix), $email->getSubject());
+        $this->setTemplate(sprintf('from_name_%s', $emailSuffix), $email->getFromName());
 
         // keep updated at to be bale to check if the template is fresh
-        $this->updateDates[sprintf('content_%s', $suffix)] = $email->getUpdatedAt()->format('U');
-        $this->updateDates[sprintf('subject_%s', $suffix)] = $email->getUpdatedAt()->format('U');
-        $this->updateDates[sprintf('from_name_%s', $suffix)] = $email->getUpdatedAt()->format('U');
-        $this->updateDates[sprintf('layout_%s', $layoutSuffix)] = $email->getLayout()->getUpdatedAt()->format('U');
+        $this->updateDates[sprintf('content_%s', $emailSuffix)] = $email->getUpdatedAt()->format('U');
+        $this->updateDates[sprintf('subject_%s', $emailSuffix)] = $email->getUpdatedAt()->format('U');
+        $this->updateDates[sprintf('from_name_%s', $emailSuffix)] = $email->getUpdatedAt()->format('U');
     }
 
     /**
