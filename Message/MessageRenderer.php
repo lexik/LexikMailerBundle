@@ -2,6 +2,7 @@
 
 namespace Lexik\Bundle\MailerBundle\Message;
 
+use Lexik\Bundle\MailerBundle\Twig\Loader\EmailLoader;
 use Lexik\Bundle\MailerBundle\Model\EmailInterface;
 
 /**
@@ -15,25 +16,24 @@ class MessageRenderer
      * @var \Twig_Environment
      */
     private $templating;
-    
+
     /**
-     * @var \Twig_Loader_Array
+     * @var EmailLoader
      */
-    private $arrayLoader;
-    
+    private $emailLoader;
+
     /**
      * Construct
      *
      * @param \Twig_Environment $templating
-     * @param array $defaultOptions
+     * @param array             $defaultOptions
      */
-    public function __construct(\Twig_Environment $templating, \Twig_Loader_Array $arrayLoader)
+    public function __construct(\Twig_Environment $templating, EmailLoader $emailLoader)
     {
         $this->templating = $templating;
+        $this->emailLoader = $emailLoader;
 
         $this->templating->enableStrictVariables();
-
-        $this->arrayLoader = $arrayLoader;
     }
 
     /**
@@ -43,21 +43,14 @@ class MessageRenderer
      */
     public function loadTemplates(EmailInterface $email)
     {
-        $this->arrayLoader->setTemplate('subject', $email->getSubject());
-        $this->arrayLoader->setTemplate('from_name', $email->getFromName());
-
-        $layout = $email->getLayoutBody();
-        $this->arrayLoader->setTemplate('layout', $layout);
-
-        $content = empty($layout) ? $email->getBody() : '{% extends \'layout\' %} {% block content %}' . $email->getBody() . '{% endblock %}';
-        $this->arrayLoader->setTemplate('content', $content);
+        $this->emailLoader->setEmailTemplates($email);
     }
 
     /**
      * Render a template previously loaded.
      *
      * @param string $view
-     * @param array $parameters
+     * @param array  $parameters
      * @return string
      */
     public function renderTemplate($view, array $parameters = array())

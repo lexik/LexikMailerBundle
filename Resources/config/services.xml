@@ -1,5 +1,4 @@
 <?xml version="1.0" ?>
-
 <container xmlns="http://symfony.com/schema/dic/services"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
@@ -19,7 +18,7 @@
         </service>
 
         <!-- Loader -->
-        <service id="lexik_mailer.templating.loader_array" class="Twig_Loader_Array" public="false">
+        <service id="lexik_mailer.templating.loader_array" class="Lexik\Bundle\MailerBundle\Twig\Loader\EmailLoader" public="false">
             <argument type="collection" />
         </service>
 

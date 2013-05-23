@@ -66,4 +66,11 @@ interface EmailInterface
      * @return array
      */
     public function getBccs();
+
+    /**
+     * Returns the update date.
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt();
 }
