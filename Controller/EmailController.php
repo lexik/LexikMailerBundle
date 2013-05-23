@@ -71,9 +71,9 @@ class EmailController extends ContainerAware
                 $em->flush();
 
                 return new RedirectResponse($this->container->get('router')->generate('lexik_mailer.email_edit', array(
-                            'emailId'   => $email->getId(),
-                            'lang'      => $lang,
-                        )));
+                    'emailId' => $email->getId(),
+                    'lang'    => $lang,
+                )));
             }
         }
 
@@ -169,18 +169,20 @@ class EmailController extends ContainerAware
         $renderer->loadTemplates($email);
         $renderer->setStrictVariables(false);
 
-        $errors = array(
-            'subject' => null,
-            'from_name' => null,
-            'content' => null,
-        );
+        $subject = $email->getSubject();
+        $fromName = $email->getFromName($this->container->getParameter('lexik_mailer.admin_email'));
+        $content = $email->getBody();
 
-        $templates = array();
+        $errors = array(
+            'subject'   => null,
+            'from_name' => null,
+            'content'   => null,
+        );
 
         foreach ($errors as $template => $error) {
             try {
                 $view = sprintf('%s_%s', $template, md5($email->getReference()));
-                $templates[$template] = $renderer->renderTemplate($view);
+                $renderer->renderTemplate($view);
             } catch(\Twig_Error $e) {
                 $errors[$template] = $e->getRawMessage();
             }
@@ -189,8 +191,10 @@ class EmailController extends ContainerAware
         $renderer->setStrictVariables(true);
 
         return $this->container->get('templating')->renderResponse('LexikMailerBundle:Email:preview.html.twig', array(
-            'templates' => $templates,
-            'errors'    => $errors,
+            'content'  => $content,
+            'subject'  => $subject,
+            'fromName' => $fromName,
+            'errors'   => $errors,
         ));
     }
 

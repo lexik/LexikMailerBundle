@@ -7,7 +7,7 @@
 {% endif %}
 
 <div>{{ 'lexik_mailer.preview.subject'|trans({}, 'LexikMailerBundle') }}:</div>
-{{ templates['subject']|raw }}
+{{ subject|raw }}
 
 <hr />
 
@@ -20,7 +20,7 @@
 {% endif %}
 
 <div>{{ 'lexik_mailer.preview.from_name'|trans({}, 'LexikMailerBundle') }}:</div>
-{{ templates['from_name']|raw }}
+{{ fromName|raw }}
 
 <hr />
 
@@ -33,4 +33,4 @@
 {% endif %}
 
 <div>{{ 'lexik_mailer.preview.body'|trans({}, 'LexikMailerBundle') }}:</div>
-{{ templates['content']|raw }}
+{{ content|raw }}
