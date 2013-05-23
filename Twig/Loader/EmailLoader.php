@@ -29,7 +29,7 @@ class EmailLoader extends \Twig_Loader_Array
             $this->setTemplate(sprintf('layout_%s', $layoutSuffix), $email->getLayoutBody());
             $this->updateDates[sprintf('layout_%s', $layoutSuffix)] = $email->getLayout()->getUpdatedAt()->format('U');
 
-            $content = strtr('{% extends \'<layout>\' %} {% block content %} <content> {% endblock %}', array(
+            $content = strtr('{% extends \'<layout>\' %}{% block content %}<content>{% endblock %}', array(
                 '<layout>'  => sprintf('layout_%s', $layoutSuffix),
                 '<content>' => $email->getBody(),
             ));
