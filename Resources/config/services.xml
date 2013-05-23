@@ -12,6 +12,7 @@
         <parameter key="lexik_mailer.templating.default_options" type="collection">
             <parameter key="cache">%kernel.cache_dir%/twig</parameter>
             <parameter key="debug">%kernel.debug%</parameter>
+            <parameter key="auto_reload">true</parameter>
         </parameter>
     </parameters>
 
