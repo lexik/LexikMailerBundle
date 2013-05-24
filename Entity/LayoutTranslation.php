@@ -45,6 +45,20 @@ class LayoutTranslation
     protected $body;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", name="created_at")
+     */
+    protected $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", name="updated_at")
+     */
+    protected $updatedAt;
+
+    /**
      * @var Lexik\Bundle\MailerBundle\Entity\Layout
      *
      * @ORM\ManyToOne(targetEntity="Layout", inversedBy="translations")
@@ -61,6 +75,16 @@ class LayoutTranslation
     public function __construct($lang = null)
     {
         $this->lang = $lang;
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->updatedAt = new \DateTime();
     }
 
     /**
@@ -111,6 +135,46 @@ class LayoutTranslation
     public function setBody($body)
     {
         $this->body = $body;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
     }
 
     /**

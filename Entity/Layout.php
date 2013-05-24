@@ -209,7 +209,7 @@ class Layout implements LayoutInterface
     }
 
     /**
-     * @see Lexik\Bundle\MailerBundle\Model.LayoutInterface::setLocale()
+     * {@inheritdoc}
      */
     public function setLocale($locale)
     {
@@ -219,10 +219,18 @@ class Layout implements LayoutInterface
     }
 
     /**
-     * @see Lexik\Bundle\MailerBundle\Model.LayoutInterface::getBody()
+     * {@inheritdoc}
      */
     public function getBody()
     {
         return $this->currentTranslation->getBody();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUpdatedAt()
+    {
+        return $this->currentTranslation->getUpdatedAt();
     }
 }

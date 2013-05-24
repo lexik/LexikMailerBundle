@@ -2,6 +2,8 @@
 
 namespace Lexik\Bundle\MailerBundle\Tests\Message;
 
+use Lexik\Bundle\MailerBundle\Twig\Loader\EmailLoader;
+
 use Lexik\Bundle\MailerBundle\Message\MessageRenderer;
 use Lexik\Bundle\MailerBundle\Message\MessageFactory;
 use Lexik\Bundle\MailerBundle\Tests\Unit\BaseUnitTestCase;
@@ -24,7 +26,7 @@ class MessageFactoryTest extends BaseUnitTestCase
         $this->loadFixtures($this->em);
     }
 
-    public function testGetValidMassages()
+    public function testGetValidMessages()
     {
         $factory = $this->createMessageFactory();
 
@@ -52,7 +54,7 @@ class MessageFactoryTest extends BaseUnitTestCase
         $body = <<<EOF
 An error occured while trying to send an email.
 You tried to use a reference that does not exist : "this-reference-does-not-exixt"
-in "{$file}" at line 58
+in "{$file}" at line 60
 EOF;
 
         $message = $factory->get('this-reference-does-not-exixt', 'chuk@email.fr', array('name' => 'chuck'));
@@ -98,7 +100,7 @@ EOF;
             'default_locale' => 'fr',
         );
 
-        $loader = new \Twig_Loader_Array(array());
+        $loader = new EmailLoader(array());
         $templating = new \Twig_Environment($loader, array());
         $renderer = new \Lexik\Bundle\MailerBundle\Message\MessageRenderer($templating, $loader);
 

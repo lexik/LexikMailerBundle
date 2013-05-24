@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table(name="lexik_email_translation")
+ * @ORM\HasLifeCycleCallbacks
  *
  * @author Laurent Heurtault <l.heurtault@lexik.fr>
  * @author Cédric Girard <c.girard@lexik.fr>
@@ -68,6 +69,20 @@ class EmailTranslation
     protected $fromName;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", name="created_at")
+     */
+    protected $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(type="datetime", name="updated_at")
+     */
+    protected $updatedAt;
+
+    /**
      * @var Lexik\Bundle\MailerBundle\Entity\Email
      *
      * @ORM\ManyToOne(targetEntity="Email", inversedBy="translations")
@@ -84,6 +99,16 @@ class EmailTranslation
     public function __construct($lang = null)
     {
         $this->lang = $lang;
+        $this->createdAt = new \DateTime();
+        $this->updatedAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->updatedAt = new \DateTime();
     }
 
     /**
@@ -194,6 +219,46 @@ class EmailTranslation
     public function setFromName($fromName)
     {
         $this->fromName = $fromName;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
     }
 
     /**

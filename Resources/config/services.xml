@@ -1,5 +1,4 @@
 <?xml version="1.0" ?>
-
 <container xmlns="http://symfony.com/schema/dic/services"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
@@ -10,6 +9,11 @@
             <parameter key="admin_email">%lexik_mailer.admin_email%</parameter>
             <parameter key="default_locale">%locale%</parameter>
         </parameter>
+        <parameter key="lexik_mailer.templating.default_options" type="collection">
+            <parameter key="cache">%kernel.cache_dir%/twig</parameter>
+            <parameter key="debug">%kernel.debug%</parameter>
+            <parameter key="auto_reload">true</parameter>
+        </parameter>
     </parameters>
 
     <services>
@@ -19,7 +23,7 @@
         </service>
 
         <!-- Loader -->
-        <service id="lexik_mailer.templating.loader_array" class="Twig_Loader_Array" public="false">
+        <service id="lexik_mailer.templating.loader_array" class="Lexik\Bundle\MailerBundle\Twig\Loader\EmailLoader" public="false">
             <argument type="collection" />
         </service>
 
@@ -33,6 +37,7 @@
         <!-- Template -->
         <service id="lexik_mailer.templating" class="%twig.class%" public="false" >
             <argument type="service" id="lexik_mailer.templating.loader_chain" />
+            <argument>%lexik_mailer.templating.default_options%</argument>
             <call method="addExtension">
                 <argument type="service" id="twig.extension.routing" />
             </call>
