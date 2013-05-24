@@ -134,7 +134,7 @@ class LayoutController extends Controller
                 $em->persist($layout);
                 $em->flush();
 
-                return $this->redirect($this->generateUrl('lexik_mailer.layout_new'));
+                return $this->redirect($this->generateUrl('lexik_mailer.layout_list'));
             }
         }
 

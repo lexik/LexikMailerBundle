@@ -22,17 +22,17 @@ use Doctrine\ORM\EntityManager;
 class MessageFactory
 {
     /**
-     * @var Doctrine\ORM\EntityManager
+     * @var EntityManager
      */
     private $em;
 
     /**
-     * @var Lexik\Bundle\MailerBundle\Message\MessageRender
+     * @var MessageRender
      */
     private $renderer;
 
     /**
-     * @var Lexik\Bundle\MailerBundle\Mapping\Driver\Annotation
+     * @var Annotation
      */
     private $annotationDriver;
 
@@ -47,18 +47,18 @@ class MessageFactory
     private $options;
 
     /**
-     * @var Doctrine\ORM\EntityRepository
+     * @var array
      */
-    private $emailRepository;
+    private $emails;
 
     /**
      * __construct
      *
-     * @param EntityManager $entityManager
-     * @param MessageRenderer $renderer
-     * @param Annotation $driver
-     * @param Swift $dispatcher
-     * @param array $defaultOptions
+     * @param EntityManager                 $entityManager
+     * @param MessageRenderer               $renderer
+     * @param Annotation                    $driver
+     * @param \Swift_Events_EventDispatcher $dispatcher
+     * @param array                         $defaultOptions
      */
     public function __construct(EntityManager $entityManager, MessageRenderer $renderer, Annotation $annotationDriver, \Swift_Events_EventDispatcher $swiftDispatcher, $defaultOptions)
     {
@@ -67,8 +67,7 @@ class MessageFactory
         $this->annotationDriver = $annotationDriver;
         $this->swiftDispatcher = $swiftDispatcher;
         $this->options = array_merge($this->getDefaultOptions(), $defaultOptions);
-
-        $this->emailRepository = $this->em->getRepository($this->options['email_class']);
+        $this->emails = array();
     }
 
     /**
@@ -79,9 +78,9 @@ class MessageFactory
     protected function getDefaultOptions()
     {
         return array(
-            'email_class'       => '',
-            'admin_email'       => '',
-            'default_locale'    => 'en',
+            'email_class'    => '',
+            'admin_email'    => '',
+            'default_locale' => 'en',
         );
     }
 
@@ -89,14 +88,18 @@ class MessageFactory
      * Find an email template and create a swift message.
      *
      * @param string $reference
-     * @param mixed $to
-     * @param array $parameters
+     * @param mixed  $to
+     * @param array  $parameters
      * @param string $locale
-     * @return Swift_Message
+     * @return \Swift_Message
      */
     public function get($reference, $to, array $parameters = array(), $locale = null)
     {
-        $email = $this->emailRepository->findOneByReference($reference);
+        if (!isset($this->emails[$reference])) {
+            $this->emails[$reference] = $this->em->getRepository($this->options['email_class'])->findOneByReference($reference);
+        }
+
+        $email = $this->emails[$reference];
 
         if ($email instanceof EmailInterface) {
             return $this->generateMessage($email, $to, $parameters, $locale);
@@ -111,10 +114,10 @@ class MessageFactory
      * Create a swift message
      *
      * @param EmailInterface $email
-     * @param mixed $to
-     * @param array $parameters
-     * @param string $locale
-     * @return Swift_Message
+     * @param mixed          $to
+     * @param array          $parameters
+     * @param string         $locale
+     * @return \Swift_Message
      */
     public function generateMessage(EmailInterface $email, $to, array $parameters = array(), $locale = null)
     {
@@ -127,7 +130,7 @@ class MessageFactory
             $name = $this->annotationDriver->getName($to);
             $to = $this->annotationDriver->getEmail($to);
 
-            if (isset($name)) {
+            if (null !== $name && '' !== $name) {
                 $to = array($to => $name);
             }
         }
@@ -136,45 +139,44 @@ class MessageFactory
             $email->setLocale($locale);
             $this->renderer->loadTemplates($email);
 
-            $swiftEmail = \Swift_Message::newInstance()
+            $message = \Swift_Message::newInstance()
                 ->setSubject($this->renderTemplate('subject', $parameters, $email->getReference()))
                 ->setFrom($email->getFromAddress($this->options['admin_email']), $this->renderTemplate('from_name', $parameters, $email->getReference()))
                 ->setTo($to)
                 ->setBody($this->renderTemplate('content', $parameters, $email->getReference()), 'text/html');
 
             foreach ($email->getBccs() as $bcc) {
-                $swiftEmail->addBcc($bcc);
+                $message->addBcc($bcc);
             }
-
-            return $swiftEmail;
 
         } catch (NoTranslationException $e) {
             $message = new NoTranslationMessage($email->getReference(), $locale);
             $this->bindExceptionListener($message);
 
-            return $message;
-
         } catch (\Twig_Error $e) {
             $message = new TwigErrorMessage($e->getRawMessage(), $email->getReference());
 
-            return $message->setFrom($this->options['admin_email'])
+            $message->setFrom($this->options['admin_email'])
                 ->setTo($this->options['admin_email']);
         }
+
+        return $message;
     }
 
     /**
      * Render template
      *
      * @param string $view
-     * @param array $parameters
-     * @param string $type
+     * @param array  $parameters
+     * @param string $reference
      * @return string
      */
-    protected function renderTemplate($view, array $parameters = array(), $reference = null)
+    protected function renderTemplate($view, array $parameters, $reference)
     {
         $template = '';
 
         try {
+            $view = sprintf('%s_%s', $view, md5($reference));
             $template = $this->renderer->renderTemplate($view, $parameters);
 
         } catch (\Twig_Error_Runtime $e) {
@@ -186,7 +188,7 @@ class MessageFactory
     }
 
     /**
-     * Create swift message when Email is not found
+     * Create swift message when Email is not found.
      *
      * @param string $reference
      * @return ReferenceNotFoundMessage

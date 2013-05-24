@@ -29,4 +29,11 @@ interface LayoutInterface
      * @return string
      */
     public function getBody();
+
+    /**
+     * Returns the update date.
+     *
+     * @return \DateTime
+     */
+    public function getUpdatedAt();
 }
