@@ -17,12 +17,12 @@ class LayoutTranslationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('body', null, array(
-                    'attr' => array('rows' => 30)
-                ));
+            'attr' => array('rows' => 20)
+        ));
 
         if ($options['with_language']) {
             $builder->add('lang', 'language', array(
-                'preferred_choices' => array('en', 'fr', 'es', 'de', 'it', 'pt', 'ja', 'zh')
+                'preferred_choices' => $options['preferred_languages'],
             ));
         }
     }
@@ -35,8 +35,9 @@ class LayoutTranslationType extends AbstractType
         parent::setDefaultOptions($resolver);
 
         $resolver->setDefaults(array(
-            'data_class'    => 'Lexik\Bundle\MailerBundle\Entity\LayoutTranslation',
-            'with_language' => true,
+            'data_class'          => 'Lexik\Bundle\MailerBundle\Entity\LayoutTranslation',
+            'with_language'       => true,
+            'preferred_languages' => array('en', 'fr', 'es', 'de', 'it', 'pt', 'ja', 'zh'),
         ));
     }
 

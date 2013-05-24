@@ -32,11 +32,18 @@ interface EmailInterface
     public function getSubject();
 
     /**
-     * Returns the email's body according to the email locale.
+     * Returns the email's html body according to the email locale.
      *
      * @return string
      */
     public function getBody();
+
+    /**
+     * Returns the email's textual body according to the email locale.
+     *
+     * @return string
+     */
+    public function getBodyText();
 
     /**
      * Returns the layout's body for this email according to the email locale.
