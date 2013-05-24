@@ -282,7 +282,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * @see Lexik\Bundle\MailerBundle\Model.EmailInterface::setLocale()
+     * {@inheritdoc}
      */
     public function setLocale($locale)
     {
@@ -292,7 +292,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * @see Lexik\Bundle\MailerBundle\Model.EmailInterface::setSubject()
+     * {@inheritdoc}
      */
     public function getSubject()
     {
@@ -300,7 +300,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * @see Lexik\Bundle\MailerBundle\Model.EmailInterface::getBody()
+     * {@inheritdoc}
      */
     public function getBody()
     {
@@ -308,7 +308,15 @@ class Email implements EmailInterface
     }
 
     /**
-     * @see Lexik\Bundle\MailerBundle\Model.EmailInterface::getLayoutBody()
+     * {@inheritdoc}
+     */
+    public function getBodyText()
+    {
+        return (string) $this->currentTranslation->getBodyText();
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function getLayoutBody()
     {

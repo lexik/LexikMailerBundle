@@ -56,6 +56,13 @@ class EmailTranslation
     /**
      * @var string
      *
+     * @ORM\Column(type="text", name="body_text", nullable=true)
+     */
+    protected $bodyText;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string", name="from_address", nullable=true)
      * @Assert\Email()
      */
@@ -71,14 +78,14 @@ class EmailTranslation
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime", name="created_at")
+     * @ORM\Column(type="datetime", name="created_at", nullable=true)
      */
     protected $createdAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime", name="updated_at")
+     * @ORM\Column(type="datetime", name="updated_at", nullable=true)
      */
     protected $updatedAt;
 
@@ -179,6 +186,26 @@ class EmailTranslation
     public function setBody($body)
     {
         $this->body = $body;
+    }
+
+    /**
+     * Get bodyText
+     *
+     * @return string
+     */
+    public function getBodyText()
+    {
+        return $this->bodyText;
+    }
+
+    /**
+     * Set bodyText
+     *
+     * @param string $bodyText
+     */
+    public function setBodyText($bodyText)
+    {
+        $this->bodyText = $bodyText;
     }
 
     /**
