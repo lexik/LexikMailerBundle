@@ -47,14 +47,14 @@ class LayoutTranslation
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime", name="created_at")
+     * @ORM\Column(type="datetime", name="created_at", nullable=true)
      */
     protected $createdAt;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime", name="updated_at")
+     * @ORM\Column(type="datetime", name="updated_at", nullable=true)
      */
     protected $updatedAt;
 
