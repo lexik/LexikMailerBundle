@@ -1,30 +1,22 @@
 Installation
 ============
 
-Update your `deps` and `deps.lock` files:
+Add the bunde to your `composer.json` file:
 
-```
-// deps
-...
-[LexikMailerBundle]
-    git=https://github.com/lexik/LexikMailerBundle.git
-    target=/bundles/Lexik/Bundle/MailerBundle
-
-// deps.lock
-...
-LexikMailerBundle <commit>
+```javascript
+require: {
+    // ...
+    "lexik/mailer-bundle": "dev-master" // or use a tag from packagist.org
+    // ...
+}
 ```
 
-Register the namespaces with the autoloader:
+Then run a composer update:
 
-```php
-<?php
-// app/autoload.php
-$loader->registerNamespaces(array(
-    // ...
-    'Lexik' => __DIR__.'/../vendor/bundles',
-    // ...
-));
+```shell
+composer.phar update
+# OR
+composer.phar update lexik/mailer-bundle # to only update the bundle
 ```
 
 Register the bundle with your kernel:
@@ -113,6 +105,7 @@ Emails:
 * from name
 * subject
 * body
+* body text
 
 How to link a layout template with an email template :
 ------------------------------------------------------

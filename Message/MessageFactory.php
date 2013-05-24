@@ -143,7 +143,13 @@ class MessageFactory
                 ->setSubject($this->renderTemplate('subject', $parameters, $email->getReference()))
                 ->setFrom($email->getFromAddress($this->options['admin_email']), $this->renderTemplate('from_name', $parameters, $email->getReference()))
                 ->setTo($to)
-                ->setBody($this->renderTemplate('content', $parameters, $email->getReference()), 'text/html');
+                ->setBody($this->renderTemplate('html_content', $parameters, $email->getReference()), 'text/html');
+
+            $textContent = $this->renderTemplate('text_content', $parameters, $email->getReference());
+
+            if (null !== $textContent || '' !== $textContent) {
+                $message->addPart($textContent, 'text/plain');
+            }
 
             foreach ($email->getBccs() as $bcc) {
                 $message->addBcc($bcc);
