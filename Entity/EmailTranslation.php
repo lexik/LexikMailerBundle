@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity
  * @ORM\Table(name="lexik_email_translation")
- * @ORM\HasLifeCycleCallbacks
+ * @ORM\HasLifecycleCallbacks
  *
  * @author Laurent Heurtault <l.heurtault@lexik.fr>
  * @author Cédric Girard <c.girard@lexik.fr>
