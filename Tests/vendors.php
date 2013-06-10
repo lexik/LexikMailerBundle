@@ -23,14 +23,23 @@ $deps = array(
 );
 
 $revs = array(
-    'v2.1' => array(
-        'symfony'           => 'v2.1.6',
+    'v2.2' => array(
+        'symfony'           => 'v2.2.2',
         'doctrine-common'   => '2.3.0',
-        'doctrine-dbal'     => '2.3.1',
-        'doctrine'          => '2.3.1',
+        'doctrine-dbal'     => '2.3.2',
+        'doctrine'          => '2.3.2',
         'doctrine-fixtures' => 'origin/master',
         'swiftmailer'       => 'v4.2.2',
         'twig'              => 'v1.11.1',
+    ),
+    'v2.3' => array(
+        'symfony'           => 'v2.3.0',
+        'doctrine-common'   => '2.3.0',
+        'doctrine-dbal'     => '2.3.4',
+        'doctrine'          => '2.3.4',
+        'doctrine-fixtures' => 'origin/master',
+        'swiftmailer'       => 'v5.0.0',
+        'twig'              => 'v1.13.1',
     ),
 );
 
