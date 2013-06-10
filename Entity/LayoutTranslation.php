@@ -32,7 +32,7 @@ class LayoutTranslation
      *
      * @ORM\Column(type="string", length=2)
      * @Assert\NotBlank()
-     * @Assert\MaxLength(2)
+     * @Assert\Length(max=2)
      */
     protected $lang;
 

@@ -58,13 +58,14 @@ class EmailController extends ContainerAware
         }
 
         $form = $this->container->get('form.factory')->create(new EmailType(), $email, array(
-                    'data_translation'      => $translation,
-                    'edit'                  => true,
-                ));
+            'data_translation' => $translation,
+            'edit'             => true,
+        ));
 
         // Submit form
         if ('POST' === $request->getMethod()) {
-            $form->bindRequest($request);
+            $form->bind($request);
+
             if ($form->isValid()) {
                 $em = $this->container->get('doctrine.orm.entity_manager');
                 $em->persist($translation);
@@ -119,13 +120,15 @@ class EmailController extends ContainerAware
     public function newAction()
     {
         $request = $this->container->get('request');
+
         $email = new Email();
         $translation = new EmailTranslation($this->container->getParameter('locale'));
-
         $translation->setEmail($email);
+
         $form = $this->container->get('form.factory')->create(new EmailType(), $email, array(
-                    'data_translation' => $translation,
-                ));
+            'data_translation' => $translation,
+        ));
+
         // Submit form
         if ('POST' === $request->getMethod()) {
             $form->bindRequest($request);

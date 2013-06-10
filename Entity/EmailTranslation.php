@@ -32,7 +32,7 @@ class EmailTranslation
      *
      * @ORM\Column(type="string", length=2)
      * @Assert\NotBlank()
-     * @Assert\MaxLength(2)
+     * @Assert\Length(max=2)
      */
     protected $lang;
 
@@ -41,7 +41,7 @@ class EmailTranslation
      *
      * @ORM\Column(type="string")
      * @Assert\NotBlank()
-     * @Assert\MaxLength(255)
+     * @Assert\Length(max=255)
      */
     protected $subject;
 
