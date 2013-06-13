@@ -17,24 +17,26 @@ class EmailType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('reference', null, array(
-                    'read_only'  => $options['edit']
-                ))
-                ->add('layout', 'entity', array(
-                    'required'      => false,
-                    'empty_value'   => '',
-                    'class'         => 'Lexik\Bundle\MailerBundle\Entity\Layout',
-                ))
-                ->add('description')
-                ->add('bcc')
-                ->add('spool', null, array(
-                    'required'  => false,
-                ))
-                ->add('translation', new EmailTranslationType(), array(
-                    'property_path' => false,
-                    'data'          => $options['data_translation'],
-                    'with_language' => $options['edit'],
-                ));
+        $builder
+            ->add('reference', null, array(
+                'read_only'  => $options['edit']
+            ))
+            ->add('layout', 'entity', array(
+                'required'    => false,
+                'empty_value' => '',
+                'class'       => 'Lexik\Bundle\MailerBundle\Entity\Layout',
+            ))
+            ->add('description')
+            ->add('bcc')
+            ->add('spool', null, array(
+                'required'  => false,
+            ))
+            ->add('translation', new EmailTranslationType(), array(
+                'mapped'        => false,
+                'data'          => $options['data_translation'],
+                'with_language' => $options['edit'],
+            ))
+        ;
     }
 
     /**

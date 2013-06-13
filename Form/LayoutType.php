@@ -16,15 +16,17 @@ class LayoutType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('reference', null, array(
-            'read_only'  => $options['edit']
-        ))
-                ->add('description')
-                ->add('translation', new LayoutTranslationType(), array(
-                    'property_path' => false,
-                    'data'          => $options['data_translation'],
-                    'with_language' => $options['edit'],
-                ));
+        $builder
+            ->add('reference', null, array(
+                'read_only'  => $options['edit']
+            ))
+            ->add('description')
+            ->add('translation', new LayoutTranslationType(), array(
+                'mapped'        => false,
+                'data'          => $options['data_translation'],
+                'with_language' => $options['edit'],
+            ))
+        ;
     }
 
     /**
