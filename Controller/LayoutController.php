@@ -62,7 +62,7 @@ class LayoutController extends Controller
 
         // Submit form
         if ('POST' === $request->getMethod()) {
-            $form->bindRequest($request);
+            $form->bind($request);
             if ($form->isValid()) {
                 $em->persist($translation);
                 $em->flush();
@@ -125,7 +125,7 @@ class LayoutController extends Controller
                 ));
         // Submit form
         if ('POST' === $request->getMethod()) {
-            $form->bindRequest($request);
+            $form->bind($request);
 
             if ($form->isValid()) {
                 $em = $this->get('doctrine.orm.entity_manager');

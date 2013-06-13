@@ -131,7 +131,7 @@ class EmailController extends ContainerAware
 
         // Submit form
         if ('POST' === $request->getMethod()) {
-            $form->bindRequest($request);
+            $form->bind($request);
 
             if ($form->isValid()) {
                 $em = $this->container->get('doctrine.orm.entity_manager');
