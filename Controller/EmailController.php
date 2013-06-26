@@ -177,15 +177,15 @@ class EmailController extends ContainerAware
         $content = $email->getBody();
 
         $errors = array(
-            'subject'   => null,
-            'from_name' => null,
-            'content'   => null,
+            'subject'      => null,
+            'from_name'    => null,
+            'html_content' => null,
         );
 
+        $suffix = md5($email->getReference());
         foreach ($errors as $template => $error) {
             try {
-                $view = sprintf('%s_%s', $template, md5($email->getReference()));
-                $renderer->renderTemplate($view);
+                $renderer->renderTemplate(sprintf('%s_%s', $template, $suffix));
             } catch(\Twig_Error $e) {
                 $errors[$template] = $e->getRawMessage();
             }

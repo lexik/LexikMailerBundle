@@ -24,10 +24,10 @@
 
 <hr />
 
-{% if errors['content'] is not none %}
+{% if errors['html_content'] is not none %}
 <div style="border: 1px solid #f00; background: #FFE1E1">
     <div style="font-weight: bolder; color: #f00; padding: 10px; text-align: center; ">
-        {{ errors['content'] }}
+        {{ errors['html_content'] }}
     </div>
 </div>
 {% endif %}
