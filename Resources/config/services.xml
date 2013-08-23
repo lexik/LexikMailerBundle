@@ -47,13 +47,12 @@
             <argument type="service" id="lexik_mailer.templating" />
             <argument type="service" id="lexik_mailer.templating.loader_array" />
         </service>
-
+        
         <!-- Factory -->
         <service id="lexik_mailer.message_factory" class="%lexik_mailer.message_factory.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
             <argument type="service" id="lexik_mailer.message_renderer" />
             <argument type="service" id="lexik_mailer.annotation_driver" />
-            <argument type="service" id="swiftmailer.transport.eventdispatcher" />
             <argument>%lexik_mailer.default_options%</argument>
         </service>
     </services>
