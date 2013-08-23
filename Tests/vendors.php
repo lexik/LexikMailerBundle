@@ -33,7 +33,7 @@ $revs = array(
         'twig'              => 'v1.11.1',
     ),
     'v2.3' => array(
-        'symfony'           => 'v2.3.0',
+        'symfony'           => 'v2.3.3',
         'doctrine-common'   => '2.3.0',
         'doctrine-dbal'     => '2.3.4',
         'doctrine'          => '2.3.4',
