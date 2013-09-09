@@ -107,8 +107,6 @@ EOF;
         $reder = new \Doctrine\Common\Annotations\AnnotationReader();
         $annotationDriver = new \Lexik\Bundle\MailerBundle\Mapping\Driver\Annotation($reder);
 
-        $swiftDispatcher = new \Swift_Events_SimpleEventDispatcher();
-
-        return new MessageFactory($this->em, $renderer, $annotationDriver, $swiftDispatcher, $options);
+        return new MessageFactory($this->em, $renderer, $annotationDriver, $options);
     }
 }
