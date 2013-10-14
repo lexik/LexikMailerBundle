@@ -139,7 +139,7 @@ class MessageFactory
 
             $textContent = $this->renderTemplate('text_content', $parameters, $email->getReference());
 
-            if (null !== $textContent || '' !== $textContent) {
+            if (null !== $textContent && '' !== $textContent) {
                 $message->addPart($textContent, 'text/plain');
             }
 
