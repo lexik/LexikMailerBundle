@@ -17,6 +17,7 @@
             {{ form_row(form.description) }}
             {{ form_row(form.spool) }}
         </fieldset>
+
         <fieldset class="span5">
             <legend>
                 {{ 'lexik_mailer.new.group_languages' | trans({}, 'LexikMailerBundle') }}
@@ -63,8 +64,9 @@
 
         </fieldset>
 
-        <div class="control-group"></div>
         {{ form_rest(form) }}
+
+        <div class="clear"></div>
 
         <div class="form-actions">
             <input type="submit" class="btn btn-primary" value="{{ 'lexik_mailer.new.submit' | trans({}, 'LexikMailerBundle') }}" />
