@@ -90,7 +90,7 @@ class EmailTranslation
     protected $updatedAt;
 
     /**
-     * @var Lexik\Bundle\MailerBundle\Entity\Email
+     * @var \Lexik\Bundle\MailerBundle\Entity\Email
      *
      * @ORM\ManyToOne(targetEntity="Email", inversedBy="translations")
      * @ORM\JoinColumn(name="email_id", referencedColumnName="id")

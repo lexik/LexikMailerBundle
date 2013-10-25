@@ -368,8 +368,14 @@ class Email implements EmailInterface
     /**
      * {@inheritdoc}
      */
-    public function getUpdatedAt()
+    public function getLastModifiedTimestamp()
     {
-        return $this->currentTranslation->getUpdatedAt();
+        $date = $this->currentTranslation->getUpdatedAt();
+
+        if ( ! $date instanceof \DateTime ) {
+            $date = new \DateTime('now');
+        }
+
+        return $date->format('U');
     }
 }

@@ -27,7 +27,7 @@ class EmailLoader extends \Twig_Loader_Array
             $layoutSuffix = md5($email->getLayout()->getReference());
 
             $this->setTemplate(sprintf('layout_%s', $layoutSuffix), $email->getLayoutBody());
-            $this->updateDates[sprintf('layout_%s', $layoutSuffix)] = $email->getLayout()->getUpdatedAt()->format('U');
+            $this->updateDates[sprintf('layout_%s', $layoutSuffix)] = $email->getLayout()->getLastModifiedTimestamp();
 
             $content = strtr('{% extends \'<layout>\' %}{% block content %}<content>{% endblock %}', array(
                 '<layout>'  => sprintf('layout_%s', $layoutSuffix),
@@ -46,10 +46,10 @@ class EmailLoader extends \Twig_Loader_Array
         $this->setTemplate(sprintf('from_name_%s', $emailSuffix), $email->getFromName());
 
         // keep updated at to be able to check if the template is fresh
-        $this->updateDates[sprintf('html_content_%s', $emailSuffix)] = $email->getUpdatedAt()->format('U');
-        $this->updateDates[sprintf('text_content_%s', $emailSuffix)] = $email->getUpdatedAt()->format('U');
-        $this->updateDates[sprintf('subject_%s', $emailSuffix)] = $email->getUpdatedAt()->format('U');
-        $this->updateDates[sprintf('from_name_%s', $emailSuffix)] = $email->getUpdatedAt()->format('U');
+        $this->updateDates[sprintf('html_content_%s', $emailSuffix)] = $email->getLastModifiedTimestamp();
+        $this->updateDates[sprintf('text_content_%s', $emailSuffix)] = $email->getLastModifiedTimestamp();
+        $this->updateDates[sprintf('subject_%s', $emailSuffix)] = $email->getLastModifiedTimestamp();
+        $this->updateDates[sprintf('from_name_%s', $emailSuffix)] = $email->getLastModifiedTimestamp();
     }
 
     /**

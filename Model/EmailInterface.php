@@ -75,9 +75,9 @@ interface EmailInterface
     public function getBccs();
 
     /**
-     * Returns the update date.
+     * Returns the timestamp of the last modification date.
      *
-     * @return \DateTime
+     * @return int
      */
-    public function getUpdatedAt();
+    public function getLastModifiedTimestamp();
 }

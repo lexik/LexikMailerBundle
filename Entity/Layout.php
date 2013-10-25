@@ -62,7 +62,7 @@ class Layout implements LayoutInterface
     /**
      * Translation object for the current $this->locale value.
      *
-     * @var Lexik\Bundle\MailerBundle\Entity\LayoutTranslation
+     * @var \Lexik\Bundle\MailerBundle\Entity\LayoutTranslation
      */
     private $currentTranslation;
 
@@ -229,8 +229,14 @@ class Layout implements LayoutInterface
     /**
      * {@inheritdoc}
      */
-    public function getUpdatedAt()
+    public function getLastModifiedTimestamp()
     {
-        return $this->currentTranslation->getUpdatedAt();
+        $date = $this->currentTranslation->getUpdatedAt();
+
+        if ( ! $date instanceof \DateTime ) {
+            $date = new \DateTime('now');
+        }
+
+        return $date->format('U');
     }
 }
