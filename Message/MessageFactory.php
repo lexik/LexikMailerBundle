@@ -139,6 +139,14 @@ class MessageFactory
 
             $textContent = $this->renderTemplate('text_content', $parameters, $email->getReference());
 
+            if (count($email->getHeaders()) > 0) {
+                $headers = $message->getHeaders();
+                foreach ($email->getHeaders() as $header) {
+                    // todo : check again headers allowed and isset($header['key'] and $headers['value'] ?
+                    $headers->addTextHeader($header['key'], $header['value']);
+                }
+            }
+
             if (null !== $textContent || '' !== $textContent) {
                 $message->addPart($textContent, 'text/plain');
             }

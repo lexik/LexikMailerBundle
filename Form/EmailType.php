@@ -26,6 +26,11 @@ class EmailType extends AbstractType
                 'empty_value' => '',
                 'class'       => 'Lexik\Bundle\MailerBundle\Entity\Layout',
             ))
+            ->add('headers', 'collection', array(
+                'type'         => 'lexik_mailer_header',
+                'allow_add'    => true,
+                'allow_delete' => true,
+            ))
             ->add('description')
             ->add('bcc')
             ->add('spool', null, array(

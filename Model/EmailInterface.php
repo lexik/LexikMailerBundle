@@ -56,6 +56,7 @@ interface EmailInterface
      * Returns the email address of the sender according to the email locale.
      *
      * @param string $default
+     *
      * @return string
      */
     public function getFromAddress($default);
@@ -80,4 +81,11 @@ interface EmailInterface
      * @return \DateTime
      */
     public function getUpdatedAt();
+
+    /**
+     * Returns email custom headers
+     *
+     * @return array
+     */
+    public function getHeaders();
 }

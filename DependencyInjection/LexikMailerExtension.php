@@ -38,5 +38,7 @@ class LexikMailerExtension extends Extension
         foreach ($config['templating_extensions'] as $extensionsId) {
             $templating->addMethodCall('addExtension', array(new Reference($extensionsId)));
         }
+
+        $container->setParameter('lexik_mailer.allowed_headers', $config['allowed_headers']);
     }
 }

@@ -38,6 +38,12 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
 
+                ->arrayNode('allowed_headers')
+                    ->defaultValue(array())
+                    ->prototype('scalar')
+                    ->end()
+                ->end()
+
                 ->arrayNode('classes')
                     ->addDefaultsIfNotSet()
                     ->children()

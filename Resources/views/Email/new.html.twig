@@ -17,6 +17,32 @@
             {{ form_row(form.description) }}
             {{ form_row(form.spool) }}
         </fieldset>
+
+        <fieldset class="span5">
+            <legend>
+                {{ 'lexik_mailer.new.email_headers' | trans({}, 'LexikMailerBundle') }}
+            </legend>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>{{ 'lexik_mailer.headers.key'|trans({}, 'LexikMailerBundle') }}</th>
+                    <th>{{ 'lexik_mailer.headers.value'|trans({}, 'LexikMailerBundle') }}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody class="headers" data-prototype="{% filter escape %}{{ _self.linePrototype(form.headers.vars.prototype) }}{% endfilter %}">
+                {% for header in form.headers %}
+                    {{ _self.linePrototype(header) }}
+                {% endfor %}
+                <tr>
+                    <td colspan="3" style="text-align: right">
+                        <a href="#" class="btn btn-primary add_header_link">{{ 'lexik_mailer.headers.add'|trans({}, 'LexikMailerBundle') }}</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </fieldset>
+
         <fieldset>
             <legend>
                 {{ 'lexik_mailer.new.group_translation' | trans({}, 'LexikMailerBundle') }}
@@ -42,4 +68,31 @@
         </div>
     </form>
 </div>
+{% endblock %}
+
+{% macro linePrototype(field) %}
+    {% spaceless %}
+        <tr>
+            <td>
+                {{ form_widget(field.key) }}
+                {{ form_errors(field.key) }}
+            </td>
+            <td>
+                {{ form_widget(field.value) }}
+                {{ form_errors(field.value) }}
+            </td>
+            <td>
+                <a href="#" class="btn btn-small btn-danger delete_header_link" title="{{ 'lexik_mailer.headers.delete' | trans({}, 'LexikMailerBundle') }}">
+                    {{ 'lexik_mailer.headers.delete' | trans({}, 'LexikMailerBundle') }}
+                </a>
+            </td>
+        </tr>
+    {% endspaceless %}
+{% endmacro %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+        {% include "@LexikMailer/Email/_collection.js.twig" %}
+    </script>
 {% endblock %}
