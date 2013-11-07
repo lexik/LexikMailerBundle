@@ -1,5 +1,6 @@
 {% extends layout %}
 
+{% import "@LexikMailer/macros.html.twig" as macros %}
 {% form_theme form 'LexikMailerBundle:Form:form_layout.html.twig' %}
 
 {% block content %}
@@ -30,9 +31,9 @@
                     <th></th>
                 </tr>
                 </thead>
-                <tbody class="headers" data-prototype="{% filter escape %}{{ _self.linePrototype(form.headers.vars.prototype) }}{% endfilter %}">
+                <tbody class="headers" data-prototype="{% filter escape %}{{ macros.headerLinePrototype(form.headers.vars.prototype) }}{% endfilter %}">
                 {% for header in form.headers %}
-                    {{ _self.linePrototype(header) }}
+                    {{ macros.headerLinePrototype(header) }}
                 {% endfor %}
                 <tr>
                     <td colspan="3" style="text-align: right">
@@ -70,29 +71,10 @@
 </div>
 {% endblock %}
 
-{% macro linePrototype(field) %}
-    {% spaceless %}
-        <tr>
-            <td>
-                {{ form_widget(field.key) }}
-                {{ form_errors(field.key) }}
-            </td>
-            <td>
-                {{ form_widget(field.value) }}
-                {{ form_errors(field.value) }}
-            </td>
-            <td>
-                <a href="#" class="btn btn-small btn-danger delete_header_link" title="{{ 'lexik_mailer.headers.delete' | trans({}, 'LexikMailerBundle') }}">
-                    {{ 'lexik_mailer.headers.delete' | trans({}, 'LexikMailerBundle') }}
-                </a>
-            </td>
-        </tr>
-    {% endspaceless %}
-{% endmacro %}
-
 {% block javascripts %}
     {{ parent() }}
+    {% include "@LexikMailer/Email/_collection.js.twig" %}
     <script type="text/javascript">
-        {% include "@LexikMailer/Email/_collection.js.twig" %}
+
     </script>
 {% endblock %}
