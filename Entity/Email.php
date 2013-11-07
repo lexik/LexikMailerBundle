@@ -378,4 +378,12 @@ class Email implements EmailInterface
 
         return $date->format('U');
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getChecksum()
+    {
+        return md5(sprintf('%s_%s', $this->locale, $this->getReference()));
+    }
 }

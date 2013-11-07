@@ -182,7 +182,7 @@ class EmailController extends ContainerAware
             'html_content' => null,
         );
 
-        $suffix = md5($email->getReference());
+        $suffix = $email->getChecksum();
         foreach ($errors as $template => $error) {
             try {
                 $renderer->renderTemplate(sprintf('%s_%s', $template, $suffix));
