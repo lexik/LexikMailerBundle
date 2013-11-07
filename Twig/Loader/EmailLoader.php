@@ -4,6 +4,8 @@ namespace Lexik\Bundle\MailerBundle\Twig\Loader;
 
 use Lexik\Bundle\MailerBundle\Model\EmailInterface;
 
+use \Twig_Error_Loader;
+
 /**
  * Custom Email template loader.
  *
