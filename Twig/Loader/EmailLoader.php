@@ -24,7 +24,7 @@ class EmailLoader extends \Twig_Loader_Array
     public function setEmailTemplates(EmailInterface $email)
     {
         if ($email->getLayout()) {
-            $layoutSuffix = md5($email->getLayout()->getReference());
+            $layoutSuffix = md5($email->getLayout()->getChecksum());
 
             $this->setTemplate(sprintf('layout_%s', $layoutSuffix), $email->getLayoutBody());
             $this->updateDates[sprintf('layout_%s', $layoutSuffix)] = $email->getLayout()->getLastModifiedTimestamp();
@@ -38,7 +38,7 @@ class EmailLoader extends \Twig_Loader_Array
             $content = $email->getBody();
         }
 
-        $emailSuffix = md5($email->getReference());
+        $emailSuffix = md5($email->getChecksum());
 
         $this->setTemplate(sprintf('html_content_%s', $emailSuffix), $content);
         $this->setTemplate(sprintf('text_content_%s', $emailSuffix), $email->getBodyText());

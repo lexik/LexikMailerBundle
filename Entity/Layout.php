@@ -239,4 +239,14 @@ class Layout implements LayoutInterface
 
         return $date->format('U');
     }
+    
+    /**
+     * Get checksum
+     * 
+     * @return string
+     */
+    public function getChecksum()
+    {
+        return md5(sprintf('%s_%s', $this->locale, $this->getReference()));
+    }
 }

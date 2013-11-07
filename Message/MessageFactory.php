@@ -132,12 +132,12 @@ class MessageFactory
             $this->renderer->loadTemplates($email);
 
             $message = \Swift_Message::newInstance()
-                ->setSubject($this->renderTemplate('subject', $parameters, $email->getReference()))
-                ->setFrom($email->getFromAddress($this->options['admin_email']), $this->renderTemplate('from_name', $parameters, $email->getReference()))
+                ->setSubject($this->renderTemplate('subject', $parameters, $email->getChecksum()))
+                ->setFrom($email->getFromAddress($this->options['admin_email']), $this->renderTemplate('from_name', $parameters, $email->getChecksum()))
                 ->setTo($to)
-                ->setBody($this->renderTemplate('html_content', $parameters, $email->getReference()), 'text/html');
+                ->setBody($this->renderTemplate('html_content', $parameters, $email->getChecksum()), 'text/html');
 
-            $textContent = $this->renderTemplate('text_content', $parameters, $email->getReference());
+            $textContent = $this->renderTemplate('text_content', $parameters, $email->getChecksum());
 
             if (null !== $textContent && '' !== $textContent) {
                 $message->addPart($textContent, 'text/plain');
@@ -171,12 +171,12 @@ class MessageFactory
      *
      * @param string $view
      * @param array  $parameters
-     * @param string $reference
+     * @param string $checksum
      * @return string
      */
-    protected function renderTemplate($view, array $parameters, $reference)
+    protected function renderTemplate($view, array $parameters, $checksum)
     {
-        $view = sprintf('%s_%s', $view, md5($reference));
+        $view = sprintf('%s_%s', $view, $checksum);
 
         return $this->renderer->renderTemplate($view, $parameters);
     }
