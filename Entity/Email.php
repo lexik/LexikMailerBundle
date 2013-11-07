@@ -380,9 +380,7 @@ class Email implements EmailInterface
     }
     
     /**
-     * Get checksum
-     * 
-     * @return string
+     * {@inheritdoc}
      */
     public function getChecksum()
     {

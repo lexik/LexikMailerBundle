@@ -241,9 +241,7 @@ class Layout implements LayoutInterface
     }
     
     /**
-     * Get checksum
-     * 
-     * @return string
+     * {@inheritdoc}
      */
     public function getChecksum()
     {
