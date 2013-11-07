@@ -80,4 +80,11 @@ interface EmailInterface
      * @return int
      */
     public function getLastModifiedTimestamp();
+    
+    /**
+     * Return checksum of email
+     * 
+     * @return string
+     */
+    public function getChecksum();
 }
