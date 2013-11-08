@@ -51,7 +51,6 @@ Change the default layout used with email template:
 lexik_mailer:
     base_layout: "ProjectBundle:path:template.html.twg" # default value is "LexikMailerBundle::layout.html.twig"
 ```
-```
 
 Add DKIM signature in your email:
 
