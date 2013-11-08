@@ -4,6 +4,8 @@ namespace Lexik\Bundle\MailerBundle\Signer;
 
 /**
  * Signer interface
+ * 
+ * @author Sébastien Dieunidou <sebastien@bedycasa.com>
  */
 interface SignerInterface
 {

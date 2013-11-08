@@ -95,14 +95,5 @@ class SignerFactory
         }
         
         return $this->getSigner($this->options['signer'])->createSignature();
-        /*
-        //DKIMSigner($this->dkim->getPrivateKey(), $this->options[''], 'bedymail');
-
-            'dkim'           => array(
-                'private_key' => '',
-                'domain'      => '',
-                'selector'    => ''
-            )
-         */
     }
 }

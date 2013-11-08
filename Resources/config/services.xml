@@ -17,6 +17,11 @@
         <parameter key="lexik_mailer.signer.default_options" type="collection">
             <parameter key="signer">%lexik_mailer.signer%</parameter>
         </parameter>
+        <parameter key="lexik_mailer.signer.dkim.default_options" type="collection">
+            <parameter key="private_key_path">%lexik_mailer.dkim.private_key_path%</parameter>
+            <parameter key="domain">%lexik_mailer.dkim.domain%</parameter>
+            <parameter key="selector">%lexik_mailer.dkim.selector%</parameter>
+        </parameter>
     </parameters>
 
     <services>
@@ -63,6 +68,12 @@
         <!-- Signer -->
         <service id="lexik_mailer.signer_factory" class="%lexik_mailer.signer_factory.class%">
             <argument>%lexik_mailer.signer.default_options%</argument>
+        </service>
+        
+        <!-- DKIM signer -->
+        <service id="lexik_mailer.signer.dkim" class="%lexik_mailer.signer_dkim.class%">
+            <argument>%lexik_mailer.signer.dkim.default_options%</argument>
+            <tag name="lexik_mailer.signer" label="dkim" />
         </service>
         
     </services>

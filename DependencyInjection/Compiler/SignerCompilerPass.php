@@ -8,6 +8,8 @@ use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * SignerCompilerPass
+ * 
+ * @author Sébastien Dieunidou <sebastien@bedycasa.com>
  */
 class SignerCompilerPass implements CompilerPassInterface
 {
