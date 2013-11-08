@@ -51,6 +51,19 @@ Change the default layout used with email template:
 lexik_mailer:
     base_layout: "ProjectBundle:path:template.html.twg" # default value is "LexikMailerBundle::layout.html.twig"
 ```
+```
+
+Add DKIM signature in your email:
+
+```yaml
+# app/config/config.yml
+lexik_mailer:
+    signer:               "dkim"
+    dkim:
+        private_key_path: "%kernel.root_dir%/config/dkim.key"
+        domain:           "mydomain.com"
+        selector:         "myselector"
+```
 
 Add some Twig extensions to the templating service.
 By default the templating service used by the mailer only load the routing extension.
@@ -73,6 +86,8 @@ lexik_mailer:
         annotation_driver: "Lexik\Bundle\MailerBundle\Mapping\Driver\Annotation"  # annotation driver used to get the user's name and email
         message_factory:   "Lexik\Bundle\MailerBundle\Message\MessageFactory"     # message factory service class
         message_renderer:  "Lexik\Bundle\MailerBundle\Message\MessageRenderer"    # message renderer service class
+        signer_factory:    "Lexik\Bundle\MailerBundle\Signer\SignerFactory"       # signer factory service class
+        signer_dkim:       "Lexik\Bundle\MailerBundle\Signer\DkimSigner"          # DKMI signer service class
 ```
 
 The bundle provide a GUI to edit the templates, to access these pages just load the routing file:
