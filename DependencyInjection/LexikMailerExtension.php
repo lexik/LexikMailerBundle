@@ -29,8 +29,6 @@ class LexikMailerExtension extends Extension
         $container->setParameter('lexik_mailer.base_layout', $config['base_layout']);
         $container->setParameter('lexik_mailer.admin_email', $config['admin_email']);
 
-        $container->setParameter('lexik_mailer.base_layout', $config['base_layout']);
-
         foreach ($config['classes'] as $name => $class) {
             $container->setParameter(sprintf('lexik_mailer.%s.class', $name), $class);
         }
