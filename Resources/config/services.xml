@@ -14,6 +14,9 @@
             <parameter key="debug">%kernel.debug%</parameter>
             <parameter key="auto_reload">true</parameter>
         </parameter>
+        <parameter key="lexik_mailer.signer.default_options" type="collection">
+            <parameter key="signer">%lexik_mailer.signer%</parameter>
+        </parameter>
     </parameters>
 
     <services>
@@ -54,7 +57,14 @@
             <argument type="service" id="lexik_mailer.message_renderer" />
             <argument type="service" id="lexik_mailer.annotation_driver" />
             <argument>%lexik_mailer.default_options%</argument>
+            <argument type="service" id="lexik_mailer.signer_factory" />
         </service>
+        
+        <!-- Signer -->
+        <service id="lexik_mailer.signer_factory" class="%lexik_mailer.signer_factory.class%">
+            <argument>%lexik_mailer.signer.default_options%</argument>
+        </service>
+        
     </services>
 
 </container>

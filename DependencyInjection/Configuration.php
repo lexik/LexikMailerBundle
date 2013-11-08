@@ -57,12 +57,15 @@ class Configuration implements ConfigurationInterface
                             ->cannotBeEmpty()
                             ->defaultValue('Lexik\Bundle\MailerBundle\Message\MessageRenderer')
                         ->end()
+                        ->scalarNode('signer_factory')
+                            ->cannotBeEmpty()
+                            ->defaultValue('Lexik\Bundle\MailerBundle\Signer\SignerFactory')
+                        ->end()
                     ->end()
                 ->end()
                 
-                ->enumNode('signer')
-                    ->values(array('none', 'dkim'))
-                    ->defaultValue('none')
+                ->scalarNode('signer')
+                    ->defaultValue(null)
                 ->end()
 
                 ->arrayNode('dkim')
