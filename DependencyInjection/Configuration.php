@@ -59,6 +59,25 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
+                
+                ->enumNode('signer')
+                    ->values(array('none', 'dkim'))
+                    ->defaultValue('none')
+                ->end()
+
+                ->arrayNode('dkim')
+                    ->addDefaultsIfNotSet()
+                    ->children()
+                        ->scalarNode('private_key')
+                            ->defaultValue('%kernel.root_dir%/config/dkim.key')
+                        ->end()
+                        ->scalarNode('domain')
+                        ->end()
+                        ->scalarNode('selector')
+                        ->end()
+                    ->end()
+                ->end()
+                
             ->end()
         ;
 
