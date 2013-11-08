@@ -38,5 +38,13 @@ class LexikMailerExtension extends Extension
         foreach ($config['templating_extensions'] as $extensionsId) {
             $templating->addMethodCall('addExtension', array(new Reference($extensionsId)));
         }
+        
+        // signer configuration
+        $container->setParameter('lexik_mailer.signer', $config['signer']);
+
+        // DKIM
+        $container->setParameter('lexik_mailer.dkim.private_key_path', $config['dkim']['private_key_path']);
+        $container->setParameter('lexik_mailer.dkim.domain', $config['dkim']['domain']);
+        $container->setParameter('lexik_mailer.dkim.selector', $config['dkim']['selector']);
     }
 }

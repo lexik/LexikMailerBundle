@@ -9,6 +9,7 @@ use Lexik\Bundle\MailerBundle\Message\ReferenceNotFoundMessage;
 use Lexik\Bundle\MailerBundle\Message\NoTranslationMessage;
 use Lexik\Bundle\MailerBundle\Message\UndefinedVariableMessage;
 use Lexik\Bundle\MailerBundle\Message\TwigErrorMessage;
+use Lexik\Bundle\MailerBundle\Signer\SignerFactory;
 
 use Doctrine\ORM\EntityManager;
 
@@ -44,6 +45,11 @@ class MessageFactory
      * @var array
      */
     private $emails;
+    
+    /**
+     * @var SignerFactory 
+     */
+    private $signer;
 
     /**
      * Constructor.
@@ -52,14 +58,16 @@ class MessageFactory
      * @param MessageRenderer $renderer
      * @param Annotation      $driver
      * @param array           $defaultOptions
+     * @param SignerFactory   $signer
      */
-    public function __construct(EntityManager $entityManager, MessageRenderer $renderer, Annotation $annotationDriver, $defaultOptions)
+    public function __construct(EntityManager $entityManager, MessageRenderer $renderer, Annotation $annotationDriver, $defaultOptions, SignerFactory $signer)
     {
         $this->em = $entityManager;
         $this->renderer = $renderer;
         $this->annotationDriver = $annotationDriver;
         $this->options = array_merge($this->getDefaultOptions(), $defaultOptions);
         $this->emails = array();
+        $this->signer = $signer;
     }
 
     /**
@@ -130,12 +138,12 @@ class MessageFactory
         try {
             $email->setLocale($locale);
             $this->renderer->loadTemplates($email);
-
-            $message = \Swift_Message::newInstance()
-                ->setSubject($this->renderTemplate('subject', $parameters, $email->getChecksum()))
-                ->setFrom($email->getFromAddress($this->options['admin_email']), $this->renderTemplate('from_name', $parameters, $email->getChecksum()))
-                ->setTo($to)
-                ->setBody($this->renderTemplate('html_content', $parameters, $email->getChecksum()), 'text/html');
+            
+            $message = $this->createMessageInstance()
+                            ->setSubject($this->renderTemplate('subject', $parameters, $email->getChecksum()))
+                            ->setFrom($email->getFromAddress($this->options['admin_email']), $this->renderTemplate('from_name', $parameters, $email->getChecksum()))
+                            ->setTo($to)
+                            ->setBody($this->renderTemplate('html_content', $parameters, $email->getChecksum()), 'text/html');
 
             $textContent = $this->renderTemplate('text_content', $parameters, $email->getChecksum());
 
@@ -205,6 +213,25 @@ class MessageFactory
         $message = new ReferenceNotFoundMessage($reference, $file, $line);
         $message->setFrom($this->options['admin_email']);
         $message->setTo($this->options['admin_email']);
+
+        return $message;
+    }
+    
+    /**
+     * Create Swiftf message instance
+     * 
+     * @return \Swift_Message
+     */
+    protected function createMessageInstance()
+    {
+        $hasSigner = $this->signer->hasSigner();
+        $class     = $hasSigner ? '\Swift_SignedMessage' : '\Swift_Message';
+        
+        $message = $class::newInstance();
+        
+        if ($hasSigner) {
+            $message->attachSigner($this->signer->createSigner());
+        }
 
         return $message;
     }

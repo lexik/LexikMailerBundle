@@ -106,7 +106,9 @@ EOF;
 
         $reder = new \Doctrine\Common\Annotations\AnnotationReader();
         $annotationDriver = new \Lexik\Bundle\MailerBundle\Mapping\Driver\Annotation($reder);
+        
+        $signerFactory = new \Lexik\Bundle\MailerBundle\Signer\SignerFactory(array());
 
-        return new MessageFactory($this->em, $renderer, $annotationDriver, $options);
+        return new MessageFactory($this->em, $renderer, $annotationDriver, $options, $signerFactory);
     }
 }
