@@ -14,6 +14,7 @@
             <parameter key="debug">%kernel.debug%</parameter>
             <parameter key="auto_reload">true</parameter>
         </parameter>
+        <parameter key="lexik_mailer.type.header.class">Lexik\Bundle\MailerBundle\Form\HeaderType</parameter>
     </parameters>
 
     <services>
@@ -54,6 +55,12 @@
             <argument type="service" id="lexik_mailer.message_renderer" />
             <argument type="service" id="lexik_mailer.annotation_driver" />
             <argument>%lexik_mailer.default_options%</argument>
+        </service>
+
+        <!-- Form Types -->
+        <service id="lexik_mailer.type.header" class="%lexik_mailer.type.header.class%">
+            <argument>%lexik_mailer.allowed_headers%</argument>
+            <tag name="form.type" alias="lexik_mailer_header" />
         </service>
     </services>
 

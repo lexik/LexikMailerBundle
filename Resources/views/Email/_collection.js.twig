@@ -1,0 +1,34 @@
+<script type="text/javascript">
+
+    // see http://symfony.com/doc/current/reference/forms/types/collection.html#adding-and-removing-items
+
+    $(document).ready(function() {
+
+        var collectionHolder = $('.headers');
+            collectionHolder.data('index', collectionHolder.find(':input').length);
+
+        $('.add_header_link').on('click', function(e) {
+            e.preventDefault();
+            addHeaderForm(collectionHolder);
+        });
+
+        collectionHolder.on("click", ".delete_header_link", function(e) {
+            e.preventDefault();
+            $(this).parent('td').parent('tr').remove();
+        });
+
+        function addHeaderForm(collectionHolder) {
+
+            var prototype = collectionHolder.data('prototype');
+            var index = collectionHolder.data('index');
+            var newForm = prototype.replace(/__name__/g, index);
+
+            collectionHolder.data('index', index + 1);
+
+            $('.add_header_link').parent('td').parent('tr').before(newForm);
+
+        }
+
+    });
+
+</script>

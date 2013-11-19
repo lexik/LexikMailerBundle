@@ -92,6 +92,20 @@ EOF;
         $this->assertEquals(array('admin@email.fr' => null), $message->getFrom());
     }
 
+    public function testMessageHeaders()
+    {
+        $factory = $this->createMessageFactory();
+        $message = $factory->get('test-headers', 'chuk@email.fr', array('name' => 'chuck'), 'fr');
+
+        $this->assertEquals(true, $message->getHeaders()->has('X-SuperHeader'));
+        $this->assertEquals('TestValue', $message->getHeaders()->get('X-SuperHeader')->getFieldBody());
+
+        $this->assertEquals(true, $message->getHeaders()->has('X-MegaHeader'));
+        $this->assertEquals('TestValue', $message->getHeaders()->get('X-MegaHeader')->getFieldBody());
+
+        $this->assertEquals(false, $message->getHeaders()->has('X-Malformed-Header'));
+    }
+
     protected function createMessageFactory()
     {
         $options = array(

@@ -1,0 +1,19 @@
+{% macro headerLinePrototype(field) %}
+    {% spaceless %}
+        <tr>
+            <td>
+                {{ form_widget(field.key) }}
+                {{ form_errors(field.key) }}
+            </td>
+            <td>
+                {{ form_widget(field.value) }}
+                {{ form_errors(field.value) }}
+            </td>
+            <td>
+                <a href="#" class="btn btn-small btn-danger delete_header_link" title="{{ 'lexik_mailer.edit.action_delete' | trans({}, 'LexikMailerBundle') }}">
+                    {{ 'lexik_mailer.edit.action_delete' | trans({}, 'LexikMailerBundle') }}
+                </a>
+            </td>
+        </tr>
+    {% endspaceless %}
+{% endmacro %}

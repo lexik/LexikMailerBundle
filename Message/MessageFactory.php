@@ -147,6 +147,15 @@ class MessageFactory
                 $message->addBcc($bcc);
             }
 
+            if (count($email->getHeaders()) > 0) {
+                $headers = $message->getHeaders();
+                foreach ($email->getHeaders() as $header) {
+                    if (is_array($header) && isset($header['key'], $header['value'])) {
+                        $headers->addTextHeader($header['key'], $header['value']);
+                    }
+                }
+            }
+
         } catch (NoTranslationException $e) {
             $message = new NoTranslationMessage($email->getReference(), $locale);
             $message->setFrom($this->options['admin_email']);

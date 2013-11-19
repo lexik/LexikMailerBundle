@@ -17,6 +17,7 @@ lexik_mailer:
         submit:                   "Valider"
         group_languages:          "Gestion des langues"
         default_lang:             "Langue par défaut"
+        email_headers:            "Headers"
 
     edit:
         action_delete:            "Supprimer"
@@ -52,3 +53,9 @@ lexik_mailer:
         subject:                  "Sujet"
         from_name:                "Expéditeur"
         body:                     "Corps"
+
+    headers:
+        key:    Clé
+        value:  Valeur
+        add:    Ajouter
+        delete: Supprimer

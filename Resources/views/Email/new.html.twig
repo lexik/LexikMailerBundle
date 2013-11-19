@@ -1,5 +1,6 @@
 {% extends layout %}
 
+{% import "@LexikMailer/macros.html.twig" as macros %}
 {% form_theme form 'LexikMailerBundle:Form:form_layout.html.twig' %}
 
 {% block content %}
@@ -17,6 +18,32 @@
             {{ form_row(form.description) }}
             {{ form_row(form.spool) }}
         </fieldset>
+
+        <fieldset class="span5">
+            <legend>
+                {{ 'lexik_mailer.new.email_headers' | trans({}, 'LexikMailerBundle') }}
+            </legend>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>{{ 'lexik_mailer.headers.key'|trans({}, 'LexikMailerBundle') }}</th>
+                    <th>{{ 'lexik_mailer.headers.value'|trans({}, 'LexikMailerBundle') }}</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody class="headers" data-prototype="{% filter escape %}{{ macros.headerLinePrototype(form.headers.vars.prototype) }}{% endfilter %}">
+                {% for header in form.headers %}
+                    {{ macros.headerLinePrototype(header) }}
+                {% endfor %}
+                <tr>
+                    <td colspan="3" style="text-align: right">
+                        <a href="#" class="btn btn-primary add_header_link">{{ 'lexik_mailer.headers.add'|trans({}, 'LexikMailerBundle') }}</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </fieldset>
+
         <fieldset>
             <legend>
                 {{ 'lexik_mailer.new.group_translation' | trans({}, 'LexikMailerBundle') }}
@@ -42,4 +69,9 @@
         </div>
     </form>
 </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include "@LexikMailer/Email/_collection.js.twig" %}
 {% endblock %}

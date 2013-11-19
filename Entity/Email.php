@@ -5,6 +5,7 @@ namespace Lexik\Bundle\MailerBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Lexik\Bundle\MailerBundle\Model\Header;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -89,11 +90,21 @@ class Email implements EmailInterface
     private $currentTranslation;
 
     /**
+     * @var array
+     *
+     * @ORM\Column(type="array", name="headers", nullable=true)
+     *
+     * @Assert\Valid()
+     */
+    private $headers;
+
+    /**
      * __construct
      */
     public function __construct()
     {
         $this->translations = new ArrayCollection();
+        $this->headers      = array();
     }
 
     /**
@@ -385,5 +396,29 @@ class Email implements EmailInterface
     public function getChecksum()
     {
         return md5(sprintf('%s_%s', $this->locale, $this->getReference()));
+    }
+
+    /**
+     * Set headers
+     *
+     * @param array $headers
+     *
+     * @return Email
+     */
+    public function setHeaders(array $headers)
+    {
+        $this->headers = $headers;
+
+        return $this;
+    }
+
+    /**
+     * Get headers
+     *
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->headers;
     }
 }
