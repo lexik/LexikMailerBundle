@@ -142,8 +142,9 @@ class MessageFactory
             if (count($email->getHeaders()) > 0) {
                 $headers = $message->getHeaders();
                 foreach ($email->getHeaders() as $header) {
-                    // todo : check again headers allowed and isset($header['key'] and $headers['value'] ?
-                    $headers->addTextHeader($header['key'], $header['value']);
+                    if (is_array($header) && isset($header['key'], $header['value'])) {
+                        $headers->addTextHeader($header['key'], $header['value']);
+                    }
                 }
             }
 

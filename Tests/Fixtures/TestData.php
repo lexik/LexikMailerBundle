@@ -92,6 +92,27 @@ class TestData implements FixtureInterface
         }
 
         $manager->persist($email);
+
+        $email = new Email();
+        $email->setReference('test-headers');
+        $email->setSpool(false);
+        $email->setHeaders(array(
+            array('key' => 'X-SuperHeader', 'value' => 'TestValue'),
+            array('key' => 'X-MegaHeader', 'value' => 'TestValue'),
+            array('X-Malformed-Header' => 'TestValue'),
+            'X-Malformed-Header: TestValue'
+        ));
+
+        $translation = new EmailTranslation();
+        $translation->setLang('fr');
+        $translation->setSubject('Email with headers');
+        $translation->setBody('Email with headers body');
+        $translation->setFromAddress('lapins@email.fr');
+        $translation->setFromName('Lapins');
+
+        $email->addTranslation($translation);
+
+        $manager->persist($email);
         $manager->flush();
     }
 }
