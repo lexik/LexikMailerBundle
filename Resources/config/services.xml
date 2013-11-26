@@ -14,6 +14,14 @@
             <parameter key="debug">%kernel.debug%</parameter>
             <parameter key="auto_reload">true</parameter>
         </parameter>
+        <parameter key="lexik_mailer.signer.default_options" type="collection">
+            <parameter key="signer">%lexik_mailer.signer%</parameter>
+        </parameter>
+        <parameter key="lexik_mailer.signer.dkim.default_options" type="collection">
+            <parameter key="private_key_path">%lexik_mailer.dkim.private_key_path%</parameter>
+            <parameter key="domain">%lexik_mailer.dkim.domain%</parameter>
+            <parameter key="selector">%lexik_mailer.dkim.selector%</parameter>
+        </parameter>
         <parameter key="lexik_mailer.type.header.class">Lexik\Bundle\MailerBundle\Form\HeaderType</parameter>
     </parameters>
 
@@ -55,12 +63,24 @@
             <argument type="service" id="lexik_mailer.message_renderer" />
             <argument type="service" id="lexik_mailer.annotation_driver" />
             <argument>%lexik_mailer.default_options%</argument>
+            <argument type="service" id="lexik_mailer.signer_factory" />
+        </service>
+        
+        <!-- Signer -->
+        <service id="lexik_mailer.signer_factory" class="%lexik_mailer.signer_factory.class%">
+            <argument>%lexik_mailer.signer.default_options%</argument>
         </service>
 
         <!-- Form Types -->
         <service id="lexik_mailer.type.header" class="%lexik_mailer.type.header.class%">
             <argument>%lexik_mailer.allowed_headers%</argument>
             <tag name="form.type" alias="lexik_mailer_header" />
+        </service>
+        
+        <!-- DKIM signer -->
+        <service id="lexik_mailer.signer.dkim" class="%lexik_mailer.signer_dkim.class%">
+            <argument>%lexik_mailer.signer.dkim.default_options%</argument>
+            <tag name="lexik_mailer.signer" label="dkim" />
         </service>
     </services>
 

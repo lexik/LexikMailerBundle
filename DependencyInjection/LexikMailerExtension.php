@@ -28,6 +28,7 @@ class LexikMailerExtension extends Extension
 
         $container->setParameter('lexik_mailer.base_layout', $config['base_layout']);
         $container->setParameter('lexik_mailer.admin_email', $config['admin_email']);
+        $container->setParameter('lexik_mailer.allowed_headers', $config['allowed_headers']);
 
         foreach ($config['classes'] as $name => $class) {
             $container->setParameter(sprintf('lexik_mailer.%s.class', $name), $class);
@@ -39,6 +40,12 @@ class LexikMailerExtension extends Extension
             $templating->addMethodCall('addExtension', array(new Reference($extensionsId)));
         }
 
-        $container->setParameter('lexik_mailer.allowed_headers', $config['allowed_headers']);
+        // signer configuration
+        $container->setParameter('lexik_mailer.signer', $config['signer']);
+
+        // DKIM
+        $container->setParameter('lexik_mailer.dkim.private_key_path', $config['dkim']['private_key_path']);
+        $container->setParameter('lexik_mailer.dkim.domain', $config['dkim']['domain']);
+        $container->setParameter('lexik_mailer.dkim.selector', $config['dkim']['selector']);
     }
 }
