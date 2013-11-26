@@ -26,9 +26,13 @@ class EmailLoader extends \Twig_Loader_Array
     public function setEmailTemplates(EmailInterface $email)
     {
         if ($email->getLayout()) {
+            // call of getLayoutBody set locale on layout
+            $body = $email->getLayoutBody();
+            
+            // now we can compute correctly the key cache
             $layoutSuffix = $email->getLayout()->getChecksum();
 
-            $this->setTemplate(sprintf('layout_%s', $layoutSuffix), $email->getLayoutBody());
+            $this->setTemplate(sprintf('layout_%s', $layoutSuffix), $body);
             $this->updateDates[sprintf('layout_%s', $layoutSuffix)] = $email->getLayout()->getLastModifiedTimestamp();
 
             $content = strtr('{% extends \'<layout>\' %}{% block content %}<content>{% endblock %}', array(
