@@ -5,10 +5,10 @@ namespace Lexik\Bundle\MailerBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-use Lexik\Bundle\MailerBundle\Model\Header;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use Lexik\Bundle\MailerBundle\Model\Header;
 use Lexik\Bundle\MailerBundle\Model\EmailInterface;
 use Lexik\Bundle\MailerBundle\Exception\NoTranslationException;
 

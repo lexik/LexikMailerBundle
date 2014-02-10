@@ -38,8 +38,7 @@ abstract class BaseUnitTestCase extends \PHPUnit_Framework_TestCase
         $purger = new ORMPurger();
         $executor = new ORMExecutor($em, $purger);
 
-        $fixtures = new TestData();
-        $executor->execute(array($fixtures), false);
+        $executor->execute(array(new TestData()), false);
     }
 
     /**
@@ -53,10 +52,9 @@ abstract class BaseUnitTestCase extends \PHPUnit_Framework_TestCase
         $cache = new \Doctrine\Common\Cache\ArrayCache();
 
         // annotation driver
-        $reader = new AnnotationReader($cache);
-        $annotationDriver = new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($reader, array(
+        $annotationDriver = \Doctrine\ORM\Configuration::newDefaultAnnotationDriver(array(
             __DIR__.'/../../Entity',
-        ));
+        ), false);
 
         // configuration mock
         $config = $this->getMock('Doctrine\ORM\Configuration');
@@ -83,7 +81,10 @@ abstract class BaseUnitTestCase extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('Doctrine\ORM\Mapping\ClassMetadataFactory'));
         $config->expects($this->any())
             ->method('getDefaultRepositoryClassName')
-            ->will($this->returnValue('Doctrine\\ORM\\EntityRepository'));
+            ->will($this->returnValue('Doctrine\ORM\EntityRepository'));
+        $config->expects($this->any())
+            ->method('getRepositoryFactory')
+            ->will($this->returnValue(new \Doctrine\ORM\Repository\DefaultRepositoryFactory()));
         $config->expects($this->any())
             ->method('getQuoteStrategy')
             ->will($this->returnValue(new DefaultQuoteStrategy()));
