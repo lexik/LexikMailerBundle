@@ -9,6 +9,7 @@ use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\Common\Annotations\AnnotationReader;
 
 use Lexik\Bundle\MailerBundle\Tests\Fixtures\TestData;
+use Doctrine\ORM\Tools\Setup;
 
 /**
  * Base unit test class providing functions to create a mock entity manger, load schema and fixtures.
@@ -51,43 +52,17 @@ abstract class BaseUnitTestCase extends \PHPUnit_Framework_TestCase
     {
         $cache = new \Doctrine\Common\Cache\ArrayCache();
 
-        // annotation driver
-        $annotationDriver = \Doctrine\ORM\Configuration::newDefaultAnnotationDriver(array(
+        $config = Setup::createAnnotationMetadataConfiguration(array(
             __DIR__.'/../../Entity',
-        ), false);
+        ), false, null, null, false);
 
-        // configuration mock
-        $config = $this->getMock('Doctrine\ORM\Configuration');
-        $config->expects($this->any())
-            ->method('getMetadataCacheImpl')
-            ->will($this->returnValue($cache));
-        $config->expects($this->any())
-            ->method('getQueryCacheImpl')
-            ->will($this->returnValue($cache));
-        $config->expects($this->once())
-            ->method('getProxyDir')
-            ->will($this->returnValue(sys_get_temp_dir()));
-        $config->expects($this->once())
-            ->method('getProxyNamespace')
-            ->will($this->returnValue('Proxy'));
-        $config->expects($this->once())
-            ->method('getAutoGenerateProxyClasses')
-            ->will($this->returnValue(true));
-        $config->expects($this->any())
-            ->method('getMetadataDriverImpl')
-            ->will($this->returnValue($annotationDriver));
-        $config->expects($this->any())
-            ->method('getClassMetadataFactoryName')
-            ->will($this->returnValue('Doctrine\ORM\Mapping\ClassMetadataFactory'));
-        $config->expects($this->any())
-            ->method('getDefaultRepositoryClassName')
-            ->will($this->returnValue('Doctrine\ORM\EntityRepository'));
-        $config->expects($this->any())
-            ->method('getRepositoryFactory')
-            ->will($this->returnValue(new \Doctrine\ORM\Repository\DefaultRepositoryFactory()));
-        $config->expects($this->any())
-            ->method('getQuoteStrategy')
-            ->will($this->returnValue(new DefaultQuoteStrategy()));
+        $config->setMetadataCacheImpl($cache);
+        $config->setQueryCacheImpl($cache);
+        $config->setProxyDir(sys_get_temp_dir());
+        $config->setProxyNamespace('Proxy');
+        $config->setAutoGenerateProxyClasses(true);
+        $config->setClassMetadataFactoryName('Doctrine\ORM\Mapping\ClassMetadataFactory');
+        $config->setDefaultRepositoryClassName('Doctrine\ORM\EntityRepository');
 
         $conn = array(
             'driver' => 'pdo_sqlite',
