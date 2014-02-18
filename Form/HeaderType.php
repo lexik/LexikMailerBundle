@@ -4,6 +4,7 @@ namespace Lexik\Bundle\MailerBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
@@ -34,10 +35,7 @@ class HeaderType extends AbstractType
         $builder
             ->add('key', 'choice', array(
                 'required' => true,
-                'choices'  => array_combine(
-                    $this->allowedHeaders,
-                    $this->allowedHeaders
-                ),
+                'choices'  => $options['key_choices'],
                 'multiple' => false,
                 'expanded' => false,
             ))
@@ -47,6 +45,16 @@ class HeaderType extends AbstractType
                     new NotBlank(),
                 )
             ));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'key_choices' => count($this->allowedHeaders) ? array_combine($this->allowedHeaders, $this->allowedHeaders) : array(),
+        ));
     }
 
     /**
