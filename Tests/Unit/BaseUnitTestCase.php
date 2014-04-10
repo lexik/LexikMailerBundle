@@ -21,7 +21,9 @@ abstract class BaseUnitTestCase extends \PHPUnit_Framework_TestCase
     /**
      * Create the database schema.
      *
-     * @param EntityManager $om
+     * @param \Doctrine\ORM\EntityManager $em
+     *
+     * @internal param \Doctrine\ORM\EntityManager $om
      */
     protected function createSchema(EntityManager $em)
     {
@@ -32,7 +34,9 @@ abstract class BaseUnitTestCase extends \PHPUnit_Framework_TestCase
     /**
      * Load test fixtures.
      *
-     * @param EntityManager $om
+     * @param \Doctrine\ORM\EntityManager $em
+     *
+     * @internal param \Doctrine\ORM\EntityManager $om
      */
     protected function loadFixtures(EntityManager $em)
     {

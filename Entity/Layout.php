@@ -149,6 +149,9 @@ class Layout implements LayoutInterface
      * Get LayoutTranslation for a given lang, if not exist it will be created
      *
      * @param string $lang
+     *
+     * @throws \InvalidArgumentException
+     * @return \Lexik\Bundle\MailerBundle\Entity\LayoutTranslation
      */
     public function getTranslation($lang)
     {

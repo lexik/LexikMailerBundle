@@ -25,8 +25,10 @@ class MessageRenderer
     /**
      * Construct
      *
-     * @param \Twig_Environment $templating
-     * @param array             $defaultOptions
+     * @param \Twig_Environment                                  $templating
+     * @param \Lexik\Bundle\MailerBundle\Twig\Loader\EmailLoader $emailLoader
+     *
+     * @internal param array $defaultOptions
      */
     public function __construct(\Twig_Environment $templating, EmailLoader $emailLoader)
     {

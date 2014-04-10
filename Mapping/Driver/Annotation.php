@@ -12,7 +12,7 @@ use Doctrine\Common\Annotations\Reader;
 class Annotation
 {
     /**
-     * @var Doctrine\Common\Annotations\Reader
+     * @var \Doctrine\Common\Annotations\Reader
      */
     protected $reader;
 

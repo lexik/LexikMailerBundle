@@ -40,6 +40,8 @@ class LayoutController extends Controller
      *
      * @param string $layoutId
      * @param string $lang
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction($layoutId, $lang = null)
@@ -87,6 +89,9 @@ class LayoutController extends Controller
     /**
      * Delete layout
      *
+     * @param $layoutId
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction($layoutId)

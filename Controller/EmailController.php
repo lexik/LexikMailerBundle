@@ -42,6 +42,8 @@ class EmailController extends ContainerAware
      *
      * @param string $emailId
      * @param string $lang
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction($emailId, $lang = null)
@@ -91,6 +93,9 @@ class EmailController extends ContainerAware
     /**
      * Delete email
      *
+     * @param $emailId
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction($emailId)
@@ -154,6 +159,10 @@ class EmailController extends ContainerAware
      * Preview an email
      *
      * @param int $emailId
+     * @param     $lang
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     * @return
      */
     public function previewAction($emailId, $lang)
     {
