@@ -18,10 +18,10 @@ class TwigErrorMessage extends \Swift_Message
         parent::__construct();
 
         $body = <<<EOF
-An error occured while trying to send email: {$reference}
+An error occurred while trying to send email: {$reference}
 {$message}
 EOF;
 
-        $this->setSubject('An exception occured')->setBody($body);
+        $this->setSubject('An exception occurred')->setBody($body);
     }
 }

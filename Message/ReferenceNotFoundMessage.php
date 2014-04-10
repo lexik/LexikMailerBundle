@@ -19,11 +19,11 @@ class ReferenceNotFoundMessage extends \Swift_Message
         parent::__construct();
 
         $body = <<<EOF
-An error occured while trying to send an email.
+An error occurred while trying to send an email.
 You tried to use a reference that does not exist : "{$reference}"
 in "{$file}" at line {$line}
 EOF;
 
-        $this->setSubject('An exception occured')->setBody($body);
+        $this->setSubject('An exception occurred')->setBody($body);
     }
 }
