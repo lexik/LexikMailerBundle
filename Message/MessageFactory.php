@@ -54,11 +54,13 @@ class MessageFactory
     /**
      * Constructor.
      *
-     * @param EntityManager   $entityManager
-     * @param MessageRenderer $renderer
-     * @param Annotation      $driver
-     * @param array           $defaultOptions
-     * @param SignerFactory   $signer
+     * @param EntityManager                                        $entityManager
+     * @param MessageRenderer                                      $renderer
+     * @param \Lexik\Bundle\MailerBundle\Mapping\Driver\Annotation $annotationDriver
+     * @param array                                                $defaultOptions
+     * @param SignerFactory                                        $signer
+     *
+     * @internal param \Lexik\Bundle\MailerBundle\Mapping\Driver\Annotation $driver
      */
     public function __construct(EntityManager $entityManager, MessageRenderer $renderer, Annotation $annotationDriver, $defaultOptions, SignerFactory $signer)
     {
@@ -91,6 +93,8 @@ class MessageFactory
      * @param mixed  $to
      * @param array  $parameters
      * @param string $locale
+     *
+     * @throws \RuntimeException
      * @return \Swift_Message
      */
     public function get($reference, $to, array $parameters = array(), $locale = null)

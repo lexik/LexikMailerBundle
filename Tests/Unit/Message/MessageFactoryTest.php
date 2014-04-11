@@ -15,7 +15,7 @@ use Lexik\Bundle\MailerBundle\Tests\Unit\BaseUnitTestCase;
 class MessageFactoryTest extends BaseUnitTestCase
 {
     /**
-     * @var Doctrine\ORM\EntityManager
+     * @var \Doctrine\ORM\EntityManager
      */
     private $em;
 

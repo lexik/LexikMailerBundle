@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Validator\Constraints as Assert;
 
-use Lexik\Bundle\MailerBundle\Model\Header;
 use Lexik\Bundle\MailerBundle\Model\EmailInterface;
 use Lexik\Bundle\MailerBundle\Exception\NoTranslationException;
 
@@ -62,14 +61,14 @@ class Email implements EmailInterface
     protected $spool;
 
     /**
-     * @var Doctrine\Common\Collections\ArrayCollection
+     * @var \Doctrine\Common\Collections\ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="EmailTranslation", mappedBy="email", cascade={"all"})
      */
     protected $translations;
 
     /**
-     * @var Lexik\Bundle\MailerBundle\Entity\Layout
+     * @var \Lexik\Bundle\MailerBundle\Entity\Layout
      *
      * @ORM\ManyToOne(targetEntity="Layout")
      */
@@ -85,7 +84,7 @@ class Email implements EmailInterface
     /**
      * Translation object for the current $this->locale value.
      *
-     * @var Lexik\Bundle\MailerBundle\Entity\EmailTranslation
+     * @var \Lexik\Bundle\MailerBundle\Entity\EmailTranslation
      */
     private $currentTranslation;
 
@@ -270,7 +269,8 @@ class Email implements EmailInterface
     /**
      * Set the current translation.
      *
-     * @param string $locale
+     * @throws \Lexik\Bundle\MailerBundle\Exception\NoTranslationException
+     * @internal param string $locale
      */
     protected function setCurrentTranslation()
     {
