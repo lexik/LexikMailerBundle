@@ -52,7 +52,7 @@ class MessageFactoryTest extends BaseUnitTestCase
         // invalid reference
         $file = __FILE__;
         $body = <<<EOF
-An error occured while trying to send an email.
+An error occurred while trying to send an email.
 You tried to use a reference that does not exist : "this-reference-does-not-exixt"
 in "{$file}" at line 60
 EOF;
@@ -60,7 +60,7 @@ EOF;
         $message = $factory->get('this-reference-does-not-exixt', 'chuk@email.fr', array('name' => 'chuck'));
         $this->assertInstanceOf('Swift_Message', $message);
         $this->assertEquals(array('admin@email.fr' => null), $message->getTo());
-        $this->assertEquals('An exception occured', $message->getSubject());
+        $this->assertEquals('An exception occurred', $message->getSubject());
         $this->assertEquals($body, $message->getBody());
         $this->assertEquals(array('admin@email.fr' => null), $message->getFrom());
 
@@ -74,20 +74,20 @@ EOF;
         $message = $factory->get('rabbids-template', 'chuk@email.fr', array('name' => 'chuck'), 'de');
         $this->assertInstanceOf('Swift_Message', $message);
         $this->assertEquals(array('admin@email.fr' => null), $message->getTo());
-        $this->assertEquals('An exception occured', $message->getSubject());
+        $this->assertEquals('An exception occurred', $message->getSubject());
         $this->assertEquals($body, $message->getBody());
         $this->assertEquals(array('admin@email.fr' => null), $message->getFrom());
 
         // wrong twig variable
         $body = <<<EOF
-An error occured while trying to send email: rabbids-template
+An error occurred while trying to send email: rabbids-template
 Unexpected "}"
 EOF;
 
         $message = $factory->get('rabbids-template', 'chuk@email.fr', array('name' => 'chuck'), 'es');
         $this->assertInstanceOf('Swift_Message', $message);
         $this->assertEquals(array('admin@email.fr' => null), $message->getTo());
-        $this->assertEquals('An exception occured', $message->getSubject());
+        $this->assertEquals('An exception occurred', $message->getSubject());
         $this->assertEquals($body, $message->getBody());
         $this->assertEquals(array('admin@email.fr' => null), $message->getFrom());
     }
@@ -120,7 +120,7 @@ EOF;
 
         $reder = new \Doctrine\Common\Annotations\AnnotationReader();
         $annotationDriver = new \Lexik\Bundle\MailerBundle\Mapping\Driver\Annotation($reder);
-        
+
         $signerFactory = new \Lexik\Bundle\MailerBundle\Signer\SignerFactory(array());
 
         return new MessageFactory($this->em, $renderer, $annotationDriver, $options, $signerFactory);

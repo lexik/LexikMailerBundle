@@ -23,6 +23,6 @@ Reference : {$reference}
 Language: {$locale}
 EOF;
 
-        $this->setSubject('An exception occured')->setBody($body);
+        $this->setSubject('An exception occurred')->setBody($body);
     }
 }
