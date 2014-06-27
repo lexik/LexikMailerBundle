@@ -44,6 +44,10 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
 
+                ->booleanNode('mailer_alias')
+                    ->defaultValue('lexik_mailer.mailer')
+                ->end()
+
                 ->arrayNode('classes')
                     ->addDefaultsIfNotSet()
                     ->children()
@@ -73,7 +77,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                
+
                 ->scalarNode('signer')
                     ->defaultValue(null)
                 ->end()
@@ -92,7 +96,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                
+
             ->end()
         ;
 

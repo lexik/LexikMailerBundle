@@ -48,5 +48,10 @@ class LexikMailerExtension extends Extension
         $container->setParameter('lexik_mailer.dkim.private_key_path', $config['dkim']['private_key_path']);
         $container->setParameter('lexik_mailer.dkim.domain', $config['dkim']['domain']);
         $container->setParameter('lexik_mailer.dkim.selector', $config['dkim']['selector']);
+
+        // Override default service alias
+        if ($container->hasDefinition($config['mailer_alias'])) {
+            $container->setAlias('mailer', $config['mailer_alias']);
+        }
     }
 }
