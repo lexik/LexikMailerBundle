@@ -23,9 +23,14 @@
             <parameter key="selector">%lexik_mailer.dkim.selector%</parameter>
         </parameter>
         <parameter key="lexik_mailer.type.header.class">Lexik\Bundle\MailerBundle\Form\HeaderType</parameter>
+        <parameter key="lexik_mailer.mailer.class">Lexik\Bundle\MailerBundle\Message\Mailer</parameter>
     </parameters>
 
     <services>
+        <service id="lexik_mailer.mailer" class="%lexik_mailer.mailer.class%">
+            <argument type="service" id="swiftmailer.transport" />
+        </service>
+
         <!-- Annotation -->
         <service id="lexik_mailer.annotation_driver" class="%lexik_mailer.annotation_driver.class%" public="false">
             <argument type="service" id="annotation_reader" />
@@ -56,7 +61,7 @@
             <argument type="service" id="lexik_mailer.templating" />
             <argument type="service" id="lexik_mailer.templating.loader_array" />
         </service>
-        
+
         <!-- Factory -->
         <service id="lexik_mailer.message_factory" class="%lexik_mailer.message_factory.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
@@ -65,7 +70,7 @@
             <argument>%lexik_mailer.default_options%</argument>
             <argument type="service" id="lexik_mailer.signer_factory" />
         </service>
-        
+
         <!-- Signer -->
         <service id="lexik_mailer.signer_factory" class="%lexik_mailer.signer_factory.class%">
             <argument>%lexik_mailer.signer.default_options%</argument>
@@ -76,7 +81,7 @@
             <argument>%lexik_mailer.allowed_headers%</argument>
             <tag name="form.type" alias="lexik_mailer_header" />
         </service>
-        
+
         <!-- DKIM signer -->
         <service id="lexik_mailer.signer.dkim" class="%lexik_mailer.signer_dkim.class%">
             <argument>%lexik_mailer.signer.dkim.default_options%</argument>

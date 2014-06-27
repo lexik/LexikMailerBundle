@@ -98,12 +98,20 @@ class Email implements EmailInterface
     private $headers;
 
     /**
-     * __construct
+     * @var string
+     *
+     * @ORM\Column(type="string", length=50, name="status", nullable=true, options={"default":"enabled"})
+     */
+    private $status;
+
+    /**
+     * Constructor.
      */
     public function __construct()
     {
         $this->translations = new ArrayCollection();
         $this->headers      = array();
+        $this->status       = self::STATUS_ENABLED;
     }
 
     /**
@@ -215,6 +223,26 @@ class Email implements EmailInterface
     public function getLayout()
     {
         return $this->layout;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 
     /**
@@ -389,7 +417,7 @@ class Email implements EmailInterface
 
         return $date->format('U');
     }
-    
+
     /**
      * {@inheritdoc}
      */
@@ -413,12 +441,18 @@ class Email implements EmailInterface
     }
 
     /**
-     * Get headers
-     *
-     * @return array
+     * {@inheritdoc}
      */
     public function getHeaders()
     {
         return $this->headers;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isActive()
+    {
+        return ($this->status == self::STATUS_ENABLED);
     }
 }

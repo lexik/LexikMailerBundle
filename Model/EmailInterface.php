@@ -10,6 +10,9 @@ namespace Lexik\Bundle\MailerBundle\Model;
  */
 interface EmailInterface
 {
+    const STATUS_ENABLED  = 'enabled';
+    const STATUS_DISABLED = 'disabled';
+
     /**
      * Returns the email template reference.
      *
@@ -81,10 +84,10 @@ interface EmailInterface
      * @return int
      */
     public function getLastModifiedTimestamp();
-    
+
     /**
      * Return checksum of email
-     * 
+     *
      * @return string
      */
     public function getChecksum();
@@ -95,4 +98,9 @@ interface EmailInterface
      * @return array
      */
     public function getHeaders();
+
+    /**
+     * @return boolean
+     */
+    public function isActive();
 }

@@ -2,6 +2,7 @@
 
 namespace Lexik\Bundle\MailerBundle\Form;
 
+use Lexik\Bundle\MailerBundle\Model\EmailInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
@@ -19,7 +20,7 @@ class EmailType extends AbstractType
     {
         $builder
             ->add('reference', null, array(
-                'read_only'  => $options['edit']
+                'read_only' => $options['edit']
             ))
             ->add('layout', 'entity', array(
                 'required'    => false,
@@ -33,8 +34,11 @@ class EmailType extends AbstractType
             ))
             ->add('description')
             ->add('bcc')
+            ->add('status', 'choice', array(
+                'choices'  => $options['status_choices'],
+            ))
             ->add('spool', null, array(
-                'required'  => false,
+                'required' => false,
             ))
             ->add('translation', new EmailTranslationType(), array(
                 'mapped'        => false,
@@ -56,6 +60,10 @@ class EmailType extends AbstractType
             'data_translation'      => null,
             'edit'                  => false,
             'preferred_languages'   => array(),
+            'status_choices'        => array(
+                EmailInterface::STATUS_ENABLED  => 'enabled',
+                EmailInterface::STATUS_DISABLED => 'disabled',
+            )
         ));
     }
 

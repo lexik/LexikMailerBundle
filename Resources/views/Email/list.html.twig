@@ -11,6 +11,7 @@
             <th>{{ 'lexik_mailer.email.id' | trans({}, 'LexikMailerBundle') }}</th>
             <th>{{ 'lexik_mailer.email.description' | trans({}, 'LexikMailerBundle') }}</th>
             <th>{{ 'lexik_mailer.email.reference' | trans({}, 'LexikMailerBundle') }}</th>
+            <th>{{ 'lexik_mailer.email.is_actve' | trans({}, 'LexikMailerBundle') }}</th>
             <th>{{ 'lexik_mailer.email.bcc' | trans({}, 'LexikMailerBundle') }}</th>
             <th>{{ 'lexik_mailer.email.languages' | trans({}, 'LexikMailerBundle') }}</th>
             <th>{{ 'lexik_mailer.email.actions' | trans({}, 'LexikMailerBundle') }}</th>
@@ -26,6 +27,7 @@
                 {{ 'lexik_mailer.list.from %from%' | trans({ '%from%' : email.getTranslation(app.request.locale).fromAddress }, 'LexikMailerBundle') }}
             </td>
             <td>{{ email.reference }}</td>
+            <td>{{ email.isActive ? 'Yes' : 'No' }}</td>
             <td>{{ email.bcc }}</td>
             <td>
                 <ul class="unstyled">
