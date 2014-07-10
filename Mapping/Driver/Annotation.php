@@ -3,6 +3,7 @@
 namespace Lexik\Bundle\MailerBundle\Mapping\Driver;
 
 use Doctrine\Common\Annotations\Reader;
+use Doctrine\ORM\Proxy\Proxy;
 
 /**
  * Driver to find values of annotated properties.
@@ -59,6 +60,11 @@ class Annotation
     {
         $reflClass = new \ReflectionClass($obj);
 
+        // Make sure we are not using a Proxy class
+        if ($obj instanceof Proxy) {
+            $reflClass = $reflClass->getParentClass();
+        }
+        
         // Find on property
         foreach ($reflClass->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
             if ($this->reader->getPropertyAnnotation($property, $className)) {
