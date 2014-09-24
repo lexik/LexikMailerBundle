@@ -30,11 +30,11 @@ class EmailController extends ContainerAware
         $em = $this->container->get('doctrine.orm.entity_manager');
         $emails = $em->getRepository($this->container->getParameter('lexik_mailer.email_entity.class'))->findAll();
 
-        return $this->container->get('templating')->renderResponse('LexikMailerBundle:Email:list.html.twig', array(
+        return $this->container->get('templating')->renderResponse('LexikMailerBundle:Email:list.html.twig', array_merge(array(
             'emails' => $emails,
             'layout' => $this->container->getParameter('lexik_mailer.base_layout'),
             'locale' => $this->container->getParameter('locale'),
-        ));
+        ), $this->getAdditionalParameters()));
     }
 
     /**
@@ -80,14 +80,14 @@ class EmailController extends ContainerAware
             }
         }
 
-        return $this->container->get('templating')->renderResponse('LexikMailerBundle:Email:edit.html.twig', array(
+        return $this->container->get('templating')->renderResponse('LexikMailerBundle:Email:edit.html.twig', array_merge(array(
             'form'          => $form->createView(),
             'layout'        => $this->container->getParameter('lexik_mailer.base_layout'),
             'email'         => $email,
             'lang'          => $lang,
             'displayLang'   => Locale::getDisplayLanguage($lang),
             'routePattern'  => urldecode($this->container->get('router')->generate('lexik_mailer.email_edit', array('emailId' => $email->getId(), 'lang' => '%lang%'), true)),
-        ));
+        ), $this->getAdditionalParameters()));
     }
 
     /**
@@ -148,11 +148,11 @@ class EmailController extends ContainerAware
             }
         }
 
-        return $this->container->get('templating')->renderResponse('LexikMailerBundle:Email:new.html.twig', array(
+        return $this->container->get('templating')->renderResponse('LexikMailerBundle:Email:new.html.twig', array_merge(array(
             'form'      => $form->createView(),
             'layout'    => $this->container->getParameter('lexik_mailer.base_layout'),
             'lang'      => Locale::getDisplayLanguage($translation->getLang()),
-        ));
+        ), $this->getAdditionalParameters()));
     }
 
     /**
@@ -202,12 +202,12 @@ class EmailController extends ContainerAware
 
         $renderer->setStrictVariables(true);
 
-        return $this->container->get('templating')->renderResponse('LexikMailerBundle:Email:preview.html.twig', array(
+        return $this->container->get('templating')->renderResponse('LexikMailerBundle:Email:preview.html.twig', array_merge(array(
             'content'  => $content,
             'subject'  => $subject,
             'fromName' => $fromName,
             'errors'   => $errors,
-        ));
+        ), $this->getAdditionalParameters()));
     }
 
     /**
@@ -230,5 +230,15 @@ class EmailController extends ContainerAware
         $em->flush();
 
         return new RedirectResponse($this->container->get('router')->generate('lexik_mailer.email_edit', array('emailId' => $translation->getEmail()->getId())));
+    }
+
+    /**
+     * Return some additional parameters to pass to the view.
+     *
+     * @return array
+     */
+    protected function getAdditionalParameters()
+    {
+        return array();
     }
 }

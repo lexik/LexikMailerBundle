@@ -192,3 +192,28 @@ class User
     }
 }
 ```
+Override Controllers:
+---------------------
+
+If you want to pass an additional parameter for all views, you can override the controllers like describe here http://symfony.com/doc/current/cookbook/bundles/inheritance.html#overriding-controllers
+and override this method :
+
+```php
+<?php
+class EmailController extends BaseEmailController
+{
+    /**
+    * Example for Sonata
+    */
+    protected function getAdditionalParameters()
+    {
+        return array('admin_pool' => $this->container->get('sonata.admin.pool'));
+    }
+}
+//...
+```
+
+TODO:
+-----
+
+- Integrate layout with Twitter Bootstrap 3
