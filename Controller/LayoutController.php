@@ -29,10 +29,10 @@ class LayoutController extends Controller
     {
         $layouts = $this->get('doctrine.orm.entity_manager')->getRepository('LexikMailerBundle:Layout')->findAll();
 
-        return $this->container->get('templating')->renderResponse('LexikMailerBundle:Layout:list.html.twig', array(
+        return $this->container->get('templating')->renderResponse('LexikMailerBundle:Layout:list.html.twig', array_merge(array(
             'layouts'   => $layouts,
             'layout'    => $this->container->getParameter('lexik_mailer.base_layout'),
-        ));
+        ), $this->getAdditionalParameters()));
     }
 
     /**
@@ -74,14 +74,14 @@ class LayoutController extends Controller
             }
         }
 
-        return $this->render('LexikMailerBundle:Layout:edit.html.twig', array(
+        return $this->render('LexikMailerBundle:Layout:edit.html.twig', array_merge(array(
             'form'          => $form->createView(),
             'base_layout'   => $this->container->getParameter('lexik_mailer.base_layout'),
             'layout'        => $layout,
             'lang'          => $lang,
             'displayLang'   => Locale::getDisplayLanguage($lang),
             'routePattern'  => urldecode($this->generateUrl('lexik_mailer.layout_edit', array('layoutId' => $layout->getId(), 'lang' => '%lang%'), true)),
-        ));
+        ), $this->getAdditionalParameters()));
     }
 
     /**
@@ -138,11 +138,11 @@ class LayoutController extends Controller
             }
         }
 
-        return $this->render('LexikMailerBundle:Layout:new.html.twig', array(
+        return $this->render('LexikMailerBundle:Layout:new.html.twig', array_merge(array(
             'form'      => $form->createView(),
             'layout'    => $this->container->getParameter('lexik_mailer.base_layout'),
             'lang'      => Locale::getDisplayLanguage($translation->getLang()),
-        ));
+        ), $this->getAdditionalParameters()));
     }
 
     /**
@@ -165,5 +165,15 @@ class LayoutController extends Controller
         $em->flush();
 
         return $this->redirect($this->generateUrl('lexik_mailer.layout_edit', array('layoutId' => $translation->getLayout()->getId())));
+    }
+
+    /**
+     * Return some additional parameters to pass to the view.
+     *
+     * @return array
+     */
+    protected function getAdditionalParameters()
+    {
+        return array();
     }
 }
