@@ -239,6 +239,17 @@ class Email implements EmailInterface
     }
 
     /**
+     * Remove a translation
+     *
+     * @param EmailTranslation $translation
+     */
+    public function removeTranslation(EmailTranslation $translation)
+    {
+        $this->translations->removeElement($translation);
+        $translation->setEmail(null);
+    }
+
+    /**
      * Get EmailTranslation for a given lang, if not exist it will be created
      *
      * @param string $lang

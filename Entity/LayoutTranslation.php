@@ -192,7 +192,7 @@ class LayoutTranslation
      *
      * @param Layout $layout
      */
-    public function setLayout(Layout $layout)
+    public function setLayout(Layout $layout = null)
     {
         $this->layout = $layout;
     }

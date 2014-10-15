@@ -26,6 +26,10 @@ class LexikMailerExtension extends Extension
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
+        if ($config['sonata']) {
+            $loader->load('sonata.xml');
+        }
+
         $container->setParameter('lexik_mailer.base_layout', $config['base_layout']);
         $container->setParameter('lexik_mailer.admin_email', $config['admin_email']);
         $container->setParameter('lexik_mailer.allowed_headers', $config['allowed_headers']);
