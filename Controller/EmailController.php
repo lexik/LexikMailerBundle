@@ -4,7 +4,6 @@ namespace Lexik\Bundle\MailerBundle\Controller;
 
 use Lexik\Bundle\MailerBundle\Entity\Email;
 use Lexik\Bundle\MailerBundle\Entity\EmailTranslation;
-use Lexik\Bundle\MailerBundle\Form\EmailType;
 
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -59,7 +58,7 @@ class EmailController extends ContainerAware
             throw new NotFoundHttpException('Email not found');
         }
 
-        $form = $this->container->get('form.factory')->create(new EmailType(), $email, array(
+        $form = $this->container->get('form.factory')->create('mailer_email', $email, array(
             'data_translation' => $translation,
             'edit'             => true,
         ));
@@ -130,7 +129,7 @@ class EmailController extends ContainerAware
         $translation = new EmailTranslation($this->container->getParameter('locale'));
         $translation->setEmail($email);
 
-        $form = $this->container->get('form.factory')->create(new EmailType(), $email, array(
+        $form = $this->container->get('form.factory')->create('mailer_email', $email, array(
             'data_translation' => $translation,
         ));
 

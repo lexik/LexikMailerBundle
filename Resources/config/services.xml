@@ -22,7 +22,12 @@
             <parameter key="domain">%lexik_mailer.dkim.domain%</parameter>
             <parameter key="selector">%lexik_mailer.dkim.selector%</parameter>
         </parameter>
-        <parameter key="lexik_mailer.type.header.class">Lexik\Bundle\MailerBundle\Form\HeaderType</parameter>
+
+        <parameter key="lexik_mailer.form.type.header.class">Lexik\Bundle\MailerBundle\Form\Type\HeaderType</parameter>
+        <parameter key="lexik_mailer.form.type.mailer_email.class">Lexik\Bundle\MailerBundle\Form\Type\EmailType</parameter>
+        <parameter key="lexik_mailer.form.type.mailer_email_translation.class">Lexik\Bundle\MailerBundle\Form\Type\EmailTranslationType</parameter>
+        <parameter key="lexik_mailer.form.type.mailer_layout.class">Lexik\Bundle\MailerBundle\Form\Type\LayoutType</parameter>
+        <parameter key="lexik_mailer.form.type.mailer_layout_translation.class">Lexik\Bundle\MailerBundle\Form\Type\LayoutTranslationType</parameter>
     </parameters>
 
     <services>
@@ -56,7 +61,7 @@
             <argument type="service" id="lexik_mailer.templating" />
             <argument type="service" id="lexik_mailer.templating.loader_array" />
         </service>
-        
+
         <!-- Factory -->
         <service id="lexik_mailer.message_factory" class="%lexik_mailer.message_factory.class%">
             <argument type="service" id="doctrine.orm.entity_manager" />
@@ -65,18 +70,34 @@
             <argument>%lexik_mailer.default_options%</argument>
             <argument type="service" id="lexik_mailer.signer_factory" />
         </service>
-        
+
         <!-- Signer -->
         <service id="lexik_mailer.signer_factory" class="%lexik_mailer.signer_factory.class%">
             <argument>%lexik_mailer.signer.default_options%</argument>
         </service>
 
         <!-- Form Types -->
-        <service id="lexik_mailer.type.header" class="%lexik_mailer.type.header.class%">
+        <service id="lexik_mailer.form.type.header" class="%lexik_mailer.form.type.header.class%">
             <argument>%lexik_mailer.allowed_headers%</argument>
             <tag name="form.type" alias="lexik_mailer_header" />
         </service>
-        
+
+        <service id="lexik_mailer.form.type.mailer_email" class="%lexik_mailer.form.type.mailer_email.class%">
+            <tag name="form.type" alias="mailer_email" />
+        </service>
+
+        <service id="lexik_mailer.form.type.mailer_email_translation" class="%lexik_mailer.form.type.mailer_email_translation.class%">
+            <tag name="form.type" alias="mailer_email_translation" />
+        </service>
+
+        <service id="lexik_mailer.form.type.mailer_layout" class="%lexik_mailer.form.type.mailer_layout.class%">
+            <tag name="form.type" alias="mailer_layout" />
+        </service>
+
+        <service id="lexik_mailer.form.type.mailer_layout_translation" class="%lexik_mailer.form.type.mailer_layout_translation.class%">
+            <tag name="form.type" alias="mailer_layout_translation" />
+        </service>
+
         <!-- DKIM signer -->
         <service id="lexik_mailer.signer.dkim" class="%lexik_mailer.signer_dkim.class%">
             <argument>%lexik_mailer.signer.dkim.default_options%</argument>

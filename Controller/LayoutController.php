@@ -4,7 +4,6 @@ namespace Lexik\Bundle\MailerBundle\Controller;
 
 use Lexik\Bundle\MailerBundle\Entity\Layout;
 use Lexik\Bundle\MailerBundle\Entity\LayoutTranslation;
-use Lexik\Bundle\MailerBundle\Form\LayoutType;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerAware;
@@ -57,10 +56,10 @@ class LayoutController extends Controller
             throw new NotFoundHttpException('Layout not found');
         }
 
-        $form = $this->createForm(new LayoutType(), $layout, array(
-                    'data_translation'      => $translation,
-                    'edit'                  => true,
-                ));
+        $form = $this->createForm('mailer_layout', $layout, array(
+            'data_translation' => $translation,
+            'edit'             => true,
+        ));
 
         // Submit form
         if ('POST' === $request->getMethod()) {
@@ -70,9 +69,9 @@ class LayoutController extends Controller
                 $em->flush();
 
                 return $this->redirect($this->generateUrl('lexik_mailer.layout_edit', array(
-                            'layoutId'   => $layout->getId(),
-                            'lang'      => $lang,
-                        )));
+                    'layoutId' => $layout->getId(),
+                    'lang'     => $lang,
+                )));
             }
         }
 
@@ -125,9 +124,10 @@ class LayoutController extends Controller
         $translation = new LayoutTranslation($this->container->getParameter('locale'));
 
         $translation->setLayout($layout);
-        $form = $this->createForm(new LayoutType(), $layout, array(
-                    'data_translation' => $translation,
-                ));
+        $form = $this->createForm('mailer_layout', $layout, array(
+            'data_translation' => $translation,
+        ));
+
         // Submit form
         if ('POST' === $request->getMethod()) {
             $form->bind($request);
