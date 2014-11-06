@@ -2,14 +2,8 @@
 
 namespace Lexik\Bundle\MailerBundle\Controller;
 
-use Lexik\Bundle\MailerBundle\Entity\Email;
-use Lexik\Bundle\MailerBundle\Entity\EmailTranslation;
-
-use Symfony\Component\DependencyInjection\ContainerAware;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Locale\Locale;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Email controller.
@@ -17,7 +11,7 @@ use Symfony\Component\Locale\Locale;
  * @author Laurent Heurtault <l.heurtault@lexik.fr>
  * @author Yoann Aparici <y.aparici@lexik.fr>
  */
-class EmailController extends ContainerAware
+class EmailController extends Controller
 {
     /**
      * List all emails
@@ -26,10 +20,10 @@ class EmailController extends ContainerAware
      */
     public function listAction()
     {
-        $em = $this->container->get('doctrine.orm.entity_manager');
+        $em = $this->get('doctrine.orm.entity_manager');
         $emails = $em->getRepository($this->container->getParameter('lexik_mailer.email_entity.class'))->findAll();
 
-        return $this->container->get('templating')->renderResponse('LexikMailerBundle:Email:list.html.twig', array_merge(array(
+        return $this->render('LexikMailerBundle:Email:list.html.twig', array_merge(array(
             'emails' => $emails,
             'layout' => $this->container->getParameter('lexik_mailer.base_layout'),
             'locale' => $this->container->getParameter('locale'),
@@ -39,53 +33,39 @@ class EmailController extends ContainerAware
     /**
      * Email edition
      *
-     * @param string $emailId
-     * @param string $lang
+     * @param Request $request
+     * @param string  $emailId
+     * @param string  $lang
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction($emailId, $lang = null)
+    public function editAction(Request $request, $emailId, $lang = null)
     {
-        $em = $this->container->get('doctrine.orm.entity_manager');
-        $request = $this->container->get('request');
-        $lang = $lang ? : $this->container->getParameter('locale');
-
-        $email = $em->find('LexikMailerBundle:Email', $emailId);
-        $translation = $email->getTranslation($lang);
+        $class = $this->container->getParameter('lexik_mailer.email_entity.class');
+        $email = $this->get('doctrine.orm.entity_manager')->find($class, $emailId);
 
         if (!$email) {
-            throw new NotFoundHttpException('Email not found');
+            throw $this->createNotFoundException(sprintf('No email found for id "%d"', $emailId));
         }
 
-        $form = $this->container->get('form.factory')->create('mailer_email', $email, array(
-            'data_translation' => $translation,
-            'edit'             => true,
-        ));
+        $handler = $this->get('lexik_mailer.form.handler.email');
+        $form = $handler->createForm($email, $lang);
 
-        // Submit form
-        if ('POST' === $request->getMethod()) {
-            $form->bind($request);
-
-            if ($form->isValid()) {
-                $em = $this->container->get('doctrine.orm.entity_manager');
-                $em->persist($translation);
-                $em->flush();
-
-                return new RedirectResponse($this->container->get('router')->generate('lexik_mailer.email_edit', array(
-                    'emailId' => $email->getId(),
-                    'lang'    => $lang,
-                )));
-            }
+        if ($handler->processForm($form, $request)) {
+            return $this->redirect($this->generateUrl('lexik_mailer.email_edit', array(
+                'emailId' => $email->getId(),
+                'lang'    => $handler->getLocale(),
+            )));
         }
 
-        return $this->container->get('templating')->renderResponse('LexikMailerBundle:Email:edit.html.twig', array_merge(array(
+        return $this->render('LexikMailerBundle:Email:edit.html.twig', array_merge(array(
             'form'          => $form->createView(),
             'layout'        => $this->container->getParameter('lexik_mailer.base_layout'),
             'email'         => $email,
-            'lang'          => $lang,
-            'displayLang'   => Locale::getDisplayLanguage($lang),
-            'routePattern'  => urldecode($this->container->get('router')->generate('lexik_mailer.email_edit', array('emailId' => $email->getId(), 'lang' => '%lang%'), true)),
+            'lang'          => $handler->getLocale(),
+            'displayLang'   => \Locale::getDisplayLanguage($handler->getLocale()),
+            'routePattern'  => urldecode($this->generateUrl('lexik_mailer.email_edit', array('emailId' => $email->getId(), 'lang' => '%lang%'), true)),
         ), $this->getAdditionalParameters()));
     }
 
@@ -99,58 +79,40 @@ class EmailController extends ContainerAware
      */
     public function deleteAction($emailId)
     {
-        $em = $this->container->get('doctrine.orm.entity_manager');
-        $email = $em->find('LexikMailerBundle:Email', $emailId);
+        $class = $this->container->getParameter('lexik_mailer.email_entity.class');
+
+        $em = $this->get('doctrine.orm.entity_manager');
+        $email = $em->find($class, $emailId);
 
         if (!$email) {
-            throw new NotFoundHttpException('Email not found');
+            throw $this->createNotFoundException(sprintf('No email found for id "%d"', $emailId));
         }
-
-        $email->getTranslations()->forAll(function($key, $translation) use ($em) {
-            $em->remove($translation);
-        });
 
         $em->remove($email);
         $em->flush();
 
-        return new RedirectResponse($this->container->get('router')->generate('lexik_mailer.email_list'));
+        return $this->redirect($this->generateUrl('lexik_mailer.email_list'));
     }
 
     /**
      * New email
      *
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
-        $request = $this->container->get('request');
+        $handler = $this->get('lexik_mailer.form.handler.email');
+        $form = $handler->createForm();
 
-        $email = new Email();
-        $translation = new EmailTranslation($this->container->getParameter('locale'));
-        $translation->setEmail($email);
-
-        $form = $this->container->get('form.factory')->create('mailer_email', $email, array(
-            'data_translation' => $translation,
-        ));
-
-        // Submit form
-        if ('POST' === $request->getMethod()) {
-            $form->bind($request);
-
-            if ($form->isValid()) {
-                $em = $this->container->get('doctrine.orm.entity_manager');
-                $em->persist($translation);
-                $em->persist($email);
-                $em->flush();
-
-                return new RedirectResponse($this->container->get('router')->generate('lexik_mailer.email_list'));
-            }
+        if ($handler->processForm($form, $request)) {
+            return $this->redirect($this->generateUrl('lexik_mailer.email_list'));
         }
 
-        return $this->container->get('templating')->renderResponse('LexikMailerBundle:Email:new.html.twig', array_merge(array(
+        return $this->render('LexikMailerBundle:Email:new.html.twig', array_merge(array(
             'form'      => $form->createView(),
             'layout'    => $this->container->getParameter('lexik_mailer.base_layout'),
-            'lang'      => Locale::getDisplayLanguage($translation->getLang()),
+            'lang'      => \Locale::getDisplayLanguage($handler->getLocale()),
         ), $this->getAdditionalParameters()));
     }
 
@@ -161,22 +123,22 @@ class EmailController extends ContainerAware
      * @param     $lang
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     * @return
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function previewAction($emailId, $lang)
     {
-        $em = $this->container->get('doctrine.orm.entity_manager');
+        $em = $this->get('doctrine.orm.entity_manager');
 
         $class = $this->container->getParameter('lexik_mailer.email_entity.class');
         $email = $em->find($class, $emailId);
 
         if (!$email) {
-            throw new NotFoundHttpException('Email not found');
+            throw $this->createNotFoundException(sprintf('No email found for id "%d"', $emailId));
         }
 
         $email->setLocale($lang);
 
-        $renderer = $this->container->get('lexik_mailer.message_renderer');
+        $renderer = $this->get('lexik_mailer.message_renderer');
         $renderer->loadTemplates($email);
         $renderer->setStrictVariables(false);
 
@@ -201,7 +163,7 @@ class EmailController extends ContainerAware
 
         $renderer->setStrictVariables(true);
 
-        return $this->container->get('templating')->renderResponse('LexikMailerBundle:Email:preview.html.twig', array_merge(array(
+        return $this->render('LexikMailerBundle:Email:preview.html.twig', array_merge(array(
             'content'  => $content,
             'subject'  => $subject,
             'fromName' => $fromName,
@@ -213,22 +175,22 @@ class EmailController extends ContainerAware
      * Delete a translation
      *
      * @param string $translationId
-     * @throws NotFoundHttpException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteTranslationAction($translationId)
     {
-        $em = $this->container->get('doctrine.orm.entity_manager');
+        $em = $this->get('doctrine.orm.entity_manager');
         $translation = $em->find('LexikMailerBundle:EmailTranslation', $translationId);
 
         if (!$translation) {
-            throw new NotFoundHttpException('Translation not found');
+            throw $this->createNotFoundException(sprintf('No translation found for id "%d"', $translationId));
         }
 
         $em->remove($translation);
         $em->flush();
 
-        return new RedirectResponse($this->container->get('router')->generate('lexik_mailer.email_edit', array('emailId' => $translation->getEmail()->getId())));
+        return $this->redirect($this->generateUrl('lexik_mailer.email_edit', array('emailId' => $translation->getEmail()->getId())));
     }
 
     /**

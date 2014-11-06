@@ -27,7 +27,7 @@ class Email implements EmailInterface
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     protected $id;
 
@@ -242,6 +242,7 @@ class Email implements EmailInterface
      * Get EmailTranslation for a given lang, if not exist it will be created
      *
      * @param string $lang
+     * @return EmailTranslation
      */
     public function getTranslation($lang)
     {
@@ -389,7 +390,7 @@ class Email implements EmailInterface
 
         return $date->format('U');
     }
-    
+
     /**
      * {@inheritdoc}
      */

@@ -2,15 +2,8 @@
 
 namespace Lexik\Bundle\MailerBundle\Controller;
 
-use Lexik\Bundle\MailerBundle\Entity\Layout;
-use Lexik\Bundle\MailerBundle\Entity\LayoutTranslation;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\DependencyInjection\ContainerAware;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Locale\Locale;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Layout controller.
@@ -28,51 +21,38 @@ class LayoutController extends Controller
     {
         $layouts = $this->get('doctrine.orm.entity_manager')->getRepository('LexikMailerBundle:Layout')->findAll();
 
-        return $this->container->get('templating')->renderResponse('LexikMailerBundle:Layout:list.html.twig', array_merge(array(
-            'layouts'   => $layouts,
-            'layout'    => $this->container->getParameter('lexik_mailer.base_layout'),
+        return $this->render('LexikMailerBundle:Layout:list.html.twig', array_merge(array(
+            'layouts' => $layouts,
+            'layout'  => $this->container->getParameter('lexik_mailer.base_layout'),
         ), $this->getAdditionalParameters()));
     }
 
     /**
      * Layout edition
      *
+     * @param Request $request
      * @param string $layoutId
      * @param string $lang
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function editAction($layoutId, $lang = null)
+    public function editAction(Request $request, $layoutId, $lang = null)
     {
-        $em = $this->get('doctrine.orm.entity_manager');
-        $request = $this->get('request');
-        $lang = $lang ? : $this->container->getParameter('locale');
-
-        $layout= $em->find('LexikMailerBundle:Layout', $layoutId);
-        $translation = $layout->getTranslation($lang);
+        $layout= $this->get('doctrine.orm.entity_manager')->find('LexikMailerBundle:Layout', $layoutId);
 
         if (!$layout) {
-            throw new NotFoundHttpException('Layout not found');
+            throw $this->createNotFoundException(sprintf('No layout found for id "%d".', $layoutId));
         }
 
-        $form = $this->createForm('mailer_layout', $layout, array(
-            'data_translation' => $translation,
-            'edit'             => true,
-        ));
+        $handler = $this->get('lexik_mailer.form.handler.layout');
+        $form = $handler->createForm($layout, $lang);
 
-        // Submit form
-        if ('POST' === $request->getMethod()) {
-            $form->bind($request);
-            if ($form->isValid()) {
-                $em->persist($translation);
-                $em->flush();
-
-                return $this->redirect($this->generateUrl('lexik_mailer.layout_edit', array(
-                    'layoutId' => $layout->getId(),
-                    'lang'     => $lang,
-                )));
-            }
+        if ($handler->processForm($form, $request)) {
+            return $this->redirect($this->generateUrl('lexik_mailer.layout_edit', array(
+                'layoutId' => $layout->getId(),
+                'lang'     => $lang,
+            )));
         }
 
         return $this->render('LexikMailerBundle:Layout:edit.html.twig', array_merge(array(
@@ -80,7 +60,7 @@ class LayoutController extends Controller
             'base_layout'   => $this->container->getParameter('lexik_mailer.base_layout'),
             'layout'        => $layout,
             'lang'          => $lang,
-            'displayLang'   => Locale::getDisplayLanguage($lang),
+            'displayLang'   => \Locale::getDisplayLanguage($lang),
             'routePattern'  => urldecode($this->generateUrl('lexik_mailer.layout_edit', array('layoutId' => $layout->getId(), 'lang' => '%lang%'), true)),
         ), $this->getAdditionalParameters()));
     }
@@ -99,12 +79,8 @@ class LayoutController extends Controller
         $layout = $em->find('LexikMailerBundle:Layout', $layoutId);
 
         if (!$layout) {
-            throw new NotFoundHttpException('Layout not found');
+            throw $this->createNotFoundException(sprintf('No layout found for id "%d".', $layoutId));
         }
-
-        $layout->getTranslations()->forAll(function($key, $translation) use ($em) {
-            $em->remove($translation);
-        });
 
         $em->remove($layout);
         $em->flush();
@@ -115,38 +91,22 @@ class LayoutController extends Controller
     /**
      * New layout
      *
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
-        $request = $this->get('request');
-        $layout = new Layout();
-        $translation = new LayoutTranslation($this->container->getParameter('locale'));
+        $handler = $this->get('lexik_mailer.form.handler.layout');
+        $form = $handler->createForm();
 
-        $translation->setLayout($layout);
-        $form = $this->createForm('mailer_layout', $layout, array(
-            'data_translation' => $translation,
-        ));
-
-        // Submit form
-        if ('POST' === $request->getMethod()) {
-            $form->bind($request);
-
-            if ($form->isValid()) {
-                $em = $this->get('doctrine.orm.entity_manager');
-
-                $em->persist($translation);
-                $em->persist($layout);
-                $em->flush();
-
-                return $this->redirect($this->generateUrl('lexik_mailer.layout_list'));
-            }
+        if ($handler->processForm($form, $request)) {
+            return $this->redirect($this->generateUrl('lexik_mailer.layout_list'));
         }
 
         return $this->render('LexikMailerBundle:Layout:new.html.twig', array_merge(array(
-            'form'      => $form->createView(),
-            'layout'    => $this->container->getParameter('lexik_mailer.base_layout'),
-            'lang'      => Locale::getDisplayLanguage($translation->getLang()),
+            'form'   => $form->createView(),
+            'layout' => $this->container->getParameter('lexik_mailer.base_layout'),
+            'lang'   => \Locale::getDisplayLanguage($this->container->getParameter('locale')),
         ), $this->getAdditionalParameters()));
     }
 
@@ -154,7 +114,7 @@ class LayoutController extends Controller
      * Delete a translation
      *
      * @param int $translationId
-     * @throws NotFoundHttpException
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteTranslationAction($translationId)
@@ -163,7 +123,7 @@ class LayoutController extends Controller
         $translation = $em->find('LexikMailerBundle:LayoutTranslation', $translationId);
 
         if (!$translation) {
-            throw new NotFoundHttpException('Translation not found');
+            throw $this->createNotFoundException(sprintf('No translation found for id "%d"', $translationId));
         }
 
         $em->remove($translation);

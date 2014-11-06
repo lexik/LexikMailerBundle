@@ -19,25 +19,32 @@ class EmailType extends AbstractType
     {
         $builder
             ->add('reference', null, array(
-                'read_only'  => $options['edit']
+                'read_only'     => $options['edit'],
+                'property_path' => 'entity.reference',
             ))
             ->add('layout', 'entity', array(
-                'required'    => false,
-                'empty_value' => '',
-                'class'       => $options['layout_entity'],
+                'required'      => false,
+                'empty_value'   => '',
+                'class'         => $options['layout_entity'],
+                'property_path' => 'entity.layout',
             ))
             ->add('headers', 'collection', array(
-                'type'         => 'lexik_mailer_header',
-                'allow_add'    => true,
-                'allow_delete' => true,
+                'type'          => 'lexik_mailer_header',
+                'allow_add'     => true,
+                'allow_delete'  => true,
+                'property_path' => 'entity.headers',
             ))
-            ->add('description')
-            ->add('bcc')
-            ->add('spool', null, array(
-                'required'  => false,
+            ->add('description', 'textarea', array(
+                'property_path' => 'entity.description',
+            ))
+            ->add('bcc', 'text', array(
+                'property_path' => 'entity.bcc',
+            ))
+            ->add('spool', 'checkbox', array(
+                'required'      => false,
+                'property_path' => 'entity.spool',
             ))
             ->add('translation', 'mailer_email_translation', array(
-                'mapped'        => false,
                 'data'          => $options['data_translation'],
                 'with_language' => $options['edit'],
             ))
@@ -50,7 +57,7 @@ class EmailType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'            => 'Lexik\Bundle\MailerBundle\Entity\Email',
+            'data_class'            => 'Lexik\Bundle\MailerBundle\Form\Model\EntityTranslationModel',
             'layout_entity'         => 'Lexik\Bundle\MailerBundle\Entity\Layout',
             'data_translation'      => null,
             'edit'                  => false,

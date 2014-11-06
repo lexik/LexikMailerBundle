@@ -28,6 +28,9 @@
         <parameter key="lexik_mailer.form.type.mailer_email_translation.class">Lexik\Bundle\MailerBundle\Form\Type\EmailTranslationType</parameter>
         <parameter key="lexik_mailer.form.type.mailer_layout.class">Lexik\Bundle\MailerBundle\Form\Type\LayoutType</parameter>
         <parameter key="lexik_mailer.form.type.mailer_layout_translation.class">Lexik\Bundle\MailerBundle\Form\Type\LayoutTranslationType</parameter>
+
+        <parameter key="lexik_mailer.form.handler.email.class">Lexik\Bundle\MailerBundle\Form\Handler\EmailFormHandler</parameter>
+        <parameter key="lexik_mailer.form.handler.layout.class">Lexik\Bundle\MailerBundle\Form\Handler\LayoutFormHandler</parameter>
     </parameters>
 
     <services>
@@ -96,6 +99,19 @@
 
         <service id="lexik_mailer.form.type.mailer_layout_translation" class="%lexik_mailer.form.type.mailer_layout_translation.class%">
             <tag name="form.type" alias="mailer_layout_translation" />
+        </service>
+
+        <!-- Form handler -->
+        <service id="lexik_mailer.form.handler.email" class="%lexik_mailer.form.handler.email.class%">
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument>%locale%</argument>
+        </service>
+
+        <service id="lexik_mailer.form.handler.layout" class="%lexik_mailer.form.handler.layout.class%">
+            <argument type="service" id="form.factory" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument>%locale%</argument>
         </service>
 
         <!-- DKIM signer -->

@@ -17,12 +17,14 @@ class LayoutType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('reference', null, array(
-                'read_only'  => $options['edit']
+            ->add('reference', 'text', array(
+                'read_only'     => $options['edit'],
+                'property_path' => 'entity.reference',
             ))
-            ->add('description')
+            ->add('description', 'textarea', array(
+                'property_path' => 'entity.description',
+            ))
             ->add('translation', 'mailer_layout_translation', array(
-                'mapped'        => false,
                 'data'          => $options['data_translation'],
                 'with_language' => $options['edit'],
             ))
@@ -35,7 +37,7 @@ class LayoutType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class'          => 'Lexik\Bundle\MailerBundle\Entity\Layout',
+            'data_class'          => 'Lexik\Bundle\MailerBundle\Form\Model\EntityTranslationModel',
             'data_translation'    => null,
             'edit'                => false,
             'preferred_languages' => array(),
