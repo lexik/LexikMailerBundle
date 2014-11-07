@@ -136,38 +136,14 @@ class EmailController extends Controller
             throw $this->createNotFoundException(sprintf('No email found for id "%d"', $emailId));
         }
 
-        $email->setLocale($lang);
-
-        $renderer = $this->get('lexik_mailer.message_renderer');
-        $renderer->loadTemplates($email);
-        $renderer->setStrictVariables(false);
-
-        $subject = $email->getSubject();
-        $fromName = $email->getFromName($this->container->getParameter('lexik_mailer.admin_email'));
-        $content = $email->getBody();
-
-        $errors = array(
-            'subject'      => null,
-            'from_name'    => null,
-            'html_content' => null,
-        );
-
-        $suffix = $email->getChecksum();
-        foreach ($errors as $template => $error) {
-            try {
-                $renderer->renderTemplate(sprintf('%s_%s', $template, $suffix));
-            } catch(\Twig_Error $e) {
-                $errors[$template] = $e->getRawMessage();
-            }
-        }
-
-        $renderer->setStrictVariables(true);
+        $preview = $this->get('lexik_mailer.message_preview_generator');
+        $preview->getTemplatesPreview($email, $lang);
 
         return $this->render('LexikMailerBundle:Email:preview.html.twig', array_merge(array(
-            'content'  => $content,
-            'subject'  => $subject,
-            'fromName' => $fromName,
-            'errors'   => $errors,
+            'content'  => $preview->get('content'),
+            'subject'  => $preview->get('subject'),
+            'fromName' => $preview->get('fromName'),
+            'errors'   => $preview->getErrors(),
         ), $this->getAdditionalParameters()));
     }
 

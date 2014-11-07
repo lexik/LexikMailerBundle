@@ -23,6 +23,8 @@
             <parameter key="selector">%lexik_mailer.dkim.selector%</parameter>
         </parameter>
 
+        <parameter key="lexik_mailer.message_preview_penerator.class">Lexik\Bundle\MailerBundle\Message\PreviewGenerator</parameter>
+
         <parameter key="lexik_mailer.form.type.header.class">Lexik\Bundle\MailerBundle\Form\Type\HeaderType</parameter>
         <parameter key="lexik_mailer.form.type.mailer_email.class">Lexik\Bundle\MailerBundle\Form\Type\EmailType</parameter>
         <parameter key="lexik_mailer.form.type.mailer_email_translation.class">Lexik\Bundle\MailerBundle\Form\Type\EmailTranslationType</parameter>
@@ -63,6 +65,11 @@
         <service id="lexik_mailer.message_renderer" class="%lexik_mailer.message_renderer.class%">
             <argument type="service" id="lexik_mailer.templating" />
             <argument type="service" id="lexik_mailer.templating.loader_array" />
+        </service>
+
+        <service id="lexik_mailer.message_preview_generator" class="%lexik_mailer.message_preview_penerator.class%" scope="prototype">
+            <argument type="service" id="lexik_mailer.message_renderer" />
+            <argument>%lexik_mailer.admin_email%</argument>
         </service>
 
         <!-- Factory -->
