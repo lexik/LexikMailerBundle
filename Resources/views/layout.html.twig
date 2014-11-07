@@ -4,41 +4,30 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title>{% block title %}Lexik Mailer Administration{% endblock %}</title>
         {% block stylesheets %}
-            {% stylesheets filter="?yui_css" output='css/lexik-mailer.css'
-                '@LexikMailerBundle/Resources/public/css/bootstrap.min.css'
-                '@LexikMailerBundle/Resources/public/css/bootstrap-responsive.min.css'
-                '@LexikMailerBundle/Resources/public/css/mailer.css' %}
-                <link href="{{ asset_url }}" rel="stylesheet" type="text/css" media="all" />
-            {% endstylesheets %}
+            <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
         {% endblock %}
         <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
+
+        <nav class="navbar navbar-default" role="navigation">
             <div class="container">
-            <ul class="nav">
-               <li><a href="{{ path('lexik_mailer.email_list') }}">Email List</a></li>
-               <li><a href="{{ path('lexik_mailer.layout_list') }}">Layout List</a></li>
-           </ul>
+                <div class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="{{ path('lexik_mailer.email_list') }}">Email List</a></li>
+                        <li><a href="{{ path('lexik_mailer.layout_list') }}">Layout List</a></li>
+                    </ul>
+                </div>
             </div>
-            </div>
-        </div>
+        </nav>
 
         <div class="container">
             {% block content %}{% endblock %}
         </div>
 
         {% block javascripts %}
-            {% javascripts filter="?yui_js" output='js/lexik-mailer.js'
-                '@LexikMailerBundle/Resources/public/js/bootstrap.min.js'
-                '@LexikMailerBundle/Resources/public/js/jquery-1.7.2.min.js' %}
-                <script src="{{ asset_url }}" type="text/javascript"></script>
-            {% endjavascripts %}
+            <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
         {% endblock %}
     </body>
 </html>
-
-
-
