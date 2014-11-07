@@ -1,55 +1,59 @@
 {% extends layout %}
 
 {% block content %}
-<div class="page-header">
-    <h1>{{ 'lexik_mailer.email.list' | trans({}, 'LexikMailerBundle') }}</h1>
+<div class="row">
+    <div class="col-md-12">
+        <h1>{{ 'lexik_mailer.email.list' | trans({}, 'LexikMailerBundle') }}</h1>
+
+        <p>
+            <a href="{{ path('lexik_mailer.email_new') }}" class="btn btn-primary">{{ 'lexik_mailer.link.new' | trans({}, 'LexikMailerBundle') }}</a>
+        </p>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>{{ 'lexik_mailer.email.id' | trans({}, 'LexikMailerBundle') }}</th>
+                    <th>{{ 'lexik_mailer.email.description' | trans({}, 'LexikMailerBundle') }}</th>
+                    <th>{{ 'lexik_mailer.email.reference' | trans({}, 'LexikMailerBundle') }}</th>
+                    <th>{{ 'lexik_mailer.email.bcc' | trans({}, 'LexikMailerBundle') }}</th>
+                    <th>{{ 'lexik_mailer.email.languages' | trans({}, 'LexikMailerBundle') }}</th>
+                    <th>{{ 'lexik_mailer.email.actions' | trans({}, 'LexikMailerBundle') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for key, email in emails %}
+                <tr class="{{ cycle(['', 'odd-row'], key) }}">
+                    <td><a href="{{ path('lexik_mailer.email_edit', { 'emailId' : email.id }) }}">{{ email.id }}</a></td>
+                    <td>
+                        {{ email.getTranslation(app.request.locale).subject }}<br />
+                        {{ email.description }}<br />
+                        {{ 'lexik_mailer.list.from %from%' | trans({ '%from%' : email.getTranslation(app.request.locale).fromAddress }, 'LexikMailerBundle') }}
+                    </td>
+                    <td>{{ email.reference }}</td>
+                    <td>{{ email.bcc }}</td>
+                    <td>
+                        <ul class="unstyled">
+                            {% for translation in email.translations %}
+                                <li>
+                                    <a class="ui-icon ui-icon-search preview-messenger" href="{{ path('lexik_mailer.email_preview', {'emailId' : email.id, 'lang' : translation.lang}) }}"></a>
+                                    &nbsp;<a href="{{ path('lexik_mailer.email_edit', { 'emailId' : email.id, 'lang' : translation.lang }) }}" title="email-preview-{{translation.lang}}">{{ translation.displayLanguage }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <a class="btn btn-info" href="{{ path('lexik_mailer.email_edit', { 'emailId' : email.id }) }}">{{ 'lexik_mailer.email.action.edit' | trans({}, 'LexikMailerBundle') }}</a>
+                        <a class="btn btn-danger" href="{{ path('lexik_mailer.email_delete', { 'emailId' : email.id }) }}" onclick="if (!confirm('{{ 'lexik_mailer.email.delete.confirm' | trans({}, 'LexikMailerBundle') }}')) return false;">{{ 'lexik_mailer.email.action.delete' | trans({}, 'LexikMailerBundle') }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
-
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>{{ 'lexik_mailer.email.id' | trans({}, 'LexikMailerBundle') }}</th>
-            <th>{{ 'lexik_mailer.email.description' | trans({}, 'LexikMailerBundle') }}</th>
-            <th>{{ 'lexik_mailer.email.reference' | trans({}, 'LexikMailerBundle') }}</th>
-            <th>{{ 'lexik_mailer.email.bcc' | trans({}, 'LexikMailerBundle') }}</th>
-            <th>{{ 'lexik_mailer.email.languages' | trans({}, 'LexikMailerBundle') }}</th>
-            <th>{{ 'lexik_mailer.email.actions' | trans({}, 'LexikMailerBundle') }}</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for key, email in emails %}
-        <tr class="{{ cycle(['', 'odd-row'], key) }}">
-            <td><a href="{{ path('lexik_mailer.email_edit', { 'emailId' : email.id }) }}">{{ email.id }}</a></td>
-            <td>
-                {{ email.getTranslation(app.request.locale).subject }}<br />
-                {{ email.description }}<br />
-                {{ 'lexik_mailer.list.from %from%' | trans({ '%from%' : email.getTranslation(app.request.locale).fromAddress }, 'LexikMailerBundle') }}
-            </td>
-            <td>{{ email.reference }}</td>
-            <td>{{ email.bcc }}</td>
-            <td>
-                <ul class="unstyled">
-                    {% for translation in email.translations %}
-                    <li>
-                        <a class="ui-icon ui-icon-search preview-messenger" href="{{ path('lexik_mailer.email_preview', {'emailId' : email.id, 'lang' : translation.lang}) }}"></a>
-                        &nbsp;<a href="{{ path('lexik_mailer.email_edit', { 'emailId' : email.id, 'lang' : translation.lang }) }}" title="email-preview-{{translation.lang}}">{{ translation.displayLanguage }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </td>
-            <td>
-                <a class="btn btn-info" href="{{ path('lexik_mailer.email_edit', { 'emailId' : email.id }) }}">{{ 'lexik_mailer.email.action.edit' | trans({}, 'LexikMailerBundle') }}</a>
-                <a class="btn btn-danger" href="{{ path('lexik_mailer.email_delete', { 'emailId' : email.id }) }}" onclick="if (!confirm('{{ 'lexik_mailer.email.delete.confirm' | trans({}, 'LexikMailerBundle') }}')) return false;">{{ 'lexik_mailer.email.action.delete' | trans({}, 'LexikMailerBundle') }}</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-
-<a href="{{ path('lexik_mailer.email_new') }}" class="btn btn-primary">{{ 'lexik_mailer.link.new' | trans({}, 'LexikMailerBundle') }}</a>
 {% endblock %}
 
-{% block javascript_footer %}
+{% block javascripts %}
 {{ parent() }}
 <script type="text/javascript">
     $(document).ready(function() {

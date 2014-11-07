@@ -1,26 +1,39 @@
-{% block field_row %}
+{% block form_row %}
 {% spaceless %}
-    <div class="control-group">
+    <div class="form-group">
         {{ form_label(form, label|default(null)) }}
-        <div class="controls">
-            {{ form_widget(form) }} {{ append|default(null) }}
+        <div class="col-sm-8">
+            {{ form_widget(form, {'attr': {'class': 'form-control'} }) }} {{ append|default(null) }}
             {{ form_errors(form) }}
         </div>
     </div>
 {% endspaceless %}
-{% endblock field_row %}
+{% endblock form_row %}
 
-{% block generic_label %}
+{% block checkbox_row %}
+    <div class="form-group">
+        {{ form_label(form, label|default(null)) }}
+        <div class="col-sm-8">
+            {{ form_widget(form) }} {{ append|default(null) }}
+            {{ form_errors(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block form_label %}
 {% spaceless %}
-    {% set attr = attr|merge({'class': attr.class|default('') ~ ' control-label'}) %}
-    {% if required %}
-        {% set attr = attr|merge({'class': attr.class|default('') ~ ' label-required'}) %}
-    {% endif %}
-    <label{% for attrname,attrvalue in attr %} {{attrname}}="{{attrvalue}}"{% endfor %}>
-        {{ label|trans({}) }}
-        {% if required %}
-            <span class="required" title="{{ 'required-field' | trans }}">*</span>
-        {% endif %}
-    </label>
+    {% if label is not sameas(false) -%}
+        {% set label_attr = label_attr|merge({'class': attr.class|default('') ~ 'col-sm-2 control-label'}) %}
+        {% if not compound -%}
+            {% set label_attr = label_attr|merge({'for': id}) %}
+        {%- endif %}
+        {% if required -%}
+            {% set label_attr = label_attr|merge({'class': (label_attr.class|default('') ~ ' required')|trim}) %}
+        {%- endif %}
+        {% if label is empty -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+        <label{% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({}, translation_domain) }}</label>
+    {%- endif %}
 {% endspaceless %}
-{% endblock %}{# empty Twig template #}
+{% endblock %}
