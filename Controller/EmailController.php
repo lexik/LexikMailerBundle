@@ -16,17 +16,23 @@ class EmailController extends Controller
     /**
      * List all emails
      *
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $em = $this->get('doctrine.orm.entity_manager');
-        $emails = $em->getRepository($this->container->getParameter('lexik_mailer.email_entity.class'))->findAll();
+        $pager = $this->get('lexik_mailer.simple_pager')->retrievePageElements(
+            $this->container->getParameter('lexik_mailer.email_entity.class'),
+            $request->get('page', 1)
+        );
 
         return $this->render('LexikMailerBundle:Email:list.html.twig', array_merge(array(
-            'emails' => $emails,
-            'layout' => $this->container->getParameter('lexik_mailer.base_layout'),
-            'locale' => $this->container->getParameter('locale'),
+            'emails'  => $pager->getResults(),
+            'total'   => $pager->getCount(),
+            'page'    => $pager->getPage(),
+            'maxPage' => $pager->getMaxPage(),
+            'layout'  => $this->container->getParameter('lexik_mailer.base_layout'),
+            'locale'  => $this->container->getParameter('locale'),
         ), $this->getAdditionalParameters()));
     }
 
@@ -127,10 +133,8 @@ class EmailController extends Controller
      */
     public function previewAction($emailId, $lang)
     {
-        $em = $this->get('doctrine.orm.entity_manager');
-
         $class = $this->container->getParameter('lexik_mailer.email_entity.class');
-        $email = $em->find($class, $emailId);
+        $email = $this->get('doctrine.orm.entity_manager')->find($class, $emailId);
 
         if (!$email) {
             throw $this->createNotFoundException(sprintf('No email found for id "%d"', $emailId));

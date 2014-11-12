@@ -36,13 +36,16 @@ class EmailType extends AbstractType
             ))
             ->add('description', 'textarea', array(
                 'property_path' => 'entity.description',
+                'required'      => false,
             ))
             ->add('bcc', 'text', array(
                 'property_path' => 'entity.bcc',
+                'required'      => false,
             ))
             ->add('spool', 'checkbox', array(
                 'required'      => false,
                 'property_path' => 'entity.spool',
+                'required'      => false,
             ))
             ->add('translation', 'mailer_email_translation', array(
                 'data'          => $options['data_translation'],

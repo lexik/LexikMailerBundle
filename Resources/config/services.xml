@@ -23,7 +23,8 @@
             <parameter key="selector">%lexik_mailer.dkim.selector%</parameter>
         </parameter>
 
-        <parameter key="lexik_mailer.message_preview_penerator.class">Lexik\Bundle\MailerBundle\Message\PreviewGenerator</parameter>
+        <parameter key="lexik_mailer.message_preview_penerator.class">Lexik\Bundle\MailerBundle\Tools\PreviewGenerator</parameter>
+        <parameter key="lexik_mailer.simple_pager.class">Lexik\Bundle\MailerBundle\Tools\SimplePager</parameter>
 
         <parameter key="lexik_mailer.form.type.header.class">Lexik\Bundle\MailerBundle\Form\Type\HeaderType</parameter>
         <parameter key="lexik_mailer.form.type.mailer_email.class">Lexik\Bundle\MailerBundle\Form\Type\EmailType</parameter>
@@ -70,6 +71,11 @@
         <service id="lexik_mailer.message_preview_generator" class="%lexik_mailer.message_preview_penerator.class%" scope="prototype">
             <argument type="service" id="lexik_mailer.message_renderer" />
             <argument>%lexik_mailer.admin_email%</argument>
+        </service>
+
+        <service id="lexik_mailer.simple_pager" class="%lexik_mailer.simple_pager.class%" scope="prototype">
+            <argument type="service" id="doctrine.orm.entity_manager" />
+            <argument>%lexik_mailer.list_items_per_page%</argument>
         </service>
 
         <!-- Factory -->

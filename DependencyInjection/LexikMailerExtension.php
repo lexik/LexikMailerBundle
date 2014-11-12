@@ -27,6 +27,7 @@ class LexikMailerExtension extends Extension
         $loader->load('services.xml');
 
         $container->setParameter('lexik_mailer.base_layout', $config['base_layout']);
+        $container->setParameter('lexik_mailer.list_items_per_page', $config['list_items_per_page']);
         $container->setParameter('lexik_mailer.admin_email', $config['admin_email']);
         $container->setParameter('lexik_mailer.allowed_headers', $config['allowed_headers']);
 

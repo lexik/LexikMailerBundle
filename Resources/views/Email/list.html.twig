@@ -6,15 +6,18 @@
         <h1>{{ 'lexik_mailer.email.list' | trans({}, 'LexikMailerBundle') }}</h1>
 
         <p>
-            <a href="{{ path('lexik_mailer.email_new') }}" class="btn btn-primary">{{ 'lexik_mailer.link.new' | trans({}, 'LexikMailerBundle') }}</a>
+            <a href="{{ path('lexik_mailer.email_new') }}" class="btn btn-primary">
+                <span class="glyphicon glyphicon-plus"></span>
+                {{ 'lexik_mailer.link.new' | trans({}, 'LexikMailerBundle') }}
+            </a>
         </p>
 
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>{{ 'lexik_mailer.email.id' | trans({}, 'LexikMailerBundle') }}</th>
-                    <th>{{ 'lexik_mailer.email.description' | trans({}, 'LexikMailerBundle') }}</th>
                     <th>{{ 'lexik_mailer.email.reference' | trans({}, 'LexikMailerBundle') }}</th>
+                    <th>{{ 'lexik_mailer.email.description' | trans({}, 'LexikMailerBundle') }}</th>
                     <th>{{ 'lexik_mailer.email.bcc' | trans({}, 'LexikMailerBundle') }}</th>
                     <th>{{ 'lexik_mailer.email.languages' | trans({}, 'LexikMailerBundle') }}</th>
                     <th>{{ 'lexik_mailer.email.actions' | trans({}, 'LexikMailerBundle') }}</th>
@@ -24,12 +27,12 @@
             {% for key, email in emails %}
                 <tr class="{{ cycle(['', 'odd-row'], key) }}">
                     <td><a href="{{ path('lexik_mailer.email_edit', { 'emailId' : email.id }) }}">{{ email.id }}</a></td>
+                    <td>{{ email.reference }}</td>
                     <td>
                         {{ email.getTranslation(app.request.locale).subject }}<br />
                         {{ email.description }}<br />
                         {{ 'lexik_mailer.list.from %from%' | trans({ '%from%' : email.getTranslation(app.request.locale).fromAddress }, 'LexikMailerBundle') }}
                     </td>
-                    <td>{{ email.reference }}</td>
                     <td>{{ email.bcc }}</td>
                     <td>
                         <ul class="unstyled">
@@ -42,13 +45,21 @@
                         </ul>
                     </td>
                     <td>
-                        <a class="btn btn-info" href="{{ path('lexik_mailer.email_edit', { 'emailId' : email.id }) }}">{{ 'lexik_mailer.email.action.edit' | trans({}, 'LexikMailerBundle') }}</a>
-                        <a class="btn btn-danger" href="{{ path('lexik_mailer.email_delete', { 'emailId' : email.id }) }}" onclick="if (!confirm('{{ 'lexik_mailer.email.delete.confirm' | trans({}, 'LexikMailerBundle') }}')) return false;">{{ 'lexik_mailer.email.action.delete' | trans({}, 'LexikMailerBundle') }}</a>
+                        <a class="btn btn-info btn-sm" href="{{ path('lexik_mailer.email_edit', { 'emailId' : email.id }) }}">
+                            <span class="glyphicon glyphicon-edit"></span>
+                            {{ 'lexik_mailer.email.action.edit' | trans({}, 'LexikMailerBundle') }}
+                        </a>
+                        <a class="btn btn-danger btn-sm" href="{{ path('lexik_mailer.email_delete', { 'emailId' : email.id }) }}" onclick="if (!confirm('{{ 'lexik_mailer.email.delete.confirm' | trans({}, 'LexikMailerBundle') }}')) return false;">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            {{ 'lexik_mailer.email.action.delete' | trans({}, 'LexikMailerBundle') }}
+                        </a>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
+
+        {{ include('LexikMailerBundle::_pagination.html.twig', {'route': 'lexik_mailer.email_list', 'page': page, 'maxPage': maxPage}) }}
     </div>
 </div>
 {% endblock %}

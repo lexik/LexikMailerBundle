@@ -15,14 +15,21 @@ class LayoutController extends Controller
     /**
      * List all layouts
      *
+     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function listAction()
+    public function listAction(Request $request)
     {
-        $layouts = $this->get('doctrine.orm.entity_manager')->getRepository('LexikMailerBundle:Layout')->findAll();
+        $pager = $this->get('lexik_mailer.simple_pager')->retrievePageElements(
+            'LexikMailerBundle:Layout',
+            $request->get('page', 1)
+        );
 
         return $this->render('LexikMailerBundle:Layout:list.html.twig', array_merge(array(
-            'layouts' => $layouts,
+            'layouts' => $pager->getResults(),
+            'total'   => $pager->getCount(),
+            'page'    => $pager->getPage(),
+            'maxPage' => $pager->getMaxPage(),
             'layout'  => $this->container->getParameter('lexik_mailer.base_layout'),
         ), $this->getAdditionalParameters()));
     }

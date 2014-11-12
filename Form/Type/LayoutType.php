@@ -23,6 +23,7 @@ class LayoutType extends AbstractType
             ))
             ->add('description', 'textarea', array(
                 'property_path' => 'entity.description',
+                'required'      => false,
             ))
             ->add('translation', 'mailer_layout_translation', array(
                 'data'          => $options['data_translation'],

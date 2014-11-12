@@ -1,7 +1,8 @@
 <?php
 
-namespace Lexik\Bundle\MailerBundle\Message;
+namespace Lexik\Bundle\MailerBundle\Tools;
 
+use Lexik\Bundle\MailerBundle\Message\MessageRenderer;
 use Lexik\Bundle\MailerBundle\Model\EmailInterface;
 
 /**
