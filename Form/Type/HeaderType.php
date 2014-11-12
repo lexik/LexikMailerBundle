@@ -1,6 +1,6 @@
 <?php
 
-namespace Lexik\Bundle\MailerBundle\Form;
+namespace Lexik\Bundle\MailerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -40,7 +40,7 @@ class HeaderType extends AbstractType
                 'expanded' => false,
             ))
             ->add('value', 'text', array(
-                'required' => true,
+                'required'    => true,
                 'constraints' => array(
                     new NotBlank(),
                 )

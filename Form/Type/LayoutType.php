@@ -1,6 +1,6 @@
 <?php
 
-namespace Lexik\Bundle\MailerBundle\Form;
+namespace Lexik\Bundle\MailerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -17,12 +17,15 @@ class LayoutType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('reference', null, array(
-                'read_only'  => $options['edit']
+            ->add('reference', 'text', array(
+                'read_only'     => $options['edit'],
+                'property_path' => 'entity.reference',
             ))
-            ->add('description')
-            ->add('translation', new LayoutTranslationType(), array(
-                'mapped'        => false,
+            ->add('description', 'textarea', array(
+                'property_path' => 'entity.description',
+                'required'      => false,
+            ))
+            ->add('translation', 'mailer_layout_translation', array(
                 'data'          => $options['data_translation'],
                 'with_language' => $options['edit'],
             ))
@@ -34,13 +37,11 @@ class LayoutType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
         $resolver->setDefaults(array(
-            'data_class'            => 'Lexik\Bundle\MailerBundle\Entity\Layout',
-            'data_translation'      => null,
-            'edit'                  => false,
-            'preferred_languages'   => array(),
+            'data_class'          => 'Lexik\Bundle\MailerBundle\Form\Model\EntityTranslationModel',
+            'data_translation'    => null,
+            'edit'                => false,
+            'preferred_languages' => array(),
         ));
     }
 

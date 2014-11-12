@@ -3,37 +3,39 @@
 {% form_theme form 'LexikMailerBundle:Form:form_layout.html.twig' %}
 
 {% block content %}
-<div>
-    <form action="{{ path('lexik_mailer.layout_new') }}" method="post" class="form-horizontal">
-        {{ form_errors(form) }}
+<div class="row">
+    <div class="col-md-12">
+        <form action="{{ path('lexik_mailer.layout_new') }}" method="post" class="form-horizontal" role="form">
+            {{ form_errors(form) }}
 
-        <fieldset>
-            <legend>
-                {{ 'lexik_mailer.new.group_common' | trans({}, 'LexikMailerBundle') }}
-            </legend>
-            {{ form_row(form.reference) }}
-            {{ form_row(form.description) }}
-        </fieldset>
-        <fieldset>
-            <legend>
-                {{ 'lexik_mailer.new.group_translation' | trans({}, 'LexikMailerBundle') }}
-            </legend>
-            <div class="control-group">
-                <label class="control-label"><strong>{{ 'lexik_mailer.new.default_lang' | trans({}, 'LexikMailerBundle') }}:</strong></label>
-                <div class="controls">
-                    <input type="text" disabled="disabled" value="{{ lang }}" />
+            <fieldset>
+                <legend>
+                    {{ 'lexik_mailer.new.group_common' | trans({}, 'LexikMailerBundle') }}
+                </legend>
+                {{ form_row(form.reference) }}
+                {{ form_row(form.description) }}
+            </fieldset>
+
+            <fieldset>
+                <legend>
+                    {{ 'lexik_mailer.new.group_translation' | trans({}, 'LexikMailerBundle') }}
+                </legend>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">{{ 'lexik_mailer.new.default_lang' | trans({}, 'LexikMailerBundle') }}:</label>
+                    <div class="col-sm-8">
+                        <input type="text" disabled="disabled" value="{{ lang }}" class="form-control" />
+                    </div>
                 </div>
+                {{ form_row(form.translation.body) }}
+            </fieldset>
+
+            {{ form_rest(form) }}
+
+            <div class="form-group">
+                <input class="btn btn-primary" type="submit" value="{{ 'lexik_mailer.new.submit' | trans({}, 'LexikMailerBundle') }}" />
+                <a class="btn" href="{{ path('lexik_mailer.layout_list') }}">{{ 'lexik_mailer.link.list' | trans({}, 'LexikMailerBundle') }}</a>
             </div>
-            {{ form_row(form.translation.body) }}
-        </fieldset>
-
-        {{ form_rest(form) }}
-
-        <div class="form-actions">
-            <input class="btn btn-primary" type="submit" value="{{ 'lexik_mailer.new.submit' | trans({}, 'LexikMailerBundle') }}" />
-            <a class="btn" href="{{ path('lexik_mailer.layout_list') }}">{{ 'lexik_mailer.link.list' | trans({}, 'LexikMailerBundle') }}</a>
-        </div>
-    </form>
+        </form>
+    </div>
 </div>
-
 {% endblock %}

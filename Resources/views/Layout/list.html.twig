@@ -1,44 +1,58 @@
 {% extends layout %}
 
 {% block content %}
-<div class="page-header">
-    <h1>{{ 'lexik_mailer.layout.list' | trans({}, 'LexikMailerBundle') }}</h1>
-</div>
-<table class="table table-bordered table-striped">
-    <thead>
-        <tr>
-            <th>{{ 'lexik_mailer.layout.id' | trans({}, 'LexikMailerBundle') }}</th>
-            <th>{{ 'lexik_mailer.layout.description' | trans({}, 'LexikMailerBundle') }}</th>
-            <th>{{ 'lexik_mailer.layout.reference' | trans({}, 'LexikMailerBundle') }}</th>
-            <th>{{ 'lexik_mailer.layout.languages' | trans({}, 'LexikMailerBundle') }}</th>
-            <th>{{ 'lexik_mailer.layout.actions' | trans({}, 'LexikMailerBundle') }}</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for key, layout in layouts %}
-        <tr>
-            <td><a href="{{ path('lexik_mailer.layout_edit', { 'layoutId' : layout.id }) }}">{{ layout.id }}</a></td>
-            <td>
-                {{ layout.description }}<br />
-            </td>
-            <td>{{ layout.reference }}</td>
-            <td>
-                <ul class="unstyled">
-                    {% for translation in layout.translations %}
-                    <li>
-                        <a href="{{ path('lexik_mailer.layout_edit', { 'layoutId' : layout.id, 'lang' : translation.lang }) }}" title="layout-preview-{{translation.lang}}">{{ translation.displayLanguage }}</a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </td>
-            <td>
-                <a class="btn btn-info" href="{{ path('lexik_mailer.layout_edit', { 'layoutId' : layout.id }) }}">{{ 'lexik_mailer.layout.action.edit' | trans({}, 'LexikMailerBundle') }}</a>
-                <a class="btn btn-danger" href="{{ path('lexik_mailer.layout_delete', { 'layoutId' : layout.id }) }}" onclick="if (!confirm('{{ 'lexik_mailer.layout.delete.confirm' | trans({}, 'LexikMailerBundle') }}')) return false;">{{ 'lexik_mailer.layout.action.delete' | trans({}, 'LexikMailerBundle') }}</a>
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="row">
+    <div class="col-md-12">
+        <h1>{{ 'lexik_mailer.layout.list' | trans({}, 'LexikMailerBundle') }}</h1>
 
-<a class="btn btn-primary" href="{{ path('lexik_mailer.layout_new') }}">{{ 'lexik_mailer.link.new' | trans({}, 'LexikMailerBundle') }}</a>
+        <p>
+            <a class="btn btn-primary" href="{{ path('lexik_mailer.layout_new') }}">
+                <span class="glyphicon glyphicon-plus"></span>
+                {{ 'lexik_mailer.link.new' | trans({}, 'LexikMailerBundle') }}
+            </a>
+        </p>
+
+        <table class="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>{{ 'lexik_mailer.layout.id' | trans({}, 'LexikMailerBundle') }}</th>
+                <th>{{ 'lexik_mailer.layout.reference' | trans({}, 'LexikMailerBundle') }}</th>
+                <th>{{ 'lexik_mailer.layout.description' | trans({}, 'LexikMailerBundle') }}</th>
+                <th>{{ 'lexik_mailer.layout.languages' | trans({}, 'LexikMailerBundle') }}</th>
+                <th>{{ 'lexik_mailer.layout.actions' | trans({}, 'LexikMailerBundle') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for key, layout in layouts %}
+                <tr>
+                    <td><a href="{{ path('lexik_mailer.layout_edit', { 'layoutId' : layout.id }) }}">{{ layout.id }}</a></td>
+                    <td>{{ layout.reference }}</td>
+                    <td>{{ layout.description | nl2br }}</td>
+                    <td>
+                        <ul class="unstyled">
+                        {% for translation in layout.translations %}
+                            <li>
+                                <a href="{{ path('lexik_mailer.layout_edit', { 'layoutId' : layout.id, 'lang' : translation.lang }) }}" title="layout-preview-{{translation.lang}}">{{ translation.displayLanguage }}</a>
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <a class="btn btn-info btn-sm" href="{{ path('lexik_mailer.layout_edit', { 'layoutId' : layout.id }) }}">
+                            <span class="glyphicon glyphicon-edit"></span>
+                            {{ 'lexik_mailer.layout.action.edit' | trans({}, 'LexikMailerBundle') }}
+                        </a>
+                        <a class="btn btn-danger btn-sm" href="{{ path('lexik_mailer.layout_delete', { 'layoutId' : layout.id }) }}" onclick="if (!confirm('{{ 'lexik_mailer.layout.delete.confirm' | trans({}, 'LexikMailerBundle') }}')) return false;">
+                            <span class="glyphicon glyphicon-trash"></span>
+                            {{ 'lexik_mailer.layout.action.delete' | trans({}, 'LexikMailerBundle') }}
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {{ include('LexikMailerBundle::_pagination.html.twig', {'route': 'lexik_mailer.layout_list', 'page': page, 'maxPage': maxPage}) }}
+    </div>
+</div>
 {% endblock %}

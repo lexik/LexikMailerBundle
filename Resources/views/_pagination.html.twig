@@ -1,0 +1,24 @@
+{% if maxPage > 1 %}
+<nav class="pull-right">
+
+    <ul class="pagination">
+        <li>
+        {% if page-1 > 0 %}
+            <a href="{{ path(route, {'page' : page-1}) }}">&laquo;</a>
+        {% else %}
+            <span>&laquo;</span>
+        {% endif %}
+        </li>
+        <li>
+            <span>{{ page }} / {{ maxPage }}</span>
+        </li>
+        <li>
+        {% if page+1 <= maxPage %}
+            <a href="{{ path(route, {'page' : page+1}) }}">&raquo;</a>
+        {% else %}
+            <span>&raquo;</span>
+        {% endif %}
+        </li>
+    </ul>
+</nav>
+{% endif %}

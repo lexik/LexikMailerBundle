@@ -1,6 +1,6 @@
 <?php
 
-namespace Lexik\Bundle\MailerBundle\Form;
+namespace Lexik\Bundle\MailerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -8,26 +8,17 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * @author Laurent Heurtault <l.heurtault@lexik.fr>
- * @author Yoann Aparici <y.aparici@lexik.fr>
  */
-class EmailTranslationType extends AbstractType
+class LayoutTranslationType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('subject')
-            ->add('body', null, array(
-                'attr' => array('rows' => 20)
-            ))
-            ->add('bodyText', null, array(
-                'attr' => array('rows' => 20)
-            ))
-            ->add('fromAddress')
-            ->add('fromName')
-        ;
+        $builder->add('body', null, array(
+            'attr' => array('rows' => 20)
+        ));
 
         if ($options['with_language']) {
             $builder->add('lang', 'language', array(
@@ -41,10 +32,8 @@ class EmailTranslationType extends AbstractType
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        parent::setDefaultOptions($resolver);
-
         $resolver->setDefaults(array(
-            'data_class'          => 'Lexik\Bundle\MailerBundle\Entity\EmailTranslation',
+            'data_class'          => 'Lexik\Bundle\MailerBundle\Entity\LayoutTranslation',
             'with_language'       => true,
             'preferred_languages' => array('en', 'fr', 'es', 'de', 'it', 'pt', 'ja', 'zh'),
         ));
@@ -55,6 +44,6 @@ class EmailTranslationType extends AbstractType
      */
     public function getName()
     {
-        return 'mailer_email_translation';
+        return 'mailer_layout_translation';
     }
 }

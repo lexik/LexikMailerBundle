@@ -32,6 +32,10 @@ class Configuration implements ConfigurationInterface
                     ->defaultValue('LexikMailerBundle::layout.html.twig')
                 ->end()
 
+                ->integerNode('list_items_per_page')
+                    ->defaultValue(20)
+                ->end()
+
                 ->arrayNode('templating_extensions')
                     ->defaultValue(array())
                     ->prototype('scalar')
@@ -73,7 +77,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                
+
                 ->scalarNode('signer')
                     ->defaultValue(null)
                 ->end()
@@ -92,7 +96,7 @@ class Configuration implements ConfigurationInterface
                         ->end()
                     ->end()
                 ->end()
-                
+
             ->end()
         ;
 

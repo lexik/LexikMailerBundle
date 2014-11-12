@@ -2,15 +2,15 @@
     {% spaceless %}
         <tr>
             <td>
-                {{ form_widget(field.key) }}
+                {{ form_widget(field.key, {'attr': {'class': 'form-control'} }) }}
                 {{ form_errors(field.key) }}
             </td>
             <td>
-                {{ form_widget(field.value) }}
+                {{ form_widget(field.value, {'attr': {'class': 'form-control'} }) }}
                 {{ form_errors(field.value) }}
             </td>
             <td>
-                <a href="#" class="btn btn-small btn-danger delete_header_link" title="{{ 'lexik_mailer.edit.action_delete' | trans({}, 'LexikMailerBundle') }}">
+                <a href="#" class="btn btn-sm btn-danger delete_header_link" title="{{ 'lexik_mailer.edit.action_delete' | trans({}, 'LexikMailerBundle') }}">
                     {{ 'lexik_mailer.edit.action_delete' | trans({}, 'LexikMailerBundle') }}
                 </a>
             </td>
