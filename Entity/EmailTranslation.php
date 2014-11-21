@@ -93,7 +93,7 @@ class EmailTranslation
      * @var \Lexik\Bundle\MailerBundle\Entity\Email
      *
      * @ORM\ManyToOne(targetEntity="Email", inversedBy="translations")
-     * @ORM\JoinColumn(name="email_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="email_id", referencedColumnName="id", onDelete="CASCADE")
      * @Assert\NotBlank()
      */
     protected $email;

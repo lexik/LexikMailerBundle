@@ -2,8 +2,6 @@
 
 namespace Lexik\Bundle\MailerBundle\Entity;
 
-use Lexik\Bundle\MailerBundle\Entity\Layout;
-
 use Doctrine\ORM\Mapping as ORM;
 
 use Symfony\Component\Locale\Locale;
@@ -59,10 +57,10 @@ class LayoutTranslation
     protected $updatedAt;
 
     /**
-     * @var Lexik\Bundle\MailerBundle\Entity\Layout
+     * @var Layout
      *
      * @ORM\ManyToOne(targetEntity="Layout", inversedBy="translations")
-     * @ORM\JoinColumn(name="layout_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="layout_id", referencedColumnName="id", onDelete="CASCADE")
      * @Assert\NotBlank()
      */
     protected $layout;
