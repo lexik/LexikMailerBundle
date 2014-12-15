@@ -43,7 +43,7 @@
     </route>
 
     <!-- Layout translation -->
-    <route id="lexik_mailer.layout_translation_delete" pattern="/layout/translation/delete{translationId}">
+    <route id="lexik_mailer.layout_translation_delete" pattern="/layout/translation/delete/{translationId}">
         <default key="_controller">LexikMailerBundle:Layout:deleteTranslation</default>
     </route>
 
