@@ -39,7 +39,7 @@ class MessageFactory
     /**
      * @var array
      */
-    private $options;
+    protected $options;
 
     /**
      * @var array
