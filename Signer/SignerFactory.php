@@ -4,7 +4,7 @@ namespace Lexik\Bundle\MailerBundle\Signer;
 
 /**
  * Signer Factory
- * 
+ *
  * @author Sébastien Dieunidou <sebastien@bedycasa.com>
  */
 class SignerFactory
@@ -13,7 +13,7 @@ class SignerFactory
      * @var array
      */
     protected $options;
-    
+
     /**
      * @var array
      */
@@ -21,7 +21,7 @@ class SignerFactory
 
     /**
      * Constructor
-     * 
+     *
      * @param array $defaultOptions
      */
     public function __construct($defaultOptions)
@@ -41,10 +41,10 @@ class SignerFactory
             'signer' => null,
         );
     }
-    
+
     /**
      * Return true if the message need to be signed
-     * 
+     *
      * @return boolean
      */
     public function hasSigner()
@@ -62,14 +62,14 @@ class SignerFactory
     {
         $this->signers[$signerName] = $signer;
     }
-    
+
     /**
      * Get a signer
-     * 
+     *
      * @param string $signerName
-     * 
+     *
      * @return SignerInterface
-     * 
+     *
      * @throws \Exception
      */
     protected function getSigner($signerName)
@@ -77,15 +77,15 @@ class SignerFactory
         if (empty($this->signers[$signerName])) {
             throw new \Exception(sprintf('Signer %s doesnt exist', $signerName));
         }
-        
+
         return $this->signers[$signerName];
     }
-    
+
     /**
      * Create signer
-     * 
+     *
      * @return boolean
-     * 
+     *
      * @throws \Exception
      */
     public function createSigner()
@@ -93,7 +93,7 @@ class SignerFactory
         if (!$this->hasSigner()) {
             return false;
         }
-        
+
         return $this->getSigner($this->options['signer'])->createSignature();
     }
 }

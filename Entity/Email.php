@@ -242,13 +242,14 @@ class Email implements EmailInterface
      * Get EmailTranslation for a given lang, if not exist it will be created
      *
      * @param string $lang
+     * @throws \InvalidArgumentException
      * @return EmailTranslation
      */
     public function getTranslation($lang)
     {
         // Check if locale given
         if (strpos($lang, '_')) {
-            list($lang, $culture) = explode('_', $lang);
+            $lang = array_shift(explode('_', $lang));
         }
 
         if (strlen($lang) != 2) {

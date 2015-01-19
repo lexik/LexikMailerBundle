@@ -157,7 +157,7 @@ class Layout implements LayoutInterface
     {
         // Check if locale given
         if (strpos($lang, '_')) {
-            list($lang, $culture) = explode('_', $lang);
+            $lang = array_shift(explode('_', $lang));
         }
 
         if (strlen($lang) != 2) {

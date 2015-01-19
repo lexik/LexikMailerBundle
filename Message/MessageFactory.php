@@ -45,9 +45,9 @@ class MessageFactory
      * @var array
      */
     private $emails;
-    
+
     /**
-     * @var SignerFactory 
+     * @var SignerFactory
      */
     private $signer;
 
@@ -125,7 +125,7 @@ class MessageFactory
      */
     public function generateMessage(EmailInterface $email, $to, array $parameters = array(), $locale = null)
     {
-        if (null == $locale) {
+        if (null === $locale) {
             $locale = $this->options['default_locale'];
         }
 
@@ -142,7 +142,7 @@ class MessageFactory
         try {
             $email->setLocale($locale);
             $this->renderer->loadTemplates($email);
-            
+
             $message = $this->createMessageInstance()
                             ->setSubject($this->renderTemplate('subject', $parameters, $email->getChecksum()))
                             ->setFrom($email->getFromAddress($this->options['admin_email']), $this->renderTemplate('from_name', $parameters, $email->getChecksum()))
@@ -229,19 +229,19 @@ class MessageFactory
 
         return $message;
     }
-    
+
     /**
      * Create Swiftf message instance
-     * 
+     *
      * @return \Swift_Message
      */
     protected function createMessageInstance()
     {
         $hasSigner = $this->signer->hasSigner();
         $class     = $hasSigner ? '\Swift_SignedMessage' : '\Swift_Message';
-        
+
         $message = $class::newInstance();
-        
+
         if ($hasSigner) {
             $message->attachSigner($this->signer->createSigner());
         }

@@ -4,7 +4,7 @@ namespace Lexik\Bundle\MailerBundle\Signer;
 
 /**
  * Create a DKIM signature for a Swift_Message
- * 
+ *
  * @author Sébastien Dieunidou <sebastien@bedycasa.com>
  */
 class DkimSigner implements SignerInterface
@@ -16,7 +16,7 @@ class DkimSigner implements SignerInterface
 
     /**
      * Constructor
-     * 
+     *
      * @param array $defaultOptions
      */
     public function __construct($defaultOptions)
@@ -37,31 +37,36 @@ class DkimSigner implements SignerInterface
             'selector'         => ''
         );
     }
-    
+
     /**
      * Get private key
-     * 
+     *
      * @return string
-     * 
+     *
      * @throws \Exception
      */
     protected function getPrivateKey()
     {
         if (empty($this->options['private_key_path'])) {
-            throw new \Exception('Missing private_key_path for generate a DKIM signature');
+            throw new \RuntimeException('Missing private_key_path for generate a DKIM signature.');
         }
-        
-        $privateKey = @file_get_contents($this->options['private_key_path']);
+
+        if (!is_readable($this->options['private_key_path'])) {
+            throw new \RuntimeException(sprintf('Private key file does not exists or is not readable: %s', $this->options['private_key_path']));
+        }
+
+        $privateKey = file_get_contents($this->options['private_key_path']);
+
         if (false === $privateKey) {
-            throw new \Exception(sprintf('Can\'t read private key in file %s', $this->options['private_key_path']));
+            throw new \RuntimeException(sprintf('Can\'t read private key in file %s', $this->options['private_key_path']));
         }
-        
+
         return $privateKey;
     }
-    
+
     /**
      * Create  and return a signature for a swift message
-     * 
+     *
      * @return \Swift_Signer
      */
     public function createSignature()
