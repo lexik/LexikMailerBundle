@@ -249,7 +249,8 @@ class Email implements EmailInterface
     {
         // Check if locale given
         if (strpos($lang, '_')) {
-            $lang = array_shift(explode('_', $lang));
+            $parts = explode('_', $lang);
+            $lang = array_shift($parts);
         }
 
         if (strlen($lang) != 2) {
