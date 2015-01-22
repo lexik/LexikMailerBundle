@@ -50,12 +50,14 @@ class EmailLoader extends \Twig_Loader_Array
         $this->setTemplate(sprintf('text_content_%s', $emailSuffix), $email->getBodyText());
         $this->setTemplate(sprintf('subject_%s', $emailSuffix), $email->getSubject());
         $this->setTemplate(sprintf('from_name_%s', $emailSuffix), $email->getFromName());
+        $this->setTemplate(sprintf('from_address_%s', $emailSuffix), $email->getFromName());
 
         // keep updated at to be able to check if the template is fresh
         $this->updateDates[sprintf('html_content_%s', $emailSuffix)] = $email->getLastModifiedTimestamp();
         $this->updateDates[sprintf('text_content_%s', $emailSuffix)] = $email->getLastModifiedTimestamp();
         $this->updateDates[sprintf('subject_%s', $emailSuffix)] = $email->getLastModifiedTimestamp();
         $this->updateDates[sprintf('from_name_%s', $emailSuffix)] = $email->getLastModifiedTimestamp();
+        $this->updateDates[sprintf('from_address_%s', $emailSuffix)] = $email->getLastModifiedTimestamp();
     }
 
     /**
