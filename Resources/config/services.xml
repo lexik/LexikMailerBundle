@@ -61,6 +61,10 @@
             <call method="addExtension">
                 <argument type="service" id="twig.extension.routing" />
             </call>
+            <call method="addGlobal">
+                <argument>app</argument>
+                <argument type="service" id="templating.globals" />
+            </call>
         </service>
 
         <service id="lexik_mailer.message_renderer" class="%lexik_mailer.message_renderer.class%">

@@ -264,6 +264,6 @@ class MessageFactory
             return $this->options['admin_email'];
         }
 
-        $this->renderTemplate('from_email', $parameters, $email->getChecksum());
+        $this->renderTemplate('from_address', $parameters, $email->getChecksum());
     }
 }
