@@ -2,6 +2,7 @@
 
 namespace Lexik\Bundle\MailerBundle\Message;
 
+use Lexik\Bundle\MailerBundle\Entity\EmailTranslation;
 use Lexik\Bundle\MailerBundle\Model\EmailInterface;
 use Lexik\Bundle\MailerBundle\Mapping\Driver\Annotation;
 use Lexik\Bundle\MailerBundle\Exception\NoTranslationException;
@@ -145,7 +146,7 @@ class MessageFactory
 
             $message = $this->createMessageInstance()
                             ->setSubject($this->renderTemplate('subject', $parameters, $email->getChecksum()))
-                            ->setFrom($email->getFromAddress($this->options['admin_email']), $this->renderTemplate('from_name', $parameters, $email->getChecksum()))
+                            ->setFrom($this->renderFromAddress($email, $parameters), $this->renderTemplate('from_name', $parameters, $email->getChecksum()))
                             ->setTo($to)
                             ->setBody($this->renderTemplate('html_content', $parameters, $email->getChecksum()), 'text/html');
 
@@ -247,5 +248,22 @@ class MessageFactory
         }
 
         return $message;
+    }
+
+    /**
+     * Render email from address
+     *
+     * @param  EmailInterface $email
+     * @param  array          $parameters
+     *
+     * @return string
+     */
+    protected function renderFromAddress(EmailInterface $email, array $parameters = array())
+    {
+        if (null === $email->getFromAddress()) {
+            return $this->options['admin_email'];
+        }
+
+        return $this->renderTemplate('from_address', $parameters, $email->getChecksum());
     }
 }

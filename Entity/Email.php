@@ -348,11 +348,11 @@ class Email implements EmailInterface
     /**
      * @see Lexik\Bundle\MailerBundle\Model.EmailInterface::getFromAddress()
      */
-    public function getFromAddress($default)
+    public function getFromAddress()
     {
         $from = $this->currentTranslation->getFromAddress();
 
-        return !empty($from) ? $from : $default;
+        return $from;
     }
 
     /**

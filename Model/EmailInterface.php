@@ -55,11 +55,9 @@ interface EmailInterface
     /**
      * Returns the email address of the sender according to the email locale.
      *
-     * @param string $default
-     *
      * @return string
      */
-    public function getFromAddress($default);
+    public function getFromAddress();
 
     /**
      * Returns the name of the sender according to the email locale.
