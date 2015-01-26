@@ -117,6 +117,7 @@ Layout:
 Emails:
 
 * from name
+* from address
 * subject
 * body
 * body text
