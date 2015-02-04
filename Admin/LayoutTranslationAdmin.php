@@ -13,13 +13,7 @@ use Sonata\AdminBundle\Route\RouteCollection;
  */
 class LayoutTranslationAdmin extends Admin
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function getParentAssociationMapping()
-    {
-        return 'layout';
-    }
+    protected $parentAssociationMapping = 'layout';
 
     /**
      * {@inheritdoc}

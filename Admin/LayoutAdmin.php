@@ -101,14 +101,14 @@ class LayoutAdmin extends Admin
         /** @var LayoutTranslation $translation */
         foreach ($object->getTranslations() as $translation) {
             $menu->addChild($translation->getLang(), [
-                'route' => 'admin_lexik_mailer_layouttranslation_edit',
+                'route' => 'admin_lexik_mailer_layout_layouttranslation_edit',
                 'routeParameters' => ['id' => $id, 'childId' => $translation->getId()],
                 'routeAbsolute' => false
             ]);
         }
 
         $menu->addChild('NEW', [
-            'route' => 'admin_lexik_mailer_layouttranslation_create',
+            'route' => 'admin_lexik_mailer_layout_layouttranslation_create',
             'routeParameters' => [
                 'id' => $id
             ]

@@ -18,6 +18,9 @@
             <argument/>
             <argument>Lexik\Bundle\MailerBundle\Entity\Layout</argument>
             <argument></argument>
+            <call method="addChild">
+                <argument type="service" id="lexik_mailer.admin.layout_translation" />
+            </call>
             <call method="setLocale">
                 <argument>%locale%</argument>
             </call>
