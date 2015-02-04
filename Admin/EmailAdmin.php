@@ -2,10 +2,11 @@
 
 namespace Lexik\Bundle\MailerBundle\Admin;
 
+use Knp\Menu\ItemInterface as MenuItemInterface;
 use Lexik\Bundle\MailerBundle\Entity\Email;
 use Lexik\Bundle\MailerBundle\Entity\EmailTranslation;
-
 use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -29,17 +30,6 @@ class EmailAdmin extends Admin
     public function setLocale($locale)
     {
         $this->locale = $locale;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getNewInstance()
-    {
-        $email = new Email();
-        $email->addTranslation(new EmailTranslation($this->locale));
-
-        return $email;
     }
 
     /**
@@ -80,20 +70,6 @@ class EmailAdmin extends Admin
                     'allow_add'    => true,
                     'allow_delete' => true,
                 ]))
-            ->end()
-            ->with('Translations')
-            ->add(
-                'translations',
-                'sonata_type_collection',
-                [
-                    'cascade_validation' => true,
-                    'by_reference'       => false,
-                ],
-                [
-                    'edit'       => 'inline',
-                    'admin_code' => 'lexik_mailer.admin.email_translation'
-                ]
-            )
             ->end();
     }
 
@@ -128,5 +104,36 @@ class EmailAdmin extends Admin
             ->add('reference')
             ->add('layout')
         ;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configureTabMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
+    {
+        if (!$childAdmin && !in_array($action, ['edit'])) {
+            return;
+        }
+
+        $id = $this->getRequest()->get('id');
+
+        /** @var Email $object */
+        $object = $this->getObject($id);
+
+        /** @var EmailTranslation $translation */
+        foreach ($object->getTranslations() as $translation) {
+            $menu->addChild($translation->getLang(), [
+                'route' => 'admin_lexik_mailer_email_emailtranslation_edit',
+                'routeParameters' => ['id' => $id, 'childId' => $translation->getId()],
+                'routeAbsolute' => false
+            ]);
+        }
+
+        $menu->addChild('NEW', [
+            'route' => 'admin_lexik_mailer_email_emailtranslation_create',
+            'routeParameters' => [
+                'id' => $id
+            ]
+        ]);
     }
 }

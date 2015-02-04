@@ -13,7 +13,7 @@ use Sonata\AdminBundle\Route\RouteCollection;
  */
 class EmailTranslationAdmin extends Admin
 {
-    protected $parentAssociationMapping = 'lexik_mailer.admin.email';
+    protected $parentAssociationMapping = 'email';
 
     /**
      * {@inheritdoc}
@@ -37,14 +37,14 @@ class EmailTranslationAdmin extends Admin
                     'preferred_choices' => ['fr']
                 ]
             )
+            ->add('fromAddress')
+            ->add('fromName')
             ->add('subject')
             ->add('body', null, [
                     'attr' => ['rows' => 20]
                 ])
             ->add('bodyText', null, [
                     'attr' => ['rows' => 20]
-                ])
-            ->add('fromAddress')
-            ->add('fromName');
+                ]);
     }
 }

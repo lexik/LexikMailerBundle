@@ -2,10 +2,11 @@
 
 namespace Lexik\Bundle\MailerBundle\Admin;
 
+use Knp\Menu\ItemInterface as MenuItemInterface;
 use Lexik\Bundle\MailerBundle\Entity\Layout;
 use Lexik\Bundle\MailerBundle\Entity\LayoutTranslation;
-
 use Sonata\AdminBundle\Admin\Admin;
+use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
@@ -34,17 +35,6 @@ class LayoutAdmin extends Admin
     /**
      * {@inheritdoc}
      */
-    public function getNewInstance()
-    {
-        $layout = new Layout();
-        $layout->addTranslation(new LayoutTranslation($this->locale));
-
-        return $layout;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     protected function configureShowFields(ShowMapper $showMapper)
     {
         $showMapper
@@ -61,20 +51,6 @@ class LayoutAdmin extends Admin
             ->with('General')
             ->add('reference', 'text', ['required' => true])
             ->add('description', 'textarea', ['required' => false])
-            ->end()
-            ->with('Translations')
-            ->add(
-                'translations',
-                'sonata_type_collection',
-                [
-                    'cascade_validation' => true,
-                    'by_reference'       => false,
-                ],
-                [
-                    'edit'       => 'inline',
-                    'admin_code' => 'lexik_mailer.admin.layout_translation'
-                ]
-            )
             ->end();
     }
 
@@ -106,5 +82,36 @@ class LayoutAdmin extends Admin
     {
         $datagridMapper
             ->add('reference');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configureTabMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
+    {
+        if (!$childAdmin && !in_array($action, ['edit'])) {
+            return;
+        }
+
+        $id = $this->getRequest()->get('id');
+
+        /** @var Layout $object */
+        $object = $this->getObject($id);
+
+        /** @var LayoutTranslation $translation */
+        foreach ($object->getTranslations() as $translation) {
+            $menu->addChild($translation->getLang(), [
+                'route' => 'admin_lexik_mailer_layouttranslation_edit',
+                'routeParameters' => ['id' => $id, 'childId' => $translation->getId()],
+                'routeAbsolute' => false
+            ]);
+        }
+
+        $menu->addChild('NEW', [
+            'route' => 'admin_lexik_mailer_layouttranslation_create',
+            'routeParameters' => [
+                'id' => $id
+            ]
+        ]);
     }
 }

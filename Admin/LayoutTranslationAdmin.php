@@ -16,6 +16,14 @@ class LayoutTranslationAdmin extends Admin
     /**
      * {@inheritdoc}
      */
+    public function getParentAssociationMapping()
+    {
+        return 'layout';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     protected function configureRoutes(RouteCollection $collection)
     {
         $collection->remove('list');
@@ -40,13 +48,5 @@ class LayoutTranslationAdmin extends Admin
                 'textarea',
                 ['required' => true]
             );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getParentAssociationMapping()
-    {
-        return 'lexik_mailer.admin.layout';
     }
 }
