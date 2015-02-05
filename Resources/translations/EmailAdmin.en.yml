@@ -1,0 +1,21 @@
+list:
+    label_reference:    Reference
+    label_layout:       Layout
+    label_description:  Description
+    label__action:      Action
+
+filter:
+    label_reference: Reference
+    label_layout:    Layout
+
+breadcrumb:
+    link_email_list: Emails
+
+form:
+    label_layout:      Layout
+    label_description: Description
+    label_reference:   Reference
+    label_bcc:         BCC
+    label_spool:       Spool
+
+create_translation: New translation

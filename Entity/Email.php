@@ -107,6 +107,14 @@ class Email implements EmailInterface
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->reference;
+    }
+
+    /**
      * Get id
      *
      * @return string

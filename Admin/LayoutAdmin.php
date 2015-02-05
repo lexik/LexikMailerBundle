@@ -10,6 +10,7 @@ use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Form\FormMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 /**
@@ -30,6 +31,14 @@ class LayoutAdmin extends Admin
     public function setLocale($locale)
     {
         $this->locale = $locale;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $collection->remove('show');
     }
 
     /**
@@ -67,7 +76,6 @@ class LayoutAdmin extends Admin
                 'actions',
                 [
                     'actions' => [
-                        'show'   => [],
                         'edit'   => [],
                         'delete' => [],
                     ]
@@ -107,7 +115,7 @@ class LayoutAdmin extends Admin
             ]);
         }
 
-        $menu->addChild('NEW', [
+        $menu->addChild($this->trans('create_translation'), [
             'route' => 'admin_lexik_mailer_layout_layouttranslation_create',
             'routeParameters' => [
                 'id' => $id

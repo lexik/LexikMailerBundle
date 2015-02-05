@@ -1,0 +1,11 @@
+breadcrumb:
+    link_email_translation_list:    Translations
+    link_email_translation_create:  New
+
+form:
+    label_lang:         Language
+    label_from_address: From address
+    label_from_name:    From name
+    label_subject:      Subject
+    label_body :        Content (html)
+    label_body_text:    Content (plain text)

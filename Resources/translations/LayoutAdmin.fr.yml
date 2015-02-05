@@ -1,0 +1,19 @@
+list:
+    label_reference:    Référence
+    label_description:  Description
+    label__action:      Action
+
+filter:
+    label_reference: Référence
+
+breadcrumb:
+    link_layout_list: Layouts
+
+form:
+    label_description: Description
+    label_reference:   Référence
+    label_bcc:         Copie Cachée
+    label_languages:   Langues
+    label_spool:       Spool
+
+create_translation: Nouvelle traduction

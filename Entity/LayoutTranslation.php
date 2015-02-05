@@ -78,6 +78,14 @@ class LayoutTranslation
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->lang;
+    }
+
+    /**
      * @ORM\PreUpdate()
      */
     public function preUpdate()
