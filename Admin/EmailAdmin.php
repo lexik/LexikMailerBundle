@@ -128,6 +128,15 @@ class EmailAdmin extends Admin
         /** @var Email $object */
         $object = $this->getObject($id);
 
+        $createMenuItem = $menu->addChild($this->trans('create_translation'), [
+            'route' => 'admin_lexik_mailer_email_emailtranslation_create',
+            'routeParameters' => [
+                'id' => $id
+            ]
+        ]);
+
+        $createMenuItem->setLinkAttribute('class', 'lexik-mailer-create');
+
         /** @var EmailTranslation $translation */
         foreach ($object->getTranslations() as $translation) {
             $menu->addChild($translation->getLang(), [
@@ -136,12 +145,5 @@ class EmailAdmin extends Admin
                 'routeAbsolute' => false
             ]);
         }
-
-        $menu->addChild($this->trans('create_translation'), [
-            'route' => 'admin_lexik_mailer_email_emailtranslation_create',
-            'routeParameters' => [
-                'id' => $id
-            ]
-        ]);
     }
 }

@@ -41,7 +41,7 @@ class EmailTranslationAdmin extends Admin
             ->add('fromName')
             ->add('subject')
             ->add('body', null, [
-                    'attr' => ['rows' => 20]
+                    'attr' => ['rows' => 20, 'data-editor' => 'html']
                 ])
             ->add('bodyText', null, [
                     'attr' => ['rows' => 20]

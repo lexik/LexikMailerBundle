@@ -106,6 +106,15 @@ class LayoutAdmin extends Admin
         /** @var Layout $object */
         $object = $this->getObject($id);
 
+        $createMenuItem = $menu->addChild($this->trans('create_translation'), [
+            'route' => 'admin_lexik_mailer_layout_layouttranslation_create',
+            'routeParameters' => [
+                'id' => $id
+            ]
+        ]);
+
+        $createMenuItem->setLinkAttribute('class', 'lexik-mailer-create');
+
         /** @var LayoutTranslation $translation */
         foreach ($object->getTranslations() as $translation) {
             $menu->addChild($translation->getLang(), [
@@ -114,12 +123,5 @@ class LayoutAdmin extends Admin
                 'routeAbsolute' => false
             ]);
         }
-
-        $menu->addChild($this->trans('create_translation'), [
-            'route' => 'admin_lexik_mailer_layout_layouttranslation_create',
-            'routeParameters' => [
-                'id' => $id
-            ]
-        ]);
     }
 }

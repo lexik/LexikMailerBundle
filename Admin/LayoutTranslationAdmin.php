@@ -40,7 +40,12 @@ class LayoutTranslationAdmin extends Admin
             ->add(
                 'body',
                 'textarea',
-                ['required' => true]
+                [
+                    'required' => true,
+                    'attr'     => [
+                        'data-editor' => 'html'
+                    ]
+                ]
             );
     }
 }

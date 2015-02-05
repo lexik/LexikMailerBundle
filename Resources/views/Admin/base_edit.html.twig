@@ -1,0 +1,59 @@
+{% extends 'SonataAdminBundle:CRUD:base_edit.html.twig' %}
+
+{% block navbar_title '' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .lexik-mailer-create:before { content: "\f055"; font-family: FontAwesome; margin-right: 6px; }
+    </style>
+{% endblock stylesheets %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
+    <script>
+        $(function() {
+            $('[data-editor]').each(function () {
+
+                var textarea = $(this);
+                var mode = textarea.data('editor');
+
+                var editDiv = $('<div>', {
+                    position: 'absolute',
+                    width: textarea.width(),
+                    height: 100,
+                    'class': textarea.attr('class')
+                }).insertBefore(textarea);
+
+                textarea.css('display', 'none');
+
+                var editor = ace.edit(editDiv[0]);
+                editor.renderer.setShowGutter(false);
+                editor.getSession().setValue(textarea.val());
+                editor.getSession().setMode("ace/mode/" + mode);
+
+                // copy back to textarea on form submit...
+                textarea.closest('form').submit(function () {
+                    textarea.val(editor.getSession().getValue());
+                })
+
+                var heightUpdateFunction = function() {
+                    var newHeight = editor.getSession().getScreenLength() * editor.renderer.lineHeight + editor.renderer.scrollBar.getWidth();
+                    if (newHeight > 100) {
+                        editDiv.height(newHeight.toString() + "px");
+                        editor.resize();
+                    }
+                };
+
+                heightUpdateFunction();
+
+                editor.getSession().on('change', function(){
+                    textarea.val(editor.getSession().getValue());
+                    heightUpdateFunction();
+                });
+
+            });
+        });
+    </script>
+{% endblock javascripts %}

@@ -27,6 +27,10 @@
             <call method="setTranslationDomain">
                 <argument>LayoutAdmin</argument>
             </call>
+            <call method="setTemplate">
+                <argument>edit</argument>
+                <argument>LexikMailerBundle:Admin:base_edit.html.twig</argument>
+            </call>
         </service>
         <service id="lexik_mailer.admin.layout_translation" class="%lexik_mailer.admin.layout_translation.class%">
             <tag name="sonata.admin" manager_type="orm" group="Autre" label="Layouts Translations" label_translator_strategy="sonata.admin.label.strategy.underscore" />
@@ -35,6 +39,10 @@
             <argument></argument>
             <call method="setTranslationDomain">
                 <argument>LayoutTranslationAdmin</argument>
+            </call>
+            <call method="setTemplate">
+                <argument>edit</argument>
+                <argument>LexikMailerBundle:Admin:base_edit.html.twig</argument>
             </call>
         </service>
         <!-- EMAIL ADMIN -->
@@ -52,6 +60,10 @@
             <call method="setTranslationDomain">
                 <argument>EmailAdmin</argument>
             </call>
+            <call method="setTemplate">
+                <argument>edit</argument>
+                <argument>LexikMailerBundle:Admin:base_edit.html.twig</argument>
+            </call>
         </service>
         <service id="lexik_mailer.admin.email_translation" class="%lexik_mailer.admin.email_translation.class%">
             <tag name="sonata.admin" manager_type="orm" group="Autre" label="Emails Translations" label_translator_strategy="sonata.admin.label.strategy.underscore" />
@@ -60,6 +72,10 @@
             <argument></argument>
             <call method="setTranslationDomain">
                 <argument>EmailTranslationAdmin</argument>
+            </call>
+            <call method="setTemplate">
+                <argument>edit</argument>
+                <argument>LexikMailerBundle:Admin:base_edit.html.twig</argument>
             </call>
         </service>
     </services>
