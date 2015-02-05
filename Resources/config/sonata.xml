@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="lexik_mailer.admin.layout.class">Lexik\Bundle\MailerBundle\Admin\LayoutAdmin</parameter>
+        <parameter key="lexik_mailer.admin.layout_translation.class">Lexik\Bundle\MailerBundle\Admin\LayoutTranslationAdmin</parameter>
+        <parameter key="lexik_mailer.admin.email.class">Lexik\Bundle\MailerBundle\Admin\EmailAdmin</parameter>
+        <parameter key="lexik_mailer.admin.email_translation.class">Lexik\Bundle\MailerBundle\Admin\EmailTranslationAdmin</parameter>
+    </parameters>
+
+    <services>
+        <!-- LAYOUT ADMIN -->
+        <service id="lexik_mailer.admin.layout" class="%lexik_mailer.admin.layout.class%">
+            <tag name="sonata.admin" manager_type="orm" group="Emails" label="Layouts" />
+            <argument/>
+            <argument>Lexik\Bundle\MailerBundle\Entity\Layout</argument>
+            <argument></argument>
+            <call method="addChild">
+                <argument type="service" id="lexik_mailer.admin.layout_translation" />
+            </call>
+            <call method="setLocale">
+                <argument>%locale%</argument>
+            </call>
+        </service>
+        <service id="lexik_mailer.admin.layout_translation" class="%lexik_mailer.admin.layout_translation.class%">
+            <tag name="sonata.admin" manager_type="orm" group="Autre" label="Layouts Translations" />
+            <argument/>
+            <argument>Lexik\Bundle\MailerBundle\Entity\LayoutTranslation</argument>
+            <argument></argument>
+        </service>
+        <!-- EMAIL ADMIN -->
+        <service id="lexik_mailer.admin.email" class="%lexik_mailer.admin.email.class%">
+            <tag name="sonata.admin" manager_type="orm" group="Emails" label="Emails" />
+            <argument/>
+            <argument>Lexik\Bundle\MailerBundle\Entity\Email</argument>
+            <argument></argument>
+            <call method="addChild">
+                <argument type="service" id="lexik_mailer.admin.email_translation" />
+            </call>
+            <call method="setLocale">
+                <argument>%locale%</argument>
+            </call>
+        </service>
+        <service id="lexik_mailer.admin.email_translation" class="%lexik_mailer.admin.email_translation.class%">
+            <tag name="sonata.admin" manager_type="orm" group="Autre" label="Emails Translations" />
+            <argument/>
+            <argument>Lexik\Bundle\MailerBundle\Entity\EmailTranslation</argument>
+            <argument></argument>
+        </service>
+    </services>
+</container>

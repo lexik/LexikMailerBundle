@@ -146,6 +146,17 @@ class Layout implements LayoutInterface
     }
 
     /**
+     * Remove a translation
+     *
+     * @param LayoutTranslation $translation
+     */
+    public function removeTranslation(LayoutTranslation $translation)
+    {
+        $this->translations->removeElement($translation);
+        $translation->setLayout(null);
+    }
+
+    /**
      * Get LayoutTranslation for a given lang, if not exist it will be created
      *
      * @param string $lang

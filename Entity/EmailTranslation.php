@@ -303,7 +303,7 @@ class EmailTranslation
      *
      * @param Email $email
      */
-    public function setEmail(Email $email)
+    public function setEmail(Email $email = null)
     {
         $this->email = $email;
     }
