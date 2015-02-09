@@ -32,20 +32,20 @@ class LayoutTranslationAdmin extends Admin
             ->add(
                 'lang',
                 'language',
-                [
+                array(
                     'required'          => true,
-                    'preferred_choices' => ['fr']
-                ]
+                    'preferred_choices' => array('fr')
+                )
             )
             ->add(
                 'body',
                 'textarea',
-                [
+                array(
                     'required' => true,
-                    'attr'     => [
+                    'attr'     => array(
                         'data-editor' => 'html'
-                    ]
-                ]
+                    )
+                )
             );
     }
 }

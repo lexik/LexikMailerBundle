@@ -32,19 +32,27 @@ class EmailTranslationAdmin extends Admin
             ->add(
                 'lang',
                 'language',
-                [
+                array(
                     'required'          => true,
-                    'preferred_choices' => ['fr']
-                ]
+                    'preferred_choices' => array('fr')
+                )
             )
             ->add('fromAddress')
             ->add('fromName')
             ->add('subject')
-            ->add('body', null, [
-                    'attr' => ['rows' => 20, 'data-editor' => 'html']
-                ])
-            ->add('bodyText', null, [
-                    'attr' => ['rows' => 20]
-                ]);
+            ->add(
+                'body',
+                null,
+                array(
+                    'attr' => array('rows' => 20, 'data-editor' => 'html')
+                )
+            )
+            ->add(
+                'bodyText',
+                null,
+                array(
+                    'attr' => array('rows' => 20)
+                )
+            );
     }
 }

@@ -59,26 +59,40 @@ class EmailAdmin extends Admin
     {
         $formMapper
             ->with('General')
-            ->add('reference', 'text', ['required' => true])
-            ->add('layout', null, [
-                'required' => true,
-                'attr'     => [
-                    'data-sonata-select2' => 'false',
-                    'class'               => 'form-control'
-                ]
-            ])
-            ->add('description', 'textarea', ['required' => false])
+            ->add('reference', 'text', array('required' => true))
+            ->add(
+                'layout',
+                null,
+                array(
+                    'required' => true,
+                    'attr'     => array(
+                        'data-sonata-select2' => 'false',
+                        'class'               => 'form-control'
+                    )
+                )
+            )
+            ->add('description', 'textarea', array('required' => false))
             ->add('bcc')
-            ->add('spool', null, [
-                'required'  => false,
-            ])
+            ->add(
+                'spool',
+                null,
+                array(
+                    'required' => false,
+                )
+            )
             ->end()
             ->with('Headers')
-                ->add($formMapper->create('headers', 'sonata_type_native_collection', [
-                    'type'         => 'lexik_mailer_header',
-                    'allow_add'    => true,
-                    'allow_delete' => true,
-                ]))
+            ->add(
+                $formMapper->create(
+                    'headers',
+                    'sonata_type_native_collection',
+                    array(
+                        'type'         => 'lexik_mailer_header',
+                        'allow_add'    => true,
+                        'allow_delete' => true,
+                    )
+                )
+            )
             ->end();
     }
 
@@ -94,12 +108,12 @@ class EmailAdmin extends Admin
             ->add(
                 '_action',
                 'actions',
-                [
-                    'actions' => [
-                        'edit'   => [],
-                        'delete' => [],
-                    ]
-                ]
+                array(
+                    'actions' => array(
+                        'edit'   => array(),
+                        'delete' => array(),
+                    )
+                )
             );
     }
 
@@ -110,8 +124,7 @@ class EmailAdmin extends Admin
     {
         $datagridMapper
             ->add('reference')
-            ->add('layout')
-        ;
+            ->add('layout');
     }
 
     /**
@@ -119,7 +132,7 @@ class EmailAdmin extends Admin
      */
     protected function configureTabMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
     {
-        if (!$childAdmin && !in_array($action, ['edit'])) {
+        if (!$childAdmin && !in_array($action, array('edit'))) {
             return;
         }
 
@@ -128,22 +141,28 @@ class EmailAdmin extends Admin
         /** @var Email $object */
         $object = $this->getObject($id);
 
-        $createMenuItem = $menu->addChild($this->trans('create_translation'), [
-            'route' => 'admin_lexik_mailer_email_emailtranslation_create',
-            'routeParameters' => [
-                'id' => $id
-            ]
-        ]);
+        $createMenuItem = $menu->addChild(
+            $this->trans('create_translation'),
+            array(
+                'route'           => 'admin_lexik_mailer_email_emailtranslation_create',
+                'routeParameters' => array(
+                    'id' => $id
+                )
+            )
+        );
 
         $createMenuItem->setLinkAttribute('class', 'lexik-mailer-create');
 
         /** @var EmailTranslation $translation */
         foreach ($object->getTranslations() as $translation) {
-            $menu->addChild($translation->getLang(), [
-                'route' => 'admin_lexik_mailer_email_emailtranslation_edit',
-                'routeParameters' => ['id' => $id, 'childId' => $translation->getId()],
-                'routeAbsolute' => false
-            ]);
+            $menu->addChild(
+                $translation->getLang(),
+                array(
+                    'route'           => 'admin_lexik_mailer_email_emailtranslation_edit',
+                    'routeParameters' => array('id' => $id, 'childId' => $translation->getId()),
+                    'routeAbsolute'   => false
+                )
+            );
         }
     }
 }
