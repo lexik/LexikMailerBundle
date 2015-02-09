@@ -111,6 +111,14 @@ class EmailTranslation
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->lang;
+    }
+
+    /**
      * @ORM\PreUpdate()
      */
     public function preUpdate()
@@ -303,7 +311,7 @@ class EmailTranslation
      *
      * @param Email $email
      */
-    public function setEmail(Email $email)
+    public function setEmail(Email $email = null)
     {
         $this->email = $email;
     }

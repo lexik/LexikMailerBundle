@@ -1,0 +1,7 @@
+breadcrumb:
+    link_layout_translation_list: Traductions
+    link_layout_translation_create: Nouvelle
+
+form:
+    label_lang: Langue
+    label_body: Contenu

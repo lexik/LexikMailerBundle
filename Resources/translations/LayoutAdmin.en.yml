@@ -1,0 +1,18 @@
+list:
+    label_reference:    Reference
+    label_description:  Description
+    label__action:      Action
+
+filter:
+    label_reference: Reference
+
+breadcrumb:
+    link_layout_list: Layouts
+
+form:
+    label_description: Description
+    label_reference:   Reference
+    label_bcc:         BCC
+    label_spool:       Spool
+
+create_translation: New translation

@@ -97,6 +97,10 @@ class Configuration implements ConfigurationInterface
                     ->end()
                 ->end()
 
+                ->booleanNode('sonata_integration')
+                    ->defaultFalse()
+                ->end()
+
             ->end()
         ;
 

@@ -78,6 +78,14 @@ class LayoutTranslation
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->lang;
+    }
+
+    /**
      * @ORM\PreUpdate()
      */
     public function preUpdate()
@@ -190,7 +198,7 @@ class LayoutTranslation
      *
      * @param Layout $layout
      */
-    public function setLayout(Layout $layout)
+    public function setLayout(Layout $layout = null)
     {
         $this->layout = $layout;
     }

@@ -107,6 +107,14 @@ class Email implements EmailInterface
     }
 
     /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->reference;
+    }
+
+    /**
      * Get id
      *
      * @return string
@@ -236,6 +244,17 @@ class Email implements EmailInterface
     {
         $this->translations->add($translation);
         $translation->setEmail($this);
+    }
+
+    /**
+     * Remove a translation
+     *
+     * @param EmailTranslation $translation
+     */
+    public function removeTranslation(EmailTranslation $translation)
+    {
+        $this->translations->removeElement($translation);
+        $translation->setEmail(null);
     }
 
     /**
