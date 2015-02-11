@@ -94,7 +94,7 @@ class SimplePager
             ->getRepository($entityName)
             ->createQueryBuilder('r')
             ->orderBy('r.reference')
-            ;
+        ;
     }
 
     /**
