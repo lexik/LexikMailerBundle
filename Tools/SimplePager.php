@@ -3,6 +3,7 @@
 namespace Lexik\Bundle\MailerBundle\Tools;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
@@ -83,18 +84,31 @@ class SimplePager
     }
 
     /**
+     * @param  string $entityName
+     *
+     * @return QueryBuilder
+     */
+    protected function createQueryBuilder($entityName)
+    {
+        return $this->em
+            ->getRepository($entityName)
+            ->createQueryBuilder('r')
+            ->orderBy('r.reference')
+        ;
+    }
+
+    /**
      * @param string  $entityName
      * @param integer $page
+     *
      * @return \Lexik\Bundle\MailerBundle\Tools\SimplePager
      */
     public function retrievePageElements($entityName, $page)
     {
         $page = $page < 1 ? 1 : $page;
 
-        $qb = $this->em
-            ->getRepository($entityName)
-            ->createQueryBuilder('r')
-            ->orderBy('r.reference')
+        $qb = $this->createQueryBuilder($entityName);
+        $qb
             ->setMaxResults($this->itemPerPage)
             ->setFirstResult(($page-1) * $this->itemPerPage)
         ;
