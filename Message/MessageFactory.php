@@ -25,17 +25,17 @@ class MessageFactory
     /**
      * @var EntityManager
      */
-    private $em;
+    protected $em;
 
     /**
      * @var MessageRender
      */
-    private $renderer;
+    protected $renderer;
 
     /**
      * @var Annotation
      */
-    private $annotationDriver;
+    protected $annotationDriver;
 
     /**
      * @var array
@@ -45,12 +45,12 @@ class MessageFactory
     /**
      * @var array
      */
-    private $emails;
+    protected $emails;
 
     /**
      * @var SignerFactory
      */
-    private $signer;
+    protected $signer;
 
     /**
      * Constructor.
