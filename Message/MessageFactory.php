@@ -103,7 +103,7 @@ class MessageFactory
 
         $email = $this->emails[$reference];
 
-        if (true === $throwException) {
+        if (true === $throwException && null === $email) {
             throw new ReferenceNotFoundException($reference, sprintf('Reference "%s" does not exist for email.', $reference));
         }
 
