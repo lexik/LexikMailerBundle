@@ -2,7 +2,8 @@
 
 namespace Lexik\Bundle\MailerBundle\Message;
 
-use Lexik\Bundle\MailerBundle\Entity\EmailTranslation;
+use Doctrine\ORM\EntityManager;
+use Lexik\Bundle\MailerBundle\Exception\ReferenceNotFoundException;
 use Lexik\Bundle\MailerBundle\Model\EmailInterface;
 use Lexik\Bundle\MailerBundle\Mapping\Driver\Annotation;
 use Lexik\Bundle\MailerBundle\Exception\NoTranslationException;
@@ -11,8 +12,6 @@ use Lexik\Bundle\MailerBundle\Message\NoTranslationMessage;
 use Lexik\Bundle\MailerBundle\Message\UndefinedVariableMessage;
 use Lexik\Bundle\MailerBundle\Message\TwigErrorMessage;
 use Lexik\Bundle\MailerBundle\Signer\SignerFactory;
-
-use Doctrine\ORM\EntityManager;
 
 /**
  * Create some swift messages from email templates.
@@ -28,7 +27,7 @@ class MessageFactory
     protected $em;
 
     /**
-     * @var MessageRender
+     * @var MessageRenderer
      */
     protected $renderer;
 
@@ -88,6 +87,30 @@ class MessageFactory
     }
 
     /**
+     * Find an email from database
+     *
+     * @param  string $reference
+     * @param  bool   $throwException
+     *
+     * @throws ReferenceNotFoundException
+     * @return  EmailInterface|null
+     */
+    public function getEmail($reference, $throwException = false)
+    {
+        if (!isset($this->emails[$reference])) {
+            $this->emails[$reference] = $this->em->getRepository($this->options['email_class'])->findOneByReference($reference);
+        }
+
+        $email = $this->emails[$reference];
+
+        if (true === $throwException) {
+            throw new ReferenceNotFoundException($reference, sprintf('Reference "%s" does not exist for email.', $reference));
+        }
+
+        return $email;
+    }
+
+    /**
      * Find an email template and create a swift message.
      *
      * @param string $reference
@@ -100,11 +123,7 @@ class MessageFactory
      */
     public function get($reference, $to, array $parameters = array(), $locale = null)
     {
-        if (!isset($this->emails[$reference])) {
-            $this->emails[$reference] = $this->em->getRepository($this->options['email_class'])->findOneByReference($reference);
-        }
-
-        $email = $this->emails[$reference];
+        $email = $this->getEmail($reference);
 
         if ($email instanceof EmailInterface) {
             return $this->generateMessage($email, $to, $parameters, $locale);
