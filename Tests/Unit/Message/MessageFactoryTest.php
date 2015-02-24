@@ -58,6 +58,11 @@ in "{$file}" at line 60
 EOF;
 
         $message = $factory->get('this-reference-does-not-exist', 'chuk@email.fr', array('name' => 'chuck'));
+        $this->assertInstanceOf('Swift_Message', $message);
+        $this->assertEquals(array('admin@email.fr' => null), $message->getTo());
+        $this->assertEquals('An exception occurred', $message->getSubject());
+        $this->assertEquals($body, $message->getBody());
+        $this->assertEquals(array('admin@email.fr' => null), $message->getFrom());
 
         // no translation found
         $body = <<<EOF
