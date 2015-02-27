@@ -90,12 +90,12 @@ class MessageFactory
      * Find an email from database
      *
      * @param  string $reference
-     * @param  bool   $throwException
      *
      * @throws ReferenceNotFoundException
+     *
      * @return  EmailInterface|null
      */
-    public function getEmail($reference, $throwException = false)
+    public function getEmail($reference)
     {
         if (!isset($this->emails[$reference])) {
             $this->emails[$reference] = $this->em->getRepository($this->options['email_class'])->findOneByReference($reference);
@@ -103,8 +103,10 @@ class MessageFactory
 
         $email = $this->emails[$reference];
 
-        if (true === $throwException && null === $email) {
+        if (null === $email) {
             throw new ReferenceNotFoundException($reference, sprintf('Reference "%s" does not exist for email.', $reference));
+        } elseif (!$email instanceof EmailInterface) {
+            throw new \RuntimeException();
         }
 
         return $email;
@@ -119,18 +121,16 @@ class MessageFactory
      * @param string $locale
      *
      * @throws \RuntimeException
+     *
      * @return \Swift_Message
      */
     public function get($reference, $to, array $parameters = array(), $locale = null)
     {
-        $email = $this->getEmail($reference);
-
-        if ($email instanceof EmailInterface) {
+        try {
+            $email = $this->getEmail($reference);
             return $this->generateMessage($email, $to, $parameters, $locale);
-        } elseif (null === $email) {
+        } catch (ReferenceNotFoundException $e) {
             return $this->generateExceptionMessage($reference);
-        } else {
-            throw new \RuntimeException();
         }
     }
 
@@ -141,6 +141,7 @@ class MessageFactory
      * @param mixed          $to
      * @param array          $parameters
      * @param string         $locale
+     *
      * @return \Swift_Message
      */
     public function generateMessage(EmailInterface $email, $to, array $parameters = array(), $locale = null)

@@ -130,15 +130,12 @@ EOF;
     {
         $factory = $this->createMessageFactory();
 
-        $email = $factory->getEmail('rabbids-template', false);
+        $email = $factory->getEmail('rabbids-template');
         $this->assertInstanceOf('Lexik\Bundle\MailerBundle\Model\EmailInterface', $email);
         $this->assertEquals($email->getReference(), 'rabbids-template');
 
-        $email = $factory->getEmail('this-reference-does-not-exist', false);
-        $this->assertNull($email);
-
         $this->setExpectedException('Lexik\Bundle\MailerBundle\Exception\ReferenceNotFoundException');
         $factory = $this->createMessageFactory();
-        $factory->getEmail('this-reference-does-not-exist', true);
+        $factory->getEmail('this-reference-does-not-exist');
     }
 }
