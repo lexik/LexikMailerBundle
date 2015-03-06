@@ -5,7 +5,7 @@ namespace Lexik\Bundle\MailerBundle\Message;
 /**
  * @author Yoann Aparici <y.aparici@lexik.fr>
  */
-class NoTranslationMessage extends \Swift_Message
+class NoTranslationMessage extends \Swift_Message implements ErrorMessageInterface
 {
     /**
      * Construct
