@@ -5,7 +5,7 @@ namespace Lexik\Bundle\MailerBundle\Message;
 /**
  * @author Yoann Aparici <y.aparici@lexik.fr>
  */
-class UndefinedVariableMessage extends \Swift_Message
+class UndefinedVariableMessage extends ErrorMessage
 {
     /**
      * Construct.
