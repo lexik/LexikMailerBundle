@@ -5,7 +5,7 @@ namespace Lexik\Bundle\MailerBundle\Message;
 /**
  * @author Yoann Aparici <y.aparici@lexik.fr>
  */
-class TwigErrorMessage extends \Swift_Message
+class TwigErrorMessage extends \Swift_Message implements ErrorMessageInterface
 {
     /**
      * Construct.

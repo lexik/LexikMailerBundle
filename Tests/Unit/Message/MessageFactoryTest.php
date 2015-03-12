@@ -59,6 +59,7 @@ EOF;
 
         $message = $factory->get('this-reference-does-not-exixt', 'chuk@email.fr', array('name' => 'chuck'));
         $this->assertInstanceOf('Swift_Message', $message);
+        $this->assertInstanceOf('\Lexik\Bundle\MailerBundle\Message\ErrorMessageInterface', $message);
         $this->assertEquals(array('admin@email.fr' => null), $message->getTo());
         $this->assertEquals('An exception occurred', $message->getSubject());
         $this->assertEquals($body, $message->getBody());
@@ -73,6 +74,7 @@ EOF;
 
         $message = $factory->get('rabbids-template', 'chuk@email.fr', array('name' => 'chuck'), 'de');
         $this->assertInstanceOf('Swift_Message', $message);
+        $this->assertInstanceOf('\Lexik\Bundle\MailerBundle\Message\ErrorMessageInterface', $message);
         $this->assertEquals(array('admin@email.fr' => null), $message->getTo());
         $this->assertEquals('An exception occurred', $message->getSubject());
         $this->assertEquals($body, $message->getBody());
@@ -86,6 +88,7 @@ EOF;
 
         $message = $factory->get('rabbids-template', 'chuk@email.fr', array('name' => 'chuck'), 'es');
         $this->assertInstanceOf('Swift_Message', $message);
+        $this->assertInstanceOf('\Lexik\Bundle\MailerBundle\Message\ErrorMessageInterface', $message);
         $this->assertEquals(array('admin@email.fr' => null), $message->getTo());
         $this->assertEquals('An exception occurred', $message->getSubject());
         $this->assertEquals($body, $message->getBody());
