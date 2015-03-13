@@ -104,6 +104,7 @@ class Email implements EmailInterface
     {
         $this->translations = new ArrayCollection();
         $this->headers      = array();
+        $this->spool        = false;
     }
 
     /**
