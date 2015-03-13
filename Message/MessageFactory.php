@@ -103,10 +103,8 @@ class MessageFactory
 
         $email = $this->emails[$reference];
 
-        if (null === $email) {
+        if (!$email instanceof EmailInterface) {
             throw new ReferenceNotFoundException($reference, sprintf('Reference "%s" does not exist for email.', $reference));
-        } elseif (!$email instanceof EmailInterface) {
-            throw new \RuntimeException();
         }
 
         return $email;
