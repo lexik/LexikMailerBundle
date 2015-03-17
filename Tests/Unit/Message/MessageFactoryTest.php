@@ -2,8 +2,8 @@
 
 namespace Lexik\Bundle\MailerBundle\Tests\Message;
 
+use Lexik\Bundle\MailerBundle\Exception\ReferenceNotFoundException;
 use Lexik\Bundle\MailerBundle\Twig\Loader\EmailLoader;
-
 use Lexik\Bundle\MailerBundle\Message\MessageRenderer;
 use Lexik\Bundle\MailerBundle\Message\MessageFactory;
 use Lexik\Bundle\MailerBundle\Tests\Unit\BaseUnitTestCase;
@@ -53,11 +53,11 @@ class MessageFactoryTest extends BaseUnitTestCase
         $file = __FILE__;
         $body = <<<EOF
 An error occurred while trying to send an email.
-You tried to use a reference that does not exist : "this-reference-does-not-exixt"
+You tried to use a reference that does not exist : "this-reference-does-not-exist"
 in "{$file}" at line 60
 EOF;
 
-        $message = $factory->get('this-reference-does-not-exixt', 'chuk@email.fr', array('name' => 'chuck'));
+        $message = $factory->get('this-reference-does-not-exist', 'chuk@email.fr', array('name' => 'chuck'));
         $this->assertInstanceOf('Swift_Message', $message);
         $this->assertInstanceOf('\Lexik\Bundle\MailerBundle\Message\ErrorMessageInterface', $message);
         $this->assertEquals(array('admin@email.fr' => null), $message->getTo());
@@ -127,5 +127,18 @@ EOF;
         $signerFactory = new \Lexik\Bundle\MailerBundle\Signer\SignerFactory(array());
 
         return new MessageFactory($this->em, $renderer, $annotationDriver, $options, $signerFactory);
+    }
+
+    public function testGetEmail()
+    {
+        $factory = $this->createMessageFactory();
+
+        $email = $factory->getEmail('rabbids-template');
+        $this->assertInstanceOf('Lexik\Bundle\MailerBundle\Model\EmailInterface', $email);
+        $this->assertEquals($email->getReference(), 'rabbids-template');
+
+        $this->setExpectedException('Lexik\Bundle\MailerBundle\Exception\ReferenceNotFoundException');
+        $factory = $this->createMessageFactory();
+        $factory->getEmail('this-reference-does-not-exist');
     }
 }

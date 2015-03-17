@@ -2,7 +2,8 @@
 
 namespace Lexik\Bundle\MailerBundle\Message;
 
-use Lexik\Bundle\MailerBundle\Entity\EmailTranslation;
+use Doctrine\ORM\EntityManager;
+use Lexik\Bundle\MailerBundle\Exception\ReferenceNotFoundException;
 use Lexik\Bundle\MailerBundle\Model\EmailInterface;
 use Lexik\Bundle\MailerBundle\Mapping\Driver\Annotation;
 use Lexik\Bundle\MailerBundle\Exception\NoTranslationException;
@@ -11,8 +12,6 @@ use Lexik\Bundle\MailerBundle\Message\NoTranslationMessage;
 use Lexik\Bundle\MailerBundle\Message\UndefinedVariableMessage;
 use Lexik\Bundle\MailerBundle\Message\TwigErrorMessage;
 use Lexik\Bundle\MailerBundle\Signer\SignerFactory;
-
-use Doctrine\ORM\EntityManager;
 
 /**
  * Create some swift messages from email templates.
@@ -25,17 +24,17 @@ class MessageFactory
     /**
      * @var EntityManager
      */
-    private $em;
+    protected $em;
 
     /**
-     * @var MessageRender
+     * @var MessageRenderer
      */
-    private $renderer;
+    protected $renderer;
 
     /**
      * @var Annotation
      */
-    private $annotationDriver;
+    protected $annotationDriver;
 
     /**
      * @var array
@@ -45,12 +44,12 @@ class MessageFactory
     /**
      * @var array
      */
-    private $emails;
+    protected $emails;
 
     /**
      * @var SignerFactory
      */
-    private $signer;
+    protected $signer;
 
     /**
      * Constructor.
@@ -88,6 +87,30 @@ class MessageFactory
     }
 
     /**
+     * Find an email from database
+     *
+     * @param  string $reference
+     *
+     * @throws ReferenceNotFoundException
+     *
+     * @return  EmailInterface|null
+     */
+    public function getEmail($reference)
+    {
+        if (!isset($this->emails[$reference])) {
+            $this->emails[$reference] = $this->em->getRepository($this->options['email_class'])->findOneByReference($reference);
+        }
+
+        $email = $this->emails[$reference];
+
+        if (!$email instanceof EmailInterface) {
+            throw new ReferenceNotFoundException($reference, sprintf('Reference "%s" does not exist for email.', $reference));
+        }
+
+        return $email;
+    }
+
+    /**
      * Find an email template and create a swift message.
      *
      * @param string $reference
@@ -96,22 +119,16 @@ class MessageFactory
      * @param string $locale
      *
      * @throws \RuntimeException
+     *
      * @return \Swift_Message
      */
     public function get($reference, $to, array $parameters = array(), $locale = null)
     {
-        if (!isset($this->emails[$reference])) {
-            $this->emails[$reference] = $this->em->getRepository($this->options['email_class'])->findOneByReference($reference);
-        }
-
-        $email = $this->emails[$reference];
-
-        if ($email instanceof EmailInterface) {
+        try {
+            $email = $this->getEmail($reference);
             return $this->generateMessage($email, $to, $parameters, $locale);
-        } elseif (null === $email) {
+        } catch (ReferenceNotFoundException $e) {
             return $this->generateExceptionMessage($reference);
-        } else {
-            throw new \RuntimeException();
         }
     }
 
@@ -122,6 +139,7 @@ class MessageFactory
      * @param mixed          $to
      * @param array          $parameters
      * @param string         $locale
+     *
      * @return \Swift_Message
      */
     public function generateMessage(EmailInterface $email, $to, array $parameters = array(), $locale = null)
