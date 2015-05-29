@@ -8,8 +8,8 @@ You can also create some layouts to decorate your email.
 
 [![Build Status](https://secure.travis-ci.org/lexik/LexikMailerBundle.png?branch=master)](http://travis-ci.org/lexik/LexikMailerBundle)
 ![Project Status](http://stillmaintained.com/lexik/LexikMailerBundle.png)
-
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/65df9f8f-6336-4e28-bec5-fe7f501a21dc/big.png)](https://insight.sensiolabs.com/projects/65df9f8f-6336-4e28-bec5-fe7f501a21dc)
+[![Latest Stable Version](https://poser.pugx.org/lexik/mailer-bundle/v/stable)](https://packagist.org/packages/lexik/mailer-bundle)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/65df9f8f-6336-4e28-bec5-fe7f501a21dc/mini.png)](https://insight.sensiolabs.com/projects/65df9f8f-6336-4e28-bec5-fe7f501a21dc)
 
 Documentation
 =============
