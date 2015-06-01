@@ -20,14 +20,17 @@ class LayoutType extends AbstractType
             ->add('reference', 'text', array(
                 'read_only'     => $options['edit'],
                 'property_path' => 'entity.reference',
+                'label'         => 'lexik_mailer.layout.reference',
             ))
             ->add('description', 'textarea', array(
                 'property_path' => 'entity.description',
                 'required'      => false,
+                'label'         => 'lexik_mailer.layout.description',
             ))
             ->add('translation', 'mailer_layout_translation', array(
                 'data'          => $options['data_translation'],
                 'with_language' => $options['edit'],
+                'label'         => 'lexik_mailer.layout.translation',
             ))
         ;
     }
@@ -42,6 +45,7 @@ class LayoutType extends AbstractType
             'data_translation'    => null,
             'edit'                => false,
             'preferred_languages' => array(),
+            'translation_domain'  => 'LexikMailerBundle',
         ));
     }
 
