@@ -53,7 +53,8 @@ class HeaderType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'key_choices' => count($this->allowedHeaders) ? array_combine($this->allowedHeaders, $this->allowedHeaders) : array(),
+            'key_choices'         => count($this->allowedHeaders) ? array_combine($this->allowedHeaders, $this->allowedHeaders) : array(),
+            'translation_domain'  => 'LexikMailerBundle',
         ));
     }
 

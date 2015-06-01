@@ -7,6 +7,9 @@ lexik_mailer:
         languages:                "Languages"
         actions:                  "Actions"
         list:                     "Email List"
+        delete_confirm:           "Are you sure you want to delete this template ?"
+        layout:                   "Layout"
+        spool:                    "Spool ?"
         action:
             edit:                 "Update"
             delete:               "Delete"
@@ -33,7 +36,7 @@ lexik_mailer:
         preview:                  "Preview"
 
     list:
-        from %from%:              "From: %from%"
+        from:                     "From: %from%"
 
     layout:
         id:                       "Id"
@@ -42,6 +45,7 @@ lexik_mailer:
         list:                     "Layout List"
         languages:                "Languages"
         actions:                  "Actions"
+        delete_confirm:           "Are you sure you want to delete this layout ?"
         action:
             edit:                 "Update"
             delete:               "Delete"
@@ -55,7 +59,15 @@ lexik_mailer:
         body:                     "Body"
 
     headers:
-        key:    key
-        value:  Value
-        add:    Add
-        delete: Delete
+        key:                      "key"
+        value:                    "Value"
+        add:                      "Add"
+        delete:                   "Delete"
+
+    translations:
+        language:                 "Language"
+        from_address:             "Sender email"
+        from_name:                "Sender name"
+        subject:                  "Subject"
+        body:                     "Body (HTML)"
+        body_text:                "Body (text)"

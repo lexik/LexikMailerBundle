@@ -18,20 +18,29 @@ class EmailTranslationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('subject')
+            ->add('subject', 'text', array(
+                'label' => 'lexik_mailer.translations.subject',
+            ))
             ->add('body', null, array(
-                'attr' => array('rows' => 20)
+                'attr'  => array('rows' => 20),
+                'label' => 'lexik_mailer.translations.body',
             ))
             ->add('bodyText', null, array(
-                'attr' => array('rows' => 20)
+                'attr'  => array('rows' => 20),
+                'label' => 'lexik_mailer.translations.body_text',
             ))
-            ->add('fromAddress')
-            ->add('fromName')
+            ->add('fromAddress', 'text', array(
+                'label' => 'lexik_mailer.translations.from_address',
+            ))
+            ->add('fromName', 'text', array(
+                'label' => 'lexik_mailer.translations.from_name',
+            ))
         ;
 
         if ($options['with_language']) {
             $builder->add('lang', 'language', array(
                 'preferred_choices' => $options['preferred_languages'],
+                'label'             => 'lexik_mailer.translations.language',
             ));
         }
     }
@@ -45,6 +54,7 @@ class EmailTranslationType extends AbstractType
             'data_class'          => 'Lexik\Bundle\MailerBundle\Entity\EmailTranslation',
             'with_language'       => true,
             'preferred_languages' => array('en', 'fr', 'es', 'de', 'it', 'pt', 'ja', 'zh'),
+            'translation_domain'  => 'LexikMailerBundle',
         ));
     }
 

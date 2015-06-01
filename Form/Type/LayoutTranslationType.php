@@ -17,12 +17,14 @@ class LayoutTranslationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('body', null, array(
-            'attr' => array('rows' => 20)
+            'attr'  => array('rows' => 20),
+            'label' => 'lexik_mailer.translations.subject',
         ));
 
         if ($options['with_language']) {
             $builder->add('lang', 'language', array(
                 'preferred_choices' => $options['preferred_languages'],
+                'label'             => 'lexik_mailer.translations.subject',
             ));
         }
     }
@@ -36,6 +38,7 @@ class LayoutTranslationType extends AbstractType
             'data_class'          => 'Lexik\Bundle\MailerBundle\Entity\LayoutTranslation',
             'with_language'       => true,
             'preferred_languages' => array('en', 'fr', 'es', 'de', 'it', 'pt', 'ja', 'zh'),
+            'translation_domain'  => 'LexikMailerBundle',
         ));
     }
 
