@@ -172,10 +172,6 @@ class Layout implements LayoutInterface
             $lang = array_shift($parts);
         }
 
-        if (strlen($lang) != 2) {
-            throw new \InvalidArgumentException(sprintf('$lang is not valid : "%s" given', $lang));
-        }
-
         foreach ($this->getTranslations() as $translation) {
             if ($translation->getLang() === $lang) {
                 return $translation;

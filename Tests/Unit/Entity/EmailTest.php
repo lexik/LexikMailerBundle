@@ -27,9 +27,6 @@ class EmailTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($email->getTranslation('en')->getLang(), 'en');
         $this->assertEquals($email->getTranslation('es_ES')->getLang(), 'es');
         $this->assertSame($email->getLayout(), $layout);
-
-        $this->setExpectedException('InvalidArgumentException');
-        $email->getTranslation('foo');
     }
 
     public function testGetBccs()
