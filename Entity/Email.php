@@ -262,7 +262,7 @@ class Email implements EmailInterface
      * Get EmailTranslation for a given lang, if not exist it will be created
      *
      * @param string $lang
-     * @throws \InvalidArgumentException
+     *
      * @return EmailTranslation
      */
     public function getTranslation($lang)
