@@ -161,7 +161,6 @@ class Layout implements LayoutInterface
      *
      * @param string $lang
      *
-     * @throws \InvalidArgumentException
      * @return \Lexik\Bundle\MailerBundle\Entity\LayoutTranslation
      */
     public function getTranslation($lang)
