@@ -4,7 +4,6 @@ namespace Lexik\Bundle\MailerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-use Symfony\Component\Locale\Locale;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -323,6 +322,6 @@ class EmailTranslation
      */
     public function displayLanguage()
     {
-        return Locale::getDisplayLanguage($this->getLang());
+        return \Locale::getDisplayLanguage($this->getLang());
     }
 }

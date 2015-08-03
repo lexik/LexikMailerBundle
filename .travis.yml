@@ -8,8 +8,6 @@ php:
     - hhvm
 
 env:
-    - SYMFONY_VERSION=2.3.*
-    - SYMFONY_VERSION=2.6.*
     - SYMFONY_VERSION=2.7.*
 
 matrix:

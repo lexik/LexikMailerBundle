@@ -7,9 +7,8 @@ use Doctrine\ORM\Mapping\DefaultQuoteStrategy;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
 use Doctrine\Common\Annotations\AnnotationReader;
-
-use Lexik\Bundle\MailerBundle\Tests\Fixtures\TestData;
 use Doctrine\ORM\Tools\Setup;
+use Lexik\Bundle\MailerBundle\Tests\Fixtures\TestData;
 
 /**
  * Base unit test class providing functions to create a mock entity manger, load schema and fixtures.

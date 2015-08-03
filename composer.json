@@ -11,29 +11,24 @@
             "email": "l.heurtault@lexik.fr"
         },
         {
-            "name": "Yoann Aparici",
-            "email": "y.aparici@lexik.fr"
-        },
-        {
             "name": "Dev Lexik",
             "email": "dev@lexik.fr"
         }
     ],
     "require": {
         "php": ">=5.3.2",
-        "symfony/framework-bundle": "~2.3",
-        "symfony/icu": ">=1.1",
-        "swiftmailer/swiftmailer": ">=4.1.3",
+        "symfony/framework-bundle": "~2.7",
+        "symfony/icu": "~1.1",
+        "swiftmailer/swiftmailer": "~4.1.3",
         "doctrine/orm": "~2.2",
-        "twig/twig": ">=1.3.0"
+        "twig/twig": "~1.3"
     },
     "autoload":     {
-        "psr-0": { "Lexik\\Bundle\\MailerBundle": "" }
+        "psr-4": { "Lexik\\Bundle\\MailerBundle\\": "" }
     },
-    "target-dir": "Lexik/Bundle/MailerBundle",
     "extra": {
         "branch-alias": {
-            "dev-master": "1.3.x-dev"
+            "dev-master": "2.0.x-dev"
         }
     }
 }
