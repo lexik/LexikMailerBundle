@@ -160,7 +160,7 @@ $container->get('mailer')->send($message);
 ```
     
     
-Use annotations to make the `lexik_mailer.message_factory` service automaticaly get the name and the email address of the recipient:
+Use annotations or implement the `EmailDestinationInterface` to make the `lexik_mailer.message_factory` service automaticaly get the name and the email address of the recipient:
 
 ```php
 <?php
@@ -193,6 +193,35 @@ class User
     }
 }
 ```
+
+```php
+<?php
+// SomeBundle/Entity/User.php
+//...
+use Lexik\Bundle\MailerBundle\Model\EmailDestinationInterface;
+
+class User implements EmailDestinationInterface
+{
+    //...
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+        
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+}
+```
+
 Override Controllers:
 ---------------------
 

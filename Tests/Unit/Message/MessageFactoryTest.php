@@ -3,6 +3,7 @@
 namespace Lexik\Bundle\MailerBundle\Tests\Message;
 
 use Lexik\Bundle\MailerBundle\Exception\ReferenceNotFoundException;
+use Lexik\Bundle\MailerBundle\Tests\Entity\UserTest;
 use Lexik\Bundle\MailerBundle\Twig\Loader\EmailLoader;
 use Lexik\Bundle\MailerBundle\Message\MessageRenderer;
 use Lexik\Bundle\MailerBundle\Message\MessageFactory;
@@ -54,7 +55,7 @@ class MessageFactoryTest extends BaseUnitTestCase
         $body = <<<EOF
 An error occurred while trying to send an email.
 You tried to use a reference that does not exist : "this-reference-does-not-exist"
-in "{$file}" at line 60
+in "{$file}" at line 61
 EOF;
 
         $message = $factory->get('this-reference-does-not-exist', 'chuk@email.fr', array('name' => 'chuck'));
@@ -140,5 +141,18 @@ EOF;
         $this->setExpectedException('Lexik\Bundle\MailerBundle\Exception\ReferenceNotFoundException');
         $factory = $this->createMessageFactory();
         $factory->getEmail('this-reference-does-not-exist');
+    }
+
+    public function testGetRecipient()
+    {
+        $factory = $this->createMessageFactory();
+
+        $class = new \ReflectionClass($factory);
+        $method = $class->getMethod('getRecipient');
+        $method->setAccessible(true);
+
+        $user = new UserTest();
+        $recipient = $method->invokeArgs($factory,array($user));
+        $this->assertEquals(array('user@example.net'=>'User'),$recipient);
     }
 }
