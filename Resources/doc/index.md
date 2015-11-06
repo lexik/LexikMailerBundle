@@ -241,9 +241,3 @@ class EmailController extends BaseEmailController
     }
 }
 //...
-```
-
-TODO:
------
-
-- Integrate layout with Twitter Bootstrap 3
