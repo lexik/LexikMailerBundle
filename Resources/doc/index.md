@@ -207,7 +207,7 @@ class User implements EmailDestinationInterface
     /**
      * @return string
      */
-    public function getName()
+    public function getRecipientName()
     {
         return $this->name;
     }
@@ -215,7 +215,7 @@ class User implements EmailDestinationInterface
     /**
      * @return string
      */
-    public function getEmail()
+    public function getRecipientEmail()
     {
         return $this->email;
     }
