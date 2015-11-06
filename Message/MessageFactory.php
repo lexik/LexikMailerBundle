@@ -5,6 +5,7 @@ namespace Lexik\Bundle\MailerBundle\Message;
 use Doctrine\ORM\EntityManager;
 use Lexik\Bundle\MailerBundle\Exception\ReferenceNotFoundException;
 use Lexik\Bundle\MailerBundle\Model\EmailInterface;
+use Lexik\Bundle\MailerBundle\Model\EmailDestinationInterface;
 use Lexik\Bundle\MailerBundle\Mapping\Driver\Annotation;
 use Lexik\Bundle\MailerBundle\Exception\NoTranslationException;
 use Lexik\Bundle\MailerBundle\Message\ReferenceNotFoundMessage;
@@ -148,14 +149,8 @@ class MessageFactory
             $locale = $this->options['default_locale'];
         }
 
-        // Check for annotations
         if (is_object($to)) {
-            $name = $this->annotationDriver->getName($to);
-            $to = $this->annotationDriver->getEmail($to);
-
-            if (null !== $name && '' !== $name) {
-                $to = array($to => $name);
-            }
+            $to = $this->getRecipient($to);
         }
 
         try {
@@ -283,5 +278,26 @@ class MessageFactory
         }
 
         return $this->renderTemplate('from_address', $parameters, $email->getChecksum());
+    }
+
+    /**
+     * @param object $to
+     * @return array|string
+     */
+    protected function getRecipient($to)
+    {
+        if($to instanceof EmailDestinationInterface) {
+            $name = $to->getRecipientName();
+            $to = $to->getRecipientEmail();
+        } else {
+            $name = $this->annotationDriver->getName($to);
+            $to = $this->annotationDriver->getEmail($to);
+        }
+
+        if (null !== $name && '' !== $name) {
+            $to = array($to => $name);
+        }
+
+        return $to;
     }
 }
