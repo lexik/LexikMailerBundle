@@ -84,7 +84,7 @@ EOF;
         // wrong twig variable
         $body = <<<EOF
 An error occurred while trying to send email: rabbids-template
-Unexpected "}"
+Unexpected "}".
 EOF;
 
         $message = $factory->get('rabbids-template', 'chuk@email.fr', array('name' => 'chuck'), 'es');
