@@ -15,8 +15,8 @@ class ReferenceNotFoundException extends \Exception
     /**
      * @param string $reference
      * @param string $message
+     * @param \Exception $previous
      * @param int    $code
-     * @param        \Exception
      */
     public function __construct($reference, $message = null, \Exception $previous = null, $code = 0)
     {
