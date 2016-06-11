@@ -10,7 +10,6 @@ php:
     - 5.5
     - 5.6
     - 7.0
-    - 7.1
     - hhvm
 
 env:
@@ -21,8 +20,6 @@ env:
 matrix:
     fast_finish: true
     allow_failures:
-        - php: 7.0
-        - php: 7.1
         - php: hhvm
 
 before_install:
