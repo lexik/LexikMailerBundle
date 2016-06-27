@@ -35,11 +35,16 @@ class TestData implements FixtureInterface
                 'locale' => 'es',
                 'body' => 'bliblibli {{title}} {% block content %}{% endblock %} bliblibli',
             ),
+            array(
+                'locale' => 'fa',
+                'body'   => 'fafafa {{title}} {% block content %}{% endblock %} fafafa',
+            )
         );
 
         $layout = new Layout();
         $layout->setDescription('super layout');
         $layout->setReference('rabbid-layout');
+        $layout->setDefaultLocale('fa');
 
         foreach ($translations as $trans) {
             $translation = new LayoutTranslation();
@@ -82,6 +87,13 @@ class TestData implements FixtureInterface
                 'from_address' => 'rabbids@email.fr',
                 'from_name' => 'rabbid',
             ),
+            array(
+                'locale' => 'nl',
+                'subject' => 'this template uses the fallback',
+                'body' => '{{name}} houdt van Raving Rabbids',
+                'from_address' => 'rabbids@email.com',
+                'from_name' => 'rabbid',
+            )
         );
 
         $email = new Email();
@@ -90,6 +102,7 @@ class TestData implements FixtureInterface
         $email->setReference('rabbids-template');
         $email->setSpool(false);
         $email->setLayout($layout);
+        $email->setUseFallbackLocale(true);
 
         foreach ($translations as $trans) {
             $translation = new EmailTranslation();
