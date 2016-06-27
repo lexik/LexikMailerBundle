@@ -155,4 +155,14 @@ EOF;
         $recipient = $method->invokeArgs($factory,array($user));
         $this->assertEquals(array('user@example.net'=>'User'),$recipient);
     }
+
+    public function testFallbackLanguage()
+    {
+        $factory = $this->createMessageFactory();
+        
+        $message = $factory->get('rabbids-template', 'test@email.local', array('name' => 'test', 'title' => 'test'), 'nl');
+
+        $this->assertEquals('fafafa test test houdt van Raving Rabbids fafafa', $message->getBody());
+
+    }
 }
