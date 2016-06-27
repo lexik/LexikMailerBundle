@@ -84,6 +84,7 @@ class MessageFactory
             'email_class'    => '',
             'admin_email'    => '',
             'default_locale' => 'en',
+            'fallback_locale' => false,
         );
     }
 
