@@ -1,0 +1,21 @@
+list:
+    label_reference:    参考
+    label_layout:       布局
+    label_description:  描述
+    label__action:      行动
+
+filter:
+    label_reference: 参考
+    label_layout:    布局
+
+breadcrumb:
+    link_email_list: 电子邮件
+
+form:
+    label_layout:      布局
+    label_description: 描述
+    label_reference:   参考
+    label_bcc:         密件抄送
+    label_spool:       电子邮件阀芯
+
+create_translation: 新翻译
