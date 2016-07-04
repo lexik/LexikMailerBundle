@@ -41,6 +41,5 @@ class LayoutTranslationTest extends \PHPUnit_Framework_TestCase
         $errors = $this->validator->validate($entity);
 
         $this->assertEquals(0, count($errors));
-        $this->assertNotNull($entity->displayLanguage());
     }
 }
