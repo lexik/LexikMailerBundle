@@ -1,0 +1,7 @@
+breadcrumb:
+    link_layout_translation_list:   翻译
+    link_layout_translation_create: 新
+
+form:
+    label_lang: 语言
+    label_body: 内容

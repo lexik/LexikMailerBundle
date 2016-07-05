@@ -1,0 +1,73 @@
+lexik_mailer:
+    email:
+        id:                       "身分"
+        description:              "描述"
+        reference:                "参考"
+        bcc:                      "隐藏的副本"
+        languages:                "语言"
+        actions:                  "操作"
+        list:                     "电子邮件列表"
+        delete_confirm:           "你确定要删除这个模板？"
+        layout:                   "布局"
+        spool:                    "电子邮件阀芯？"
+        action:
+            edit:                 "更新"
+            delete:               "删除"
+
+    new:
+        group_common:             "常规选项"
+        group_translation:        "翻译"
+        submit:                   "保存"
+        group_languages:          "管理语言"
+        default_lang:             "预设语言"
+        email_headers:            "头"
+
+    edit:
+        action_delete:            "删除"
+        table:
+            lang:                 "语言"
+            subject:              "学科"
+            action:               "行动"
+        lang:                     "语言"
+
+    link:
+        new:                      "新"
+        list:                     "返回目录"
+        preview:                  "预习"
+
+    list:
+        from:                     "从：%from%"
+
+    layout:
+        id:                       "身分"
+        description:              "描述"
+        reference:                "参考"
+        list:                     "布局列表"
+        languages:                "语言"
+        actions:                  "操作"
+        delete_confirm:           "你确定要删除此布局？"
+        action:
+            edit:                 "更新"
+            delete:               "删除"
+
+    translation_delete:
+        confirm:                  "你是否确认删除的语言？"
+
+    preview:
+        subject:                  "学科"
+        from_name:                "寄件人"
+        body:                     "身体"
+
+    headers:
+        key:                      "键"
+        value:                    "值"
+        add:                      "加"
+        delete:                   "删除"
+
+    translations:
+        language:                 "语言"
+        from_address:             "发件人的电子邮件"
+        from_name:                "发件人名称"
+        subject:                  "学科"
+        body:                     "车身（HTML）"
+        body_text:                "车身（文本）"

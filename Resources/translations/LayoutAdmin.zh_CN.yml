@@ -1,0 +1,18 @@
+list:
+    label_reference:    参考
+    label_description:  描述
+    label__action:      行动
+
+filter:
+    label_reference: 参考
+
+breadcrumb:
+    link_layout_list: 设计
+
+form:
+    label_description: 描述
+    label_reference:   参考
+    label_bcc:         密件抄送
+    label_spool:       卷
+
+create_translation: 新翻译
