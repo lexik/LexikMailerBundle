@@ -95,23 +95,23 @@
         <!-- Form Types -->
         <service id="lexik_mailer.form.type.header" class="%lexik_mailer.form.type.header.class%">
             <argument>%lexik_mailer.allowed_headers%</argument>
-            <tag name="form.type" alias="lexik_mailer_header" />
+            <tag name="form.type" />
         </service>
 
         <service id="lexik_mailer.form.type.mailer_email" class="%lexik_mailer.form.type.mailer_email.class%">
-            <tag name="form.type" alias="mailer_email" />
+            <tag name="form.type" />
         </service>
 
         <service id="lexik_mailer.form.type.mailer_email_translation" class="%lexik_mailer.form.type.mailer_email_translation.class%">
-            <tag name="form.type" alias="mailer_email_translation" />
+            <tag name="form.type" />
         </service>
 
         <service id="lexik_mailer.form.type.mailer_layout" class="%lexik_mailer.form.type.mailer_layout.class%">
-            <tag name="form.type" alias="mailer_layout" />
+            <tag name="form.type" />
         </service>
 
         <service id="lexik_mailer.form.type.mailer_layout_translation" class="%lexik_mailer.form.type.mailer_layout_translation.class%">
-            <tag name="form.type" alias="mailer_layout_translation" />
+            <tag name="form.type" />
         </service>
 
         <!-- Form handler -->

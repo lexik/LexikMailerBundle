@@ -3,11 +3,10 @@
 namespace Lexik\Bundle\MailerBundle\Form\Handler;
 
 use Doctrine\ORM\EntityManager;
-
 use Lexik\Bundle\MailerBundle\Entity\Layout;
 use Lexik\Bundle\MailerBundle\Entity\LayoutTranslation;
 use Lexik\Bundle\MailerBundle\Form\Model\EntityTranslationModel;
-
+use Lexik\Bundle\MailerBundle\Form\Type\LayoutType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,7 +74,7 @@ class LayoutFormHandler implements FormHandlerInterface
 
         $model = new EntityTranslationModel($layout, $translation);
 
-        return $this->factory->create('mailer_layout', $model, array(
+        return $this->factory->create(LayoutType::class, $model, array(
             'data_translation' => $translation,
             'edit'             => $edit,
         ));

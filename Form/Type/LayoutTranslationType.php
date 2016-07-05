@@ -3,6 +3,7 @@
 namespace Lexik\Bundle\MailerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -22,7 +23,7 @@ class LayoutTranslationType extends AbstractType
         ));
 
         if ($options['with_language']) {
-            $builder->add('lang', 'language', array(
+            $builder->add('lang', LanguageType::class, array(
                 'preferred_choices' => $options['preferred_languages'],
                 'label'             => 'lexik_mailer.translations.subject',
             ));
@@ -45,7 +46,7 @@ class LayoutTranslationType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'mailer_layout_translation';
     }
