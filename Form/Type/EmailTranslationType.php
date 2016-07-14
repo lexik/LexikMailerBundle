@@ -3,6 +3,8 @@
 namespace Lexik\Bundle\MailerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\LanguageType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -18,7 +20,7 @@ class EmailTranslationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('subject', 'text', array(
+            ->add('subject', TextType::class, array(
                 'label' => 'lexik_mailer.translations.subject',
             ))
             ->add('body', null, array(
@@ -29,16 +31,16 @@ class EmailTranslationType extends AbstractType
                 'attr'  => array('rows' => 20),
                 'label' => 'lexik_mailer.translations.body_text',
             ))
-            ->add('fromAddress', 'text', array(
+            ->add('fromAddress', TextType::class, array(
                 'label' => 'lexik_mailer.translations.from_address',
             ))
-            ->add('fromName', 'text', array(
+            ->add('fromName', TextType::class, array(
                 'label' => 'lexik_mailer.translations.from_name',
             ))
         ;
 
         if ($options['with_language']) {
-            $builder->add('lang', 'language', array(
+            $builder->add('lang', LanguageType::class, array(
                 'preferred_choices' => $options['preferred_languages'],
                 'label'             => 'lexik_mailer.translations.language',
             ));
@@ -61,7 +63,7 @@ class EmailTranslationType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'mailer_email_translation';
     }

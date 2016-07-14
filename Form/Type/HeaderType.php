@@ -3,6 +3,8 @@
 namespace Lexik\Bundle\MailerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -33,13 +35,13 @@ class HeaderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('key', 'choice', array(
+            ->add('key', ChoiceType::class, array(
                 'required' => true,
                 'choices'  => $options['key_choices'],
                 'multiple' => false,
                 'expanded' => false,
             ))
-            ->add('value', 'text', array(
+            ->add('value', TextType::class, array(
                 'required'    => true,
                 'constraints' => array(
                     new NotBlank(),
@@ -61,7 +63,7 @@ class HeaderType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    public function getBlockPrefix()
     {
         return 'lexik_mailer_header';
     }
