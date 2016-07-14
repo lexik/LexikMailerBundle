@@ -55,6 +55,7 @@ class EmailType extends AbstractType
             ->add('spool', CheckboxType::class, array(
                 'property_path' => 'entity.spool',
                 'label'         => 'lexik_mailer.email.spool',
+                'required'      => false,
             ))
             ->add('useFallbackLocale', CheckboxType::class, array(
                 'required'      => false,
