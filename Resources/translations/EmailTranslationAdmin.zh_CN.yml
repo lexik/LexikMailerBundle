@@ -1,0 +1,11 @@
+breadcrumb:
+    link_email_translation_list:    翻译
+    link_email_translation_create:  新
+
+form:
+    label_lang:         语言
+    label_from_address: 发件人地址
+    label_from_name:    从名字
+    label_subject:      学科
+    label_body :        内容（HTML）
+    label_body_text:    内容（纯文本）

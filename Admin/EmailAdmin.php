@@ -5,6 +5,7 @@ namespace Lexik\Bundle\MailerBundle\Admin;
 use Knp\Menu\ItemInterface as MenuItemInterface;
 use Lexik\Bundle\MailerBundle\Entity\Email;
 use Lexik\Bundle\MailerBundle\Entity\EmailTranslation;
+use Lexik\Bundle\MailerBundle\Form\Type\HeaderType;
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Admin\AdminInterface;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
@@ -87,7 +88,7 @@ class EmailAdmin extends Admin
                     'headers',
                     'sonata_type_native_collection',
                     array(
-                        'type'         => 'lexik_mailer_header',
+                        'type'         => HeaderType::class,
                         'allow_add'    => true,
                         'allow_delete' => true,
                     )

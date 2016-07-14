@@ -24,6 +24,10 @@ class TestData implements FixtureInterface
                 'body' => 'blablabla {{title}} {% block content %}{% endblock %} blablabla',
             ),
             array(
+                'locale' => 'zh_CN',
+                'body' => 'blablabla {{title}} {% block content %}{% endblock %} blablabla',
+            ),
+            array(
                 'locale' => 'en',
                 'body' => 'blublublu {{title}} {% block content %}{% endblock %} blublublu',
             ),
@@ -61,6 +65,13 @@ class TestData implements FixtureInterface
                 'body' => '{{name}} aime les lapins crétins.',
                 'from_address' => 'lapins@email.fr',
                 'from_name' => 'lapin',
+            ),
+            array(
+                'locale' => 'zh_CN',
+                'subject' => 'raving rabbids',
+                'body' => '{{name}} likes raving rabbids.',
+                'from_address' => 'rabbids@email.fr',
+                'from_name' => 'rabbid',
             ),
             array(
                 'locale' => 'en',

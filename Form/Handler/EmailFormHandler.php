@@ -3,11 +3,10 @@
 namespace Lexik\Bundle\MailerBundle\Form\Handler;
 
 use Doctrine\ORM\EntityManager;
-
 use Lexik\Bundle\MailerBundle\Entity\Email;
 use Lexik\Bundle\MailerBundle\Entity\EmailTranslation;
 use Lexik\Bundle\MailerBundle\Form\Model\EntityTranslationModel;
-
+use Lexik\Bundle\MailerBundle\Form\Type\EmailType;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -75,7 +74,7 @@ class EmailFormHandler implements FormHandlerInterface
 
         $model = new EntityTranslationModel($email, $translation);
 
-        return $this->factory->create('mailer_email', $model, array(
+        return $this->factory->create(EmailType::class, $model, array(
             'data_translation' => $translation,
             'edit'             => $edit,
         ));

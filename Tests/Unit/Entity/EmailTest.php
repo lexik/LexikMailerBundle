@@ -5,6 +5,7 @@ namespace Lexik\Bundle\MailerBundle\Tests\Entity;
 use Lexik\Bundle\MailerBundle\Entity\Layout;
 use Lexik\Bundle\MailerBundle\Entity\Email;
 use Lexik\Bundle\MailerBundle\Entity\EmailTranslation;
+use Symfony\Component\Validator\Validation;
 
 /**
  * @author Cédric Girard <c.girard@lexik.fr>
@@ -12,6 +13,24 @@ use Lexik\Bundle\MailerBundle\Entity\EmailTranslation;
  */
 class EmailTest extends \PHPUnit_Framework_TestCase
 {
+    private $validator;
+
+    /**
+     * @var \PHPUnit_Framework_MockObject_MockObject layout
+     */
+    private $layout;
+
+    public function setUp()
+    {
+        $this->validator = Validation::createValidatorBuilder()
+            ->enableAnnotationMapping()
+            ->getValidator();
+
+        $this->layout = $this->getMockBuilder(Email::class)
+                        ->disableOriginalConstructor()
+                        ->getMock();
+    }
+
     public function testGetTranslation()
     {
         $trans = new EmailTranslation('fr');
@@ -47,5 +66,23 @@ class EmailTest extends \PHPUnit_Framework_TestCase
 
         $email->setBcc(null);
         $this->assertEquals(array(), $email->getBccs());
+    }
+
+
+    public function testEntityValidation()
+    {
+
+        $entity = new EmailTranslation("zh_CN");
+        $entity->setBody("test");
+        $entity->setLang("zh_CN");
+        $entity->setSubject("test");
+        $entity->setBodyText("test");
+        $entity->setEmail($this->layout);
+        $entity->setFromAddress("test@abc.com");
+        $entity->setFromName("test");
+
+        $errors = $this->validator->validate($entity);
+
+        $this->assertEquals(0, count($errors));
     }
 }

@@ -29,9 +29,9 @@ class EmailTranslation
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=2)
+     * @ORM\Column(type="string", length=5)
      * @Assert\NotBlank()
-     * @Assert\Length(max=2)
+     * @Assert\Length(max=5)
      */
     protected $lang;
 
