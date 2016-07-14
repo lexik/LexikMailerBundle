@@ -29,7 +29,7 @@ class LayoutType extends AbstractType
                 'required'      => false,
                 'label'         => 'lexik_mailer.layout.description',
             ))
-            ->add('defaultLocale', 'text', array(
+            ->add('defaultLocale', TextType::class, array(
                 'property_path' => 'entity.defaultLocale',
                 'required'      => false,
                 'label'         => 'lexik_mailer.layout.default_locale'
