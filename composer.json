@@ -1,5 +1,5 @@
 {
-    "name": "lexik/mailer-bundle",
+    "name": "lendable/mailer-bundle",
     "type": "symfony-bundle",
     "description": "This bundle allow you to manage some HTML email templates stored in your database. Templates are written with Twig and use I18N.",
     "keywords": ["Symfony2", "bundle", "mail", "mailer"],
