@@ -98,6 +98,15 @@ class Email implements EmailInterface
     private $headers;
 
     /**
+     * Use Layout's default locale if set
+     *
+     * @var bool
+     *
+     * @ORM\Column(type="boolean", nullable=true)
+     */
+    private $useFallbackLocale;
+
+    /**
      * __construct
      */
     public function __construct()
@@ -353,7 +362,7 @@ class Email implements EmailInterface
         $body = '';
 
         if ($this->layout instanceof Layout) {
-            $this->layout->setLocale($this->locale);
+            $this->layout->setLocale($this->locale, $this->isUseFallbackLocale());
 
             $body = $this->layout->getBody();
         }
@@ -439,5 +448,23 @@ class Email implements EmailInterface
     public function getHeaders()
     {
         return $this->headers;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isUseFallbackLocale()
+    {
+        return true === $this->useFallbackLocale;
+    }
+
+    /**
+     * @param boolean $useFallbackLocale
+     * @return Email
+     */
+    public function setUseFallbackLocale($useFallbackLocale)
+    {
+        $this->useFallbackLocale = $useFallbackLocale;
+        return $this;
     }
 }

@@ -141,6 +141,30 @@ Now in the email template edition page select the `super-layout` layout, and fil
 
 When you select a layout, we will automaticaly make the email template extend the layout template you select and place it in a block named 'content' during the Swift_Message generation.
 
+How to work with default and fallback locales:
+----------------------------------------------
+
+Suppose we have a multilingual application we want to support without adding duplicate layouts for every locale, this is easily achieved by simply selecting a default locale in the Layout. 
+If an Email template which references this layout has 'Use fallback locale' enabled, we will automagically load the default locale layout if a layout with the same locale cannot be found.
+
+Lets say we have a layout with the reference `default` set to `english` as defaultLocale and no other language.
+We also have a few `registration` email templates stored, all in various locales and all with `useFallbackLocale` set to `TRUE`.
+
+A user registers using german locale, our application will kick off the code below"
+```php
+	$to = $this->request->get('email');
+	$params = ['data','loaded','from','registration','form', 'sanitized','ofc'];
+	$locale = $request->getLocale(); // 'de'
+
+	$message = $container->get('lexik_mailer.message_factory')->get('registration', $to, $params, $locale);
+```
+If the Email template does not have 'Use fallback locale' enabled, you will get a `NoTranslationException` indicating that a message with said locale could not be generated.
+If the Email template does have 'Use fallback locale' enabled, the code will try to find the same locale first, but when failing it will lookup the default locale for the layout and use that to generate and return the message.
+
+So our example above will result into a message which uses the German Email template, with the English Layout template.
+
+
+
 Generate a Swift_Message from a given template:
 -----------------------------------------------
 

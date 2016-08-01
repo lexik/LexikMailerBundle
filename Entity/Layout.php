@@ -60,6 +60,15 @@ class Layout implements LayoutInterface
     private $locale;
 
     /**
+     * The default locale which can be used as a fallback in case there
+     * is no locale for the selected email context.
+     *
+     * @ORM\Column(type="string", nullable=true)
+     * @var string
+     */
+    private $defaultLocale;
+
+    /**
      * Translation object for the current $this->locale value.
      *
      * @var \Lexik\Bundle\MailerBundle\Entity\LayoutTranslation
@@ -198,7 +207,7 @@ class Layout implements LayoutInterface
      *
      * @throws NoTranslationException
      */
-    protected function setCurrentTranslation()
+    protected function setCurrentTranslation($fallback = false)
     {
         if (!($this->currentTranslation instanceof LayoutTranslation) || $this->currentTranslation->getLang() != $this->locale) {
             $i = 0;
@@ -213,7 +222,12 @@ class Layout implements LayoutInterface
             if ($found) {
                 $this->currentTranslation = $this->translations[$i-1];
             } else {
-                throw new NoTranslationException($this->locale, sprintf('No "%s" translation for layout "%s".', $this->locale, $this->reference));
+                if($fallback && $this->getDefaultLocale()) {
+                    $this->setLocale($this->getDefaultLocale());
+                    $this->setCurrentTranslation();
+                } else {
+                    throw new NoTranslationException($this->locale, sprintf('No "%s" translation for layout "%s".', $this->locale, $this->reference));
+                }
             }
         }
     }
@@ -221,11 +235,21 @@ class Layout implements LayoutInterface
     /**
      * {@inheritdoc}
      */
-    public function setLocale($locale)
+    public function setLocale($locale, $fallback = false)
     {
         $this->locale = $locale;
 
-        $this->setCurrentTranslation();
+        $this->setCurrentTranslation($fallback);
+    }
+
+    public function setDefaultLocale($locale)
+    {
+        $this->defaultLocale = $locale;
+    }
+
+    public function getDefaultLocale()
+    {
+        return $this->defaultLocale;
     }
 
     /**
