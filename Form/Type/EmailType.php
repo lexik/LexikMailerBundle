@@ -62,7 +62,6 @@ class EmailType extends AbstractType
                 'property_path' => 'entity.useFallbackLocale',
                 'label'         => 'lexik_mailer.email.use_fallback_locale'
             ))
-            ->add('useFallbackLocale', CheckboxType::class, array(
             ->add('translation', EmailTranslationType::class, array(
                 'data'          => $options['data_translation'],
                 'with_language' => $options['edit'],
