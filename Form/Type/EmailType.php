@@ -38,7 +38,7 @@ class EmailType extends AbstractType
                 'label'         => 'lexik_mailer.email.layout',
             ))
             ->add('headers', CollectionType::class, array(
-                'type'          => HeaderType::class,
+                'entry_type'    => HeaderType::class,
                 'allow_add'     => true,
                 'allow_delete'  => true,
                 'property_path' => 'entity.headers',
