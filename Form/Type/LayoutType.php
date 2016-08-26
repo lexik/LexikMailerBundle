@@ -20,7 +20,9 @@ class LayoutType extends AbstractType
     {
         $builder
             ->add('reference', TextType::class, array(
-                'read_only'     => $options['edit'],
+                'attr' => [
+                    'read_only' => $options['edit'],
+                ],
                 'property_path' => 'entity.reference',
                 'label'         => 'lexik_mailer.layout.reference',
             ))
