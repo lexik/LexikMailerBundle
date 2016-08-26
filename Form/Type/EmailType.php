@@ -24,7 +24,9 @@ class EmailType extends AbstractType
     {
         $builder
             ->add('reference', null, array(
-                'read_only'     => $options['edit'],
+                'attr' => [
+                    'read_only' => $options['edit'],
+                ],
                 'property_path' => 'entity.reference',
                 'label'         => 'lexik_mailer.email.reference',
             ))
