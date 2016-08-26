@@ -32,7 +32,7 @@ class EmailType extends AbstractType
             ))
             ->add('layout', EntityType::class, array(
                 'required'      => false,
-                'empty_value'   => '',
+                'empty_data'   => '',
                 'class'         => $options['layout_entity'],
                 'property_path' => 'entity.layout',
                 'label'         => 'lexik_mailer.email.layout',
