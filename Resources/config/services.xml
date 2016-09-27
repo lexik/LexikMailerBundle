@@ -55,7 +55,7 @@
         </service>
 
         <!-- Template -->
-        <service id="lexik_mailer.templating" class="%twig.class%" public="false" >
+        <service id="lexik_mailer.templating" class="Twig_Environnement" public="false" >
             <argument type="service" id="lexik_mailer.templating.loader_chain" />
             <argument>%lexik_mailer.templating.default_options%</argument>
             <call method="addExtension">

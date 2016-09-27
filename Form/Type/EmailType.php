@@ -24,19 +24,21 @@ class EmailType extends AbstractType
     {
         $builder
             ->add('reference', null, array(
-                'read_only'     => $options['edit'],
+                'attr' => [
+                    'read_only' => $options['edit'],
+                ],
                 'property_path' => 'entity.reference',
                 'label'         => 'lexik_mailer.email.reference',
             ))
             ->add('layout', EntityType::class, array(
                 'required'      => false,
-                'empty_value'   => '',
+                'empty_data '   => '',
                 'class'         => $options['layout_entity'],
                 'property_path' => 'entity.layout',
                 'label'         => 'lexik_mailer.email.layout',
             ))
             ->add('headers', CollectionType::class, array(
-                'type'          => HeaderType::class,
+                'entry_type'    => HeaderType::class,
                 'allow_add'     => true,
                 'allow_delete'  => true,
                 'property_path' => 'entity.headers',
