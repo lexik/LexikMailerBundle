@@ -4,19 +4,39 @@ namespace Lexik\Bundle\MailerBundle\Twig\Loader;
 
 use Lexik\Bundle\MailerBundle\Model\EmailInterface;
 
-use \Twig_Error_Loader;
-
 /**
  * Custom Email template loader.
  *
  * @author Cédric Girard <c.girard@lexik.fr>
  */
-class EmailLoader extends \Twig_Loader_Array
+class EmailLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface, \  Twig_SourceContextLoaderInterface
 {
     /**
      * @var array
      */
+    protected $templates = array();
+
+    /**
+     * @var array
+     */
     protected $updateDates = array();
+
+    /**
+     * @param array $templates
+     */
+    public function __construct(array $templates = array())
+    {
+        $this->templates = $templates;
+    }
+
+    /**
+     * @param string $name
+     * @param string $template
+     */
+    public function setTemplate($name, $template)
+    {
+        $this->templates[$name] = $template;
+    }
 
     /**
      * Load all templates for the given email (also load the related layout).
@@ -63,11 +83,59 @@ class EmailLoader extends \Twig_Loader_Array
     /**
      * {@inheritdoc}
      */
+    public function getSource($name)
+    {
+        @trigger_error(sprintf('Calling "getSource" on "%s" is deprecated since 1.27. Use getSourceContext() instead.', get_class($this)), E_USER_DEPRECATED);
+
+        $name = (string) $name;
+        if (!isset($this->templates[$name])) {
+            throw new \Twig_Error_Loader(sprintf('Template "%s" is not defined.', $name));
+        }
+
+        return $this->templates[$name];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getSourceContext($name)
+    {
+        $name = (string) $name;
+        if (!isset($this->templates[$name])) {
+            throw new \Twig_Error_Loader(sprintf('Template "%s" is not defined.', $name));
+        }
+
+        return new \Twig_Source($this->templates[$name], $name);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function exists($name)
+    {
+        return isset($this->templates[$name]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCacheKey($name)
+    {
+        if (!isset($this->templates[$name])) {
+            throw new \Twig_Error_Loader(sprintf('Template "%s" is not defined.', $name));
+        }
+
+        return $this->templates[$name];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function isFresh($name, $time)
     {
         $name = (string) $name;
         if (!isset($this->templates[$name])) {
-            throw new Twig_Error_Loader(sprintf('Template "%s" is not defined.', $name));
+            throw new \Twig_Error_Loader(sprintf('Template "%s" is not defined.', $name));
         }
 
         if ( isset($this->updateDates[$name]) && $time < $this->updateDates[$name] ) {
