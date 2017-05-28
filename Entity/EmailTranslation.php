@@ -63,7 +63,6 @@ class EmailTranslation
      * @var string
      *
      * @ORM\Column(type="string", name="from_address", nullable=true)
-     * @Assert\Email()
      */
     protected $fromAddress;
 
