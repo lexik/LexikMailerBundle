@@ -37,6 +37,11 @@ class EmailFormHandler implements FormHandlerInterface
     private $locale;
 
     /**
+     * @var boolean
+     */
+    private $persist = true;
+
+    /**
      * @param FormFactoryInterface $factory
      * @param EntityManager        $em
      * @param string               $defaultLocale
@@ -92,12 +97,26 @@ class EmailFormHandler implements FormHandlerInterface
             $model = $form->getData();
             $model->getEntity()->addTranslation($model->getTranslation());
 
-            $this->em->persist($model->getEntity());
-            $this->em->flush();
+            if($this->getPersist()) {
+                $this->em->persist($model->getEntity());
+                $this->em->flush();
+            }
 
             $valid = true;
         }
 
         return $valid;
+    }
+    
+    public function getPersist()
+    {
+        return $this->persist;
+    }
+    
+    public function setPersist($persist)
+    {
+        $this->persist = (bool)$persist;
+        
+        return $this;
     }
 }
