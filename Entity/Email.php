@@ -112,7 +112,7 @@ class Email implements EmailInterface
      */
     public function __toString()
     {
-        return $this->reference;
+        return $this->reference?:'';
     }
 
     /**
