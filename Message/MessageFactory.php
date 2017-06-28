@@ -256,8 +256,6 @@ class MessageFactory
         $class     = $hasSigner ? '\Swift_SignedMessage' : '\Swift_Message';
 
         $message = new $class();
-        
-//        $message = $class::newInstance();
 
         if ($hasSigner) {
             $message->attachSigner($this->signer->createSigner());
