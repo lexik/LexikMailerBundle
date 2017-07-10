@@ -199,7 +199,7 @@ class Layout implements LayoutInterface
      */
     public function __toString()
     {
-        return $this->reference;
+        return $this->reference ?: '';
     }
 
     /**

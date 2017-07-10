@@ -81,7 +81,7 @@ class LayoutTranslation
      */
     public function __toString()
     {
-        return $this->lang;
+        return $this->lang ?: '';
     }
 
     /**
