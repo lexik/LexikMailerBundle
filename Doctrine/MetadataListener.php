@@ -14,7 +14,15 @@ class MetadataListener
     {
         $params = $eventArgs->getEntityManager()->getConnection()->getParams();
 
-        if ('utf8mb4' !== strtolower($params['charset'])) {
+        $charset = '';
+        if (isset($params['charset'])) {
+            $charset = $params['charset'];
+        }
+        else if (isset($params['master']['charset'])) {
+            $charset = $params['master']['charset'];
+        }
+
+        if ('utf8mb4' !== strtolower($charset)) {
             return;
         }
 
