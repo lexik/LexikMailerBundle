@@ -22,7 +22,7 @@
 
 {% block form_label %}
 {% spaceless %}
-    {% if label is not sameas(false) -%}
+    {% if label is not same as(false) -%}
         {% set label_attr = label_attr|merge({'class': attr.class|default('') ~ 'col-sm-2 control-label'}) %}
         {% if not compound -%}
             {% set label_attr = label_attr|merge({'for': id}) %}
