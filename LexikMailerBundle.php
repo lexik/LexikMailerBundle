@@ -3,12 +3,11 @@
 namespace Lexik\Bundle\MailerBundle;
 
 use Lexik\Bundle\MailerBundle\DependencyInjection\Compiler\SignerCompilerPass;
-
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 /**
- * LexikMailerBundle
+ * LexikMailerBundle.
  */
 class LexikMailerBundle extends Bundle
 {

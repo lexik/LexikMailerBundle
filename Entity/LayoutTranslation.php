@@ -3,7 +3,6 @@
 namespace Lexik\Bundle\MailerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -65,7 +64,7 @@ class LayoutTranslation
     protected $layout;
 
     /**
-     * __construct
+     * __construct.
      *
      * @param string $lang
      */
@@ -81,7 +80,7 @@ class LayoutTranslation
      */
     public function __toString()
     {
-        return $this->lang?:'';
+        return $this->lang ?: '';
     }
 
     /**
@@ -93,7 +92,7 @@ class LayoutTranslation
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return string
      */
@@ -103,7 +102,7 @@ class LayoutTranslation
     }
 
     /**
-     * Get lang
+     * Get lang.
      *
      * @return string
      */
@@ -113,7 +112,7 @@ class LayoutTranslation
     }
 
     /**
-     * Set lang
+     * Set lang.
      *
      * @param string $lang
      */
@@ -123,7 +122,7 @@ class LayoutTranslation
     }
 
     /**
-     * Get body
+     * Get body.
      *
      * @return string
      */
@@ -133,7 +132,7 @@ class LayoutTranslation
     }
 
     /**
-     * Set body
+     * Set body.
      *
      * @param string $body
      */
@@ -143,7 +142,7 @@ class LayoutTranslation
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -153,7 +152,7 @@ class LayoutTranslation
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
      */
@@ -163,7 +162,7 @@ class LayoutTranslation
     }
 
     /**
-     * Get updatedAt
+     * Get updatedAt.
      *
      * @return \DateTime
      */
@@ -173,7 +172,7 @@ class LayoutTranslation
     }
 
     /**
-     * Set updatedAt
+     * Set updatedAt.
      *
      * @param \DateTime $updatedAt
      */
@@ -183,7 +182,7 @@ class LayoutTranslation
     }
 
     /**
-     * Get layout
+     * Get layout.
      *
      * @return Layout
      */
@@ -193,7 +192,7 @@ class LayoutTranslation
     }
 
     /**
-     * Set layout
+     * Set layout.
      *
      * @param Layout $layout
      */
@@ -203,7 +202,7 @@ class LayoutTranslation
     }
 
     /**
-     * Display language
+     * Display language.
      *
      * @return string
      */

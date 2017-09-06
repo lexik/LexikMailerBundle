@@ -36,10 +36,10 @@ interface LayoutInterface
      * @return int
      */
     public function getLastModifiedTimestamp();
-    
+
     /**
-     * Return checksum of layout
-     * 
+     * Return checksum of layout.
+     *
      * @return string
      */
     public function getChecksum();

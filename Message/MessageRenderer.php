@@ -2,8 +2,8 @@
 
 namespace Lexik\Bundle\MailerBundle\Message;
 
-use Lexik\Bundle\MailerBundle\Twig\Loader\EmailLoader;
 use Lexik\Bundle\MailerBundle\Model\EmailInterface;
+use Lexik\Bundle\MailerBundle\Twig\Loader\EmailLoader;
 
 /**
  * Render each parts of an email.
@@ -23,7 +23,7 @@ class MessageRenderer
     private $emailLoader;
 
     /**
-     * Construct
+     * Construct.
      *
      * @param \Twig_Environment                                  $templating
      * @param \Lexik\Bundle\MailerBundle\Twig\Loader\EmailLoader $emailLoader
@@ -53,9 +53,10 @@ class MessageRenderer
      *
      * @param string $view
      * @param array  $parameters
+     *
      * @return string
      */
-    public function renderTemplate($view, array $parameters = array())
+    public function renderTemplate($view, array $parameters = [])
     {
         return $this->templating->render($view, $parameters);
     }
@@ -63,7 +64,7 @@ class MessageRenderer
     /**
      * Enable or not strict variables.
      *
-     * @param boolean $strict
+     * @param bool $strict
      */
     public function setStrictVariables($strict)
     {

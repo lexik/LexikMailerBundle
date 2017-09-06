@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
- * HeaderType
+ * HeaderType.
  *
  * @author Nicolas Cabot <n.cabot@lexik.fr>
  */
@@ -35,18 +35,18 @@ class HeaderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('key', ChoiceType::class, array(
+            ->add('key', ChoiceType::class, [
                 'required' => true,
-                'choices'  => $options['key_choices'],
+                'choices' => $options['key_choices'],
                 'multiple' => false,
                 'expanded' => false,
-            ))
-            ->add('value', TextType::class, array(
-                'required'    => true,
-                'constraints' => array(
+            ])
+            ->add('value', TextType::class, [
+                'required' => true,
+                'constraints' => [
                     new NotBlank(),
-                )
-            ));
+                ],
+            ]);
     }
 
     /**
@@ -54,10 +54,10 @@ class HeaderType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'key_choices'         => count($this->allowedHeaders) ? array_combine($this->allowedHeaders, $this->allowedHeaders) : array(),
-            'translation_domain'  => 'LexikMailerBundle',
-        ));
+        $resolver->setDefaults([
+            'key_choices' => count($this->allowedHeaders) ? array_combine($this->allowedHeaders, $this->allowedHeaders) : [],
+            'translation_domain' => 'LexikMailerBundle',
+        ]);
     }
 
     /**

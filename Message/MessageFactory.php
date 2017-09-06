@@ -3,15 +3,11 @@
 namespace Lexik\Bundle\MailerBundle\Message;
 
 use Doctrine\ORM\EntityManager;
-use Lexik\Bundle\MailerBundle\Exception\ReferenceNotFoundException;
-use Lexik\Bundle\MailerBundle\Model\EmailInterface;
-use Lexik\Bundle\MailerBundle\Model\EmailDestinationInterface;
-use Lexik\Bundle\MailerBundle\Mapping\Driver\Annotation;
 use Lexik\Bundle\MailerBundle\Exception\NoTranslationException;
-use Lexik\Bundle\MailerBundle\Message\ReferenceNotFoundMessage;
-use Lexik\Bundle\MailerBundle\Message\NoTranslationMessage;
-use Lexik\Bundle\MailerBundle\Message\UndefinedVariableMessage;
-use Lexik\Bundle\MailerBundle\Message\TwigErrorMessage;
+use Lexik\Bundle\MailerBundle\Exception\ReferenceNotFoundException;
+use Lexik\Bundle\MailerBundle\Mapping\Driver\Annotation;
+use Lexik\Bundle\MailerBundle\Model\EmailDestinationInterface;
+use Lexik\Bundle\MailerBundle\Model\EmailInterface;
 use Lexik\Bundle\MailerBundle\Signer\SignerFactory;
 
 /**
@@ -69,33 +65,33 @@ class MessageFactory
         $this->renderer = $renderer;
         $this->annotationDriver = $annotationDriver;
         $this->options = array_merge($this->getDefaultOptions(), $defaultOptions);
-        $this->emails = array();
+        $this->emails = [];
         $this->signer = $signer;
     }
 
     /**
-     * Get default options
+     * Get default options.
      *
      * @return array
      */
     protected function getDefaultOptions()
     {
-        return array(
-            'email_class'    => '',
-            'admin_email'    => '',
+        return [
+            'email_class' => '',
+            'admin_email' => '',
             'default_locale' => 'en',
             'fallback_locale' => false,
-        );
+        ];
     }
 
     /**
-     * Find an email from database
+     * Find an email from database.
      *
-     * @param  string $reference
+     * @param string $reference
      *
      * @throws ReferenceNotFoundException
      *
-     * @return  EmailInterface|null
+     * @return EmailInterface|null
      */
     public function getEmail($reference)
     {
@@ -124,10 +120,11 @@ class MessageFactory
      *
      * @return \Swift_Message
      */
-    public function get($reference, $to, array $parameters = array(), $locale = null)
+    public function get($reference, $to, array $parameters = [], $locale = null)
     {
         try {
             $email = $this->getEmail($reference);
+
             return $this->generateMessage($email, $to, $parameters, $locale);
         } catch (ReferenceNotFoundException $e) {
             return $this->generateExceptionMessage($reference);
@@ -135,7 +132,7 @@ class MessageFactory
     }
 
     /**
-     * Create a swift message
+     * Create a swift message.
      *
      * @param EmailInterface $email
      * @param mixed          $to
@@ -144,7 +141,7 @@ class MessageFactory
      *
      * @return \Swift_Message
      */
-    public function generateMessage(EmailInterface $email, $to, array $parameters = array(), $locale = null)
+    public function generateMessage(EmailInterface $email, $to, array $parameters = [], $locale = null)
     {
         if (null === $locale) {
             $locale = $this->options['default_locale'];
@@ -182,17 +179,14 @@ class MessageFactory
                     }
                 }
             }
-
         } catch (NoTranslationException $e) {
             $message = new NoTranslationMessage($email->getReference(), $locale);
             $message->setFrom($this->options['admin_email']);
             $message->setTo($this->options['admin_email']);
-
         } catch (\Twig_Error_Runtime $e) {
             $message = new UndefinedVariableMessage($e->getMessage(), $email->getReference());
             $message->setFrom($this->options['admin_email']);
             $message->setTo($this->options['admin_email']);
-
         } catch (\Twig_Error $e) {
             $message = new TwigErrorMessage($e->getRawMessage(), $email->getReference());
             $message->setFrom($this->options['admin_email']);
@@ -203,11 +197,12 @@ class MessageFactory
     }
 
     /**
-     * Render template
+     * Render template.
      *
      * @param string $view
      * @param array  $parameters
      * @param string $checksum
+     *
      * @return string
      */
     protected function renderTemplate($view, array $parameters, $checksum)
@@ -221,6 +216,7 @@ class MessageFactory
      * Create swift message when Email is not found.
      *
      * @param string $reference
+     *
      * @return ReferenceNotFoundMessage
      */
     protected function generateExceptionMessage($reference)
@@ -231,7 +227,7 @@ class MessageFactory
         $line = null;
 
         foreach ($traces as $trace) {
-            if (isset($trace['function']) && $trace['function'] == 'get' && isset($trace['class']) && $trace['class'] == __CLASS__) {
+            if (isset($trace['function']) && $trace['function'] === 'get' && isset($trace['class']) && $trace['class'] === __CLASS__) {
                 $file = $trace['file'];
                 $line = $trace['line'];
                 break;
@@ -246,14 +242,14 @@ class MessageFactory
     }
 
     /**
-     * Create Swiftf message instance
+     * Create Swiftf message instance.
      *
      * @return \Swift_Message
      */
     protected function createMessageInstance()
     {
         $hasSigner = $this->signer->hasSigner();
-        $class     = $hasSigner ? '\Swift_SignedMessage' : '\Swift_Message';
+        $class = $hasSigner ? '\Swift_SignedMessage' : '\Swift_Message';
 
         $message = $class::newInstance();
 
@@ -265,14 +261,14 @@ class MessageFactory
     }
 
     /**
-     * Render email from address
+     * Render email from address.
      *
-     * @param  EmailInterface $email
-     * @param  array          $parameters
+     * @param EmailInterface $email
+     * @param array          $parameters
      *
      * @return string
      */
-    protected function renderFromAddress(EmailInterface $email, array $parameters = array())
+    protected function renderFromAddress(EmailInterface $email, array $parameters = [])
     {
         if (null === $email->getFromAddress()) {
             return $this->options['admin_email'];
@@ -283,11 +279,12 @@ class MessageFactory
 
     /**
      * @param object $to
+     *
      * @return array|string
      */
     protected function getRecipient($to)
     {
-        if($to instanceof EmailDestinationInterface) {
+        if ($to instanceof EmailDestinationInterface) {
             $name = $to->getRecipientName();
             $to = $to->getRecipientEmail();
         } else {
@@ -296,7 +293,7 @@ class MessageFactory
         }
 
         if (null !== $name && '' !== $name) {
-            $to = array($to => $name);
+            $to = [$to => $name];
         }
 
         return $to;

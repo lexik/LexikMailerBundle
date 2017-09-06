@@ -7,7 +7,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 
 /**
- * LayoutTranslationAdmin
+ * LayoutTranslationAdmin.
  *
  * @author Nicolas Cabot <n.cabot@lexik.fr>
  */
@@ -32,20 +32,20 @@ class LayoutTranslationAdmin extends Admin
             ->add(
                 'lang',
                 'language',
-                array(
-                    'required'          => true,
-                    'preferred_choices' => array('fr')
-                )
+                [
+                    'required' => true,
+                    'preferred_choices' => ['fr'],
+                ]
             )
             ->add(
                 'body',
                 'textarea',
-                array(
+                [
                     'required' => true,
-                    'attr'     => array(
-                        'data-editor' => 'html'
-                    )
-                )
+                    'attr' => [
+                        'data-editor' => 'html',
+                    ],
+                ]
             );
     }
 }

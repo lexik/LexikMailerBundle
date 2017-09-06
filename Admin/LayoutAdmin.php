@@ -14,7 +14,7 @@ use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 /**
- * LayoutAdmin
+ * LayoutAdmin.
  *
  * @author Nicolas Cabot <n.cabot@lexik.fr>
  */
@@ -58,8 +58,8 @@ class LayoutAdmin extends Admin
     {
         $formMapper
             ->with('General')
-            ->add('reference', 'text', array('required' => true))
-            ->add('description', 'textarea', array('required' => false))
+            ->add('reference', 'text', ['required' => true])
+            ->add('description', 'textarea', ['required' => false])
             ->end();
     }
 
@@ -74,12 +74,12 @@ class LayoutAdmin extends Admin
             ->add(
                 '_action',
                 'actions',
-                array(
-                    'actions' => array(
-                        'edit'   => array(),
-                        'delete' => array(),
-                    )
-                )
+                [
+                    'actions' => [
+                        'edit' => [],
+                        'delete' => [],
+                    ],
+                ]
             );
     }
 
@@ -97,7 +97,7 @@ class LayoutAdmin extends Admin
      */
     protected function configureTabMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
     {
-        if (!$childAdmin && !in_array($action, array('edit'))) {
+        if (!$childAdmin && !in_array($action, ['edit'])) {
             return;
         }
 
@@ -108,12 +108,12 @@ class LayoutAdmin extends Admin
 
         $createMenuItem = $menu->addChild(
             $this->trans('create_translation'),
-            array(
-                'route'           => 'admin_lexik_mailer_layout_layouttranslation_create',
-                'routeParameters' => array(
-                    'id' => $id
-                )
-            )
+            [
+                'route' => 'admin_lexik_mailer_layout_layouttranslation_create',
+                'routeParameters' => [
+                    'id' => $id,
+                ],
+            ]
         );
 
         $createMenuItem->setLinkAttribute('class', 'lexik-mailer-create');
@@ -122,11 +122,11 @@ class LayoutAdmin extends Admin
         foreach ($object->getTranslations() as $translation) {
             $menu->addChild(
                 $translation->getLang(),
-                array(
-                    'route'           => 'admin_lexik_mailer_layout_layouttranslation_edit',
-                    'routeParameters' => array('id' => $id, 'childId' => $translation->getId()),
-                    'routeAbsolute'   => false
-                )
+                [
+                    'route' => 'admin_lexik_mailer_layout_layouttranslation_edit',
+                    'routeParameters' => ['id' => $id, 'childId' => $translation->getId()],
+                    'routeAbsolute' => false,
+                ]
             );
         }
     }

@@ -19,28 +19,28 @@ class LayoutType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('reference', TextType::class, array(
+            ->add('reference', TextType::class, [
                 'attr' => [
                     'read_only' => $options['edit'],
                 ],
                 'property_path' => 'entity.reference',
-                'label'         => 'lexik_mailer.layout.reference',
-            ))
-            ->add('description', TextareaType::class, array(
+                'label' => 'lexik_mailer.layout.reference',
+            ])
+            ->add('description', TextareaType::class, [
                 'property_path' => 'entity.description',
-                'required'      => false,
-                'label'         => 'lexik_mailer.layout.description',
-            ))
-            ->add('defaultLocale', TextType::class, array(
+                'required' => false,
+                'label' => 'lexik_mailer.layout.description',
+            ])
+            ->add('defaultLocale', TextType::class, [
                 'property_path' => 'entity.defaultLocale',
-                'required'      => false,
-                'label'         => 'lexik_mailer.layout.default_locale'
-            ))
-            ->add('translation', LayoutTranslationType::class, array(
-                'data'          => $options['data_translation'],
+                'required' => false,
+                'label' => 'lexik_mailer.layout.default_locale',
+            ])
+            ->add('translation', LayoutTranslationType::class, [
+                'data' => $options['data_translation'],
                 'with_language' => $options['edit'],
-                'label'         => 'lexik_mailer.layout.translation',
-            ))
+                'label' => 'lexik_mailer.layout.translation',
+            ])
         ;
     }
 
@@ -49,13 +49,13 @@ class LayoutType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class'          => 'Lexik\Bundle\MailerBundle\Form\Model\EntityTranslationModel',
-            'data_translation'    => null,
-            'edit'                => false,
-            'preferred_languages' => array(),
-            'translation_domain'  => 'LexikMailerBundle',
-        ));
+        $resolver->setDefaults([
+            'data_class' => 'Lexik\Bundle\MailerBundle\Form\Model\EntityTranslationModel',
+            'data_translation' => null,
+            'edit' => false,
+            'preferred_languages' => [],
+            'translation_domain' => 'LexikMailerBundle',
+        ]);
     }
 
     /**

@@ -2,9 +2,9 @@
 
 namespace Lexik\Bundle\MailerBundle\Tests\Entity;
 
-use Lexik\Bundle\MailerBundle\Entity\Layout;
 use Lexik\Bundle\MailerBundle\Entity\Email;
 use Lexik\Bundle\MailerBundle\Entity\EmailTranslation;
+use Lexik\Bundle\MailerBundle\Entity\Layout;
 use Symfony\Component\Validator\Validation;
 
 /**
@@ -52,11 +52,11 @@ class EmailTest extends \PHPUnit_Framework_TestCase
     {
         $email = new Email();
         $email->setBcc('lex@lexik.fr');
-        $this->assertEquals(array('lex@lexik.fr'), $email->getBccs());
+        $this->assertEquals(['lex@lexik.fr'], $email->getBccs());
 
         $email2 = new Email();
         $email2->setBcc('lex@lexik.fr;');
-        $this->assertEquals(array('lex@lexik.fr'), $email2->getBccs());
+        $this->assertEquals(['lex@lexik.fr'], $email2->getBccs());
 
         $email->setBcc('lex@lexik.fr; lex2@lexik.fr');
         $bccs = $email->getBccs();
@@ -65,21 +65,19 @@ class EmailTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('lex2@lexik.fr', $bccs[1]);
 
         $email->setBcc(null);
-        $this->assertEquals(array(), $email->getBccs());
+        $this->assertEquals([], $email->getBccs());
     }
-
 
     public function testEntityValidation()
     {
-
-        $entity = new EmailTranslation("zh_CN");
-        $entity->setBody("test");
-        $entity->setLang("zh_CN");
-        $entity->setSubject("test");
-        $entity->setBodyText("test");
+        $entity = new EmailTranslation('zh_CN');
+        $entity->setBody('test');
+        $entity->setLang('zh_CN');
+        $entity->setSubject('test');
+        $entity->setBodyText('test');
         $entity->setEmail($this->layout);
-        $entity->setFromAddress("test@abc.com");
-        $entity->setFromName("test");
+        $entity->setFromAddress('test@abc.com');
+        $entity->setFromName('test');
 
         $errors = $this->validator->validate($entity);
 

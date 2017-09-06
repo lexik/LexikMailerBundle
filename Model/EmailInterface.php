@@ -67,7 +67,7 @@ interface EmailInterface
     public function getFromName();
 
     /**
-     * Return all BCCs
+     * Return all BCCs.
      *
      * @return array
      */
@@ -79,16 +79,16 @@ interface EmailInterface
      * @return int
      */
     public function getLastModifiedTimestamp();
-    
+
     /**
-     * Return checksum of email
-     * 
+     * Return checksum of email.
+     *
      * @return string
      */
     public function getChecksum();
 
     /**
-     * Returns email custom headers
+     * Returns email custom headers.
      *
      * @return array
      */

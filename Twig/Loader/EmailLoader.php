@@ -9,22 +9,22 @@ use Lexik\Bundle\MailerBundle\Model\EmailInterface;
  *
  * @author Cédric Girard <c.girard@lexik.fr>
  */
-class EmailLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface, \  Twig_SourceContextLoaderInterface
+class EmailLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface, \ Twig_SourceContextLoaderInterface
 {
     /**
      * @var array
      */
-    protected $templates = array();
+    protected $templates = [];
 
     /**
      * @var array
      */
-    protected $updateDates = array();
+    protected $updateDates = [];
 
     /**
      * @param array $templates
      */
-    public function __construct(array $templates = array())
+    public function __construct(array $templates = [])
     {
         $this->templates = $templates;
     }
@@ -48,18 +48,17 @@ class EmailLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface,
         if ($email->getLayout()) {
             // call of getLayoutBody set locale on layout
             $body = $email->getLayoutBody();
-            
+
             // now we can compute correctly the key cache
             $layoutSuffix = $email->getLayout()->getChecksum();
 
             $this->setTemplate(sprintf('layout_%s', $layoutSuffix), $body);
             $this->updateDates[sprintf('layout_%s', $layoutSuffix)] = $email->getLayout()->getLastModifiedTimestamp();
 
-            $content = strtr('{% extends \'<layout>\' %}{% block content %}<content>{% endblock %}', array(
-                '<layout>'  => sprintf('layout_%s', $layoutSuffix),
+            $content = strtr('{% extends \'<layout>\' %}{% block content %}<content>{% endblock %}', [
+                '<layout>' => sprintf('layout_%s', $layoutSuffix),
                 '<content>' => $email->getBody(),
-            ));
-
+            ]);
         } else {
             $content = $email->getBody();
         }
@@ -138,7 +137,7 @@ class EmailLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface,
             throw new \Twig_Error_Loader(sprintf('Template "%s" is not defined.', $name));
         }
 
-        if ( isset($this->updateDates[$name]) && $time < $this->updateDates[$name] ) {
+        if (isset($this->updateDates[$name]) && $time < $this->updateDates[$name]) {
             return false;
         }
 

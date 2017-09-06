@@ -22,6 +22,7 @@ interface FormHandlerInterface
      *
      * @param mixed  $object
      * @param string $lang
+     *
      * @return FormInterface
      */
     public function createForm($object = null, $lang = null);
@@ -31,7 +32,8 @@ interface FormHandlerInterface
      *
      * @param FormInterface $form
      * @param Request       $request
-     * @return boolean
+     *
+     * @return bool
      */
-    public function processForm(FormInterface $form, Request $request) ;
+    public function processForm(FormInterface $form, Request $request);
 }

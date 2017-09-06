@@ -3,7 +3,7 @@
 namespace Lexik\Bundle\MailerBundle\Signer;
 
 /**
- * Signer Factory
+ * Signer Factory.
  *
  * @author Sébastien Dieunidou <sebastien@bedycasa.com>
  */
@@ -20,32 +20,32 @@ class SignerFactory
     protected $signers;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param array $defaultOptions
      */
     public function __construct($defaultOptions)
     {
         $this->options = array_merge($this->getDefaultOptions(), $defaultOptions);
-        $this->signers = array();
+        $this->signers = [];
     }
 
     /**
-     * Get default options
+     * Get default options.
      *
      * @return array
      */
     protected function getDefaultOptions()
     {
-        return array(
+        return [
             'signer' => null,
-        );
+        ];
     }
 
     /**
-     * Return true if the message need to be signed
+     * Return true if the message need to be signed.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasSigner()
     {
@@ -53,7 +53,7 @@ class SignerFactory
     }
 
     /**
-     * Add a signer
+     * Add a signer.
      *
      * @param string          $signerName
      * @param SignerInterface $signer
@@ -64,13 +64,13 @@ class SignerFactory
     }
 
     /**
-     * Get a signer
+     * Get a signer.
      *
      * @param string $signerName
      *
-     * @return SignerInterface
-     *
      * @throws \Exception
+     *
+     * @return SignerInterface
      */
     protected function getSigner($signerName)
     {
@@ -82,11 +82,11 @@ class SignerFactory
     }
 
     /**
-     * Create signer
-     *
-     * @return boolean
+     * Create signer.
      *
      * @throws \Exception
+     *
+     * @return bool
      */
     public function createSigner()
     {

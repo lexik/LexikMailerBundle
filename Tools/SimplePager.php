@@ -17,7 +17,7 @@ class SimplePager
     private $em;
 
     /**
-     * @var integer
+     * @var int
      */
     private $itemPerPage;
 
@@ -27,23 +27,23 @@ class SimplePager
     private $results;
 
     /**
-     * @var integer
+     * @var int
      */
     private $count;
 
     /**
-     * @var integer
+     * @var int
      */
     private $page;
 
     /**
-     * @var integer
+     * @var int
      */
     private $maxPage;
 
     /**
      * @param EntityManager $em
-     * @param integer       $itemPerPage
+     * @param int           $itemPerPage
      */
     public function __construct(EntityManager $em, $itemPerPage)
     {
@@ -60,7 +60,7 @@ class SimplePager
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getCount()
     {
@@ -68,7 +68,7 @@ class SimplePager
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getPage()
     {
@@ -76,7 +76,7 @@ class SimplePager
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getMaxPage()
     {
@@ -84,7 +84,7 @@ class SimplePager
     }
 
     /**
-     * @param  string $entityName
+     * @param string $entityName
      *
      * @return QueryBuilder
      */
@@ -98,8 +98,8 @@ class SimplePager
     }
 
     /**
-     * @param string  $entityName
-     * @param integer $page
+     * @param string $entityName
+     * @param int    $page
      *
      * @return \Lexik\Bundle\MailerBundle\Tools\SimplePager
      */
@@ -110,7 +110,7 @@ class SimplePager
         $qb = $this->createQueryBuilder($entityName);
         $qb
             ->setMaxResults($this->itemPerPage)
-            ->setFirstResult(($page-1) * $this->itemPerPage)
+            ->setFirstResult(($page - 1) * $this->itemPerPage)
         ;
 
         $paginator = new Paginator($qb, true);

@@ -15,7 +15,7 @@ use Sonata\AdminBundle\Route\RouteCollection;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 /**
- * EmailAdmin
+ * EmailAdmin.
  *
  * @author Nicolas Cabot <n.cabot@lexik.fr>
  */
@@ -60,26 +60,26 @@ class EmailAdmin extends Admin
     {
         $formMapper
             ->with('General')
-            ->add('reference', 'text', array('required' => true))
+            ->add('reference', 'text', ['required' => true])
             ->add(
                 'layout',
                 null,
-                array(
+                [
                     'required' => true,
-                    'attr'     => array(
+                    'attr' => [
                         'data-sonata-select2' => 'false',
-                        'class'               => 'form-control'
-                    )
-                )
+                        'class' => 'form-control',
+                    ],
+                ]
             )
-            ->add('description', 'textarea', array('required' => false))
+            ->add('description', 'textarea', ['required' => false])
             ->add('bcc')
             ->add(
                 'spool',
                 null,
-                array(
+                [
                     'required' => false,
-                )
+                ]
             )
             ->end()
             ->with('Headers')
@@ -87,11 +87,11 @@ class EmailAdmin extends Admin
                 $formMapper->create(
                     'headers',
                     'sonata_type_native_collection',
-                    array(
-                        'type'         => HeaderType::class,
-                        'allow_add'    => true,
+                    [
+                        'type' => HeaderType::class,
+                        'allow_add' => true,
                         'allow_delete' => true,
-                    )
+                    ]
                 )
             )
             ->end();
@@ -109,12 +109,12 @@ class EmailAdmin extends Admin
             ->add(
                 '_action',
                 'actions',
-                array(
-                    'actions' => array(
-                        'edit'   => array(),
-                        'delete' => array(),
-                    )
-                )
+                [
+                    'actions' => [
+                        'edit' => [],
+                        'delete' => [],
+                    ],
+                ]
             );
     }
 
@@ -133,7 +133,7 @@ class EmailAdmin extends Admin
      */
     protected function configureTabMenu(MenuItemInterface $menu, $action, AdminInterface $childAdmin = null)
     {
-        if (!$childAdmin && !in_array($action, array('edit'))) {
+        if (!$childAdmin && !in_array($action, ['edit'])) {
             return;
         }
 
@@ -144,12 +144,12 @@ class EmailAdmin extends Admin
 
         $createMenuItem = $menu->addChild(
             $this->trans('create_translation'),
-            array(
-                'route'           => 'admin_lexik_mailer_email_emailtranslation_create',
-                'routeParameters' => array(
-                    'id' => $id
-                )
-            )
+            [
+                'route' => 'admin_lexik_mailer_email_emailtranslation_create',
+                'routeParameters' => [
+                    'id' => $id,
+                ],
+            ]
         );
 
         $createMenuItem->setLinkAttribute('class', 'lexik-mailer-create');
@@ -158,11 +158,11 @@ class EmailAdmin extends Admin
         foreach ($object->getTranslations() as $translation) {
             $menu->addChild(
                 $translation->getLang(),
-                array(
-                    'route'           => 'admin_lexik_mailer_email_emailtranslation_edit',
-                    'routeParameters' => array('id' => $id, 'childId' => $translation->getId()),
-                    'routeAbsolute'   => false
-                )
+                [
+                    'route' => 'admin_lexik_mailer_email_emailtranslation_edit',
+                    'routeParameters' => ['id' => $id, 'childId' => $translation->getId()],
+                    'routeAbsolute' => false,
+                ]
             );
         }
     }

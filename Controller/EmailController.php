@@ -14,9 +14,10 @@ use Symfony\Component\HttpFoundation\Request;
 class EmailController extends Controller
 {
     /**
-     * List all emails
+     * List all emails.
      *
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listAction(Request $request)
@@ -26,24 +27,25 @@ class EmailController extends Controller
             $request->get('page', 1)
         );
 
-        return $this->render('LexikMailerBundle:Email:list.html.twig', array_merge(array(
-            'emails'  => $pager->getResults(),
-            'total'   => $pager->getCount(),
-            'page'    => $pager->getPage(),
+        return $this->render('LexikMailerBundle:Email:list.html.twig', array_merge([
+            'emails' => $pager->getResults(),
+            'total' => $pager->getCount(),
+            'page' => $pager->getPage(),
             'maxPage' => $pager->getMaxPage(),
-            'layout'  => $this->container->getParameter('lexik_mailer.base_layout'),
-            'locale'  => $this->container->getParameter('locale'),
-        ), $this->getAdditionalParameters()));
+            'layout' => $this->container->getParameter('lexik_mailer.base_layout'),
+            'locale' => $this->container->getParameter('locale'),
+        ], $this->getAdditionalParameters()));
     }
 
     /**
-     * Email edition
+     * Email edition.
      *
      * @param Request $request
      * @param string  $emailId
      * @param string  $lang
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function editAction(Request $request, $emailId, $lang = null)
@@ -59,28 +61,29 @@ class EmailController extends Controller
         $form = $handler->createForm($email, $lang);
 
         if ($handler->processForm($form, $request)) {
-            return $this->redirect($this->generateUrl('lexik_mailer.email_edit', array(
+            return $this->redirect($this->generateUrl('lexik_mailer.email_edit', [
                 'emailId' => $email->getId(),
-                'lang'    => $handler->getLocale(),
-            )));
+                'lang' => $handler->getLocale(),
+            ]));
         }
 
-        return $this->render('LexikMailerBundle:Email:edit.html.twig', array_merge(array(
-            'form'          => $form->createView(),
-            'layout'        => $this->container->getParameter('lexik_mailer.base_layout'),
-            'email'         => $email,
-            'lang'          => $handler->getLocale(),
-            'displayLang'   => \Locale::getDisplayLanguage($handler->getLocale()),
-            'routePattern'  => urldecode($this->generateUrl('lexik_mailer.email_edit', array('emailId' => $email->getId(), 'lang' => '%lang%'), true)),
-        ), $this->getAdditionalParameters()));
+        return $this->render('LexikMailerBundle:Email:edit.html.twig', array_merge([
+            'form' => $form->createView(),
+            'layout' => $this->container->getParameter('lexik_mailer.base_layout'),
+            'email' => $email,
+            'lang' => $handler->getLocale(),
+            'displayLang' => \Locale::getDisplayLanguage($handler->getLocale()),
+            'routePattern' => urldecode($this->generateUrl('lexik_mailer.email_edit', ['emailId' => $email->getId(), 'lang' => '%lang%'], true)),
+        ], $this->getAdditionalParameters()));
     }
 
     /**
-     * Delete email
+     * Delete email.
      *
      * @param $emailId
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function deleteAction($emailId)
@@ -101,9 +104,10 @@ class EmailController extends Controller
     }
 
     /**
-     * New email
+     * New email.
      *
      * @param Request $request
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function newAction(Request $request)
@@ -115,20 +119,21 @@ class EmailController extends Controller
             return $this->redirect($this->generateUrl('lexik_mailer.email_list'));
         }
 
-        return $this->render('LexikMailerBundle:Email:new.html.twig', array_merge(array(
-            'form'      => $form->createView(),
-            'layout'    => $this->container->getParameter('lexik_mailer.base_layout'),
-            'lang'      => \Locale::getDisplayLanguage($handler->getLocale()),
-        ), $this->getAdditionalParameters()));
+        return $this->render('LexikMailerBundle:Email:new.html.twig', array_merge([
+            'form' => $form->createView(),
+            'layout' => $this->container->getParameter('lexik_mailer.base_layout'),
+            'lang' => \Locale::getDisplayLanguage($handler->getLocale()),
+        ], $this->getAdditionalParameters()));
     }
 
     /**
-     * Preview an email
+     * Preview an email.
      *
      * @param int $emailId
      * @param     $lang
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function previewAction($emailId, $lang)
@@ -143,19 +148,21 @@ class EmailController extends Controller
         $preview = $this->get('lexik_mailer.message_preview_generator');
         $preview->getTemplatesPreview($email, $lang);
 
-        return $this->render('LexikMailerBundle:Email:preview.html.twig', array_merge(array(
-            'content'  => $preview->get('content'),
-            'subject'  => $preview->get('subject'),
+        return $this->render('LexikMailerBundle:Email:preview.html.twig', array_merge([
+            'content' => $preview->get('content'),
+            'subject' => $preview->get('subject'),
             'fromName' => $preview->get('fromName'),
-            'errors'   => $preview->getErrors(),
-        ), $this->getAdditionalParameters()));
+            'errors' => $preview->getErrors(),
+        ], $this->getAdditionalParameters()));
     }
 
     /**
-     * Delete a translation
+     * Delete a translation.
      *
      * @param string $translationId
+     *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     public function deleteTranslationAction($translationId)
@@ -170,7 +177,7 @@ class EmailController extends Controller
         $em->remove($translation);
         $em->flush();
 
-        return $this->redirect($this->generateUrl('lexik_mailer.email_edit', array('emailId' => $translation->getEmail()->getId())));
+        return $this->redirect($this->generateUrl('lexik_mailer.email_edit', ['emailId' => $translation->getEmail()->getId()]));
     }
 
     /**
@@ -180,6 +187,6 @@ class EmailController extends Controller
      */
     protected function getAdditionalParameters()
     {
-        return array();
+        return [];
     }
 }
