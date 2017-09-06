@@ -3,7 +3,7 @@
 namespace Lexik\Bundle\MailerBundle\Signer;
 
 /**
- * Create a DKIM signature for a Swift_Message
+ * Create a DKIM signature for a Swift_Message.
  *
  * @author Sébastien Dieunidou <sebastien@bedycasa.com>
  */
@@ -15,7 +15,7 @@ class DkimSigner implements SignerInterface
     protected $options;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param array $defaultOptions
      */
@@ -25,25 +25,25 @@ class DkimSigner implements SignerInterface
     }
 
     /**
-     * Get default options
+     * Get default options.
      *
      * @return array
      */
     protected function getDefaultOptions()
     {
-        return array(
+        return [
             'private_key_path' => '',
-            'domain'           => '',
-            'selector'         => ''
-        );
+            'domain' => '',
+            'selector' => '',
+        ];
     }
 
     /**
-     * Get private key
-     *
-     * @return string
+     * Get private key.
      *
      * @throws \Exception
+     *
+     * @return string
      */
     protected function getPrivateKey()
     {
@@ -65,7 +65,7 @@ class DkimSigner implements SignerInterface
     }
 
     /**
-     * Create  and return a signature for a swift message
+     * Create  and return a signature for a swift message.
      *
      * @return \Swift_Signer
      */

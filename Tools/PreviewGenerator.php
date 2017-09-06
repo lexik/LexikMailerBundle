@@ -42,6 +42,7 @@ class PreviewGenerator
 
     /**
      * @param string $name
+     *
      * @return null|string
      */
     public function get($name)
@@ -72,18 +73,18 @@ class PreviewGenerator
         $this->templates['subject'] = $email->getSubject();
         $this->templates['content'] = $email->getBody();
 
-        $this->errors = array(
-            'subject'      => null,
-            'from_name'    => null,
+        $this->errors = [
+            'subject' => null,
+            'from_name' => null,
             'html_content' => null,
-        );
+        ];
 
         $suffix = $email->getChecksum();
 
         foreach ($this->errors as $template => $error) {
             try {
                 $this->renderer->renderTemplate(sprintf('%s_%s', $template, $suffix));
-            } catch(\Twig_Error $e) {
+            } catch (\Twig_Error $e) {
                 $this->errors[$template] = $e->getRawMessage();
             }
         }

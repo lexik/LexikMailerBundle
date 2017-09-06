@@ -62,7 +62,7 @@ class EmailFormHandler implements FormHandlerInterface
     public function createForm($email = null, $lang = null)
     {
         $edit = ($email !== null);
-        $this->locale = $lang ? : $this->defaultLocale;
+        $this->locale = $lang ?: $this->defaultLocale;
 
         if ($edit) {
             $translation = $email->getTranslation($this->locale);
@@ -74,10 +74,10 @@ class EmailFormHandler implements FormHandlerInterface
 
         $model = new EntityTranslationModel($email, $translation);
 
-        return $this->factory->create(EmailType::class, $model, array(
+        return $this->factory->create(EmailType::class, $model, [
             'data_translation' => $translation,
-            'edit'             => $edit,
-        ));
+            'edit' => $edit,
+        ]);
     }
 
     /**

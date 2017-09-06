@@ -2,13 +2,12 @@
 
 namespace Lexik\Bundle\MailerBundle\Tests\Fixtures;
 
-use Lexik\Bundle\MailerBundle\Entity\Layout;
-use Lexik\Bundle\MailerBundle\Entity\LayoutTranslation;
-use Lexik\Bundle\MailerBundle\Entity\Email;
-use Lexik\Bundle\MailerBundle\Entity\EmailTranslation;
-
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Lexik\Bundle\MailerBundle\Entity\Email;
+use Lexik\Bundle\MailerBundle\Entity\EmailTranslation;
+use Lexik\Bundle\MailerBundle\Entity\Layout;
+use Lexik\Bundle\MailerBundle\Entity\LayoutTranslation;
 
 class TestData implements FixtureInterface
 {
@@ -18,28 +17,28 @@ class TestData implements FixtureInterface
     public function load(ObjectManager $manager)
     {
         // layouts
-        $translations = array(
-            array(
+        $translations = [
+            [
                 'locale' => 'fr',
                 'body' => 'blablabla {{title}} {% block content %}{% endblock %} blablabla',
-            ),
-            array(
+            ],
+            [
                 'locale' => 'zh_CN',
                 'body' => 'blablabla {{title}} {% block content %}{% endblock %} blablabla',
-            ),
-            array(
+            ],
+            [
                 'locale' => 'en',
                 'body' => 'blublublu {{title}} {% block content %}{% endblock %} blublublu',
-            ),
-            array(
+            ],
+            [
                 'locale' => 'es',
                 'body' => 'bliblibli {{title}} {% block content %}{% endblock %} bliblibli',
-            ),
-            array(
+            ],
+            [
                 'locale' => 'fa',
-                'body'   => 'fafafa {{title}} {% block content %}{% endblock %} fafafa',
-            )
-        );
+                'body' => 'fafafa {{title}} {% block content %}{% endblock %} fafafa',
+            ],
+        ];
 
         $layout = new Layout();
         $layout->setDescription('super layout');
@@ -58,43 +57,43 @@ class TestData implements FixtureInterface
         $manager->flush();
 
         // emails
-        $translations = array(
-            array(
+        $translations = [
+            [
                 'locale' => 'fr',
                 'subject' => 'lapin crétins',
                 'body' => '{{name}} aime les lapins crétins.',
                 'from_address' => 'lapins@email.fr',
                 'from_name' => 'lapin',
-            ),
-            array(
+            ],
+            [
                 'locale' => 'zh_CN',
                 'subject' => 'raving rabbids',
                 'body' => '{{name}} likes raving rabbids.',
                 'from_address' => 'rabbids@email.fr',
                 'from_name' => 'rabbid',
-            ),
-            array(
+            ],
+            [
                 'locale' => 'en',
                 'subject' => 'raving rabbids',
                 'body' => '{{name}} likes raving rabbids.',
                 'from_address' => 'rabbids@email.fr',
                 'from_name' => 'rabbid',
-            ),
-            array(
+            ],
+            [
                 'locale' => 'es',
                 'subject' => 'this template won\'t work',
                 'body' => '{{name} <-- fail',
                 'from_address' => 'rabbids@email.fr',
                 'from_name' => 'rabbid',
-            ),
-            array(
+            ],
+            [
                 'locale' => 'nl',
                 'subject' => 'this template uses the fallback',
                 'body' => '{{name}} houdt van Raving Rabbids',
                 'from_address' => 'rabbids@email.com',
                 'from_name' => 'rabbid',
-            )
-        );
+            ],
+        ];
 
         $email = new Email();
         $email->setBcc('one@email.fr; two@email.fr');
@@ -120,12 +119,12 @@ class TestData implements FixtureInterface
         $email = new Email();
         $email->setReference('test-headers');
         $email->setSpool(false);
-        $email->setHeaders(array(
-            array('key' => 'X-SuperHeader', 'value' => 'TestValue'),
-            array('key' => 'X-MegaHeader', 'value' => 'TestValue'),
-            array('X-Malformed-Header' => 'TestValue'),
-            'X-Malformed-Header: TestValue'
-        ));
+        $email->setHeaders([
+            ['key' => 'X-SuperHeader', 'value' => 'TestValue'],
+            ['key' => 'X-MegaHeader', 'value' => 'TestValue'],
+            ['X-Malformed-Header' => 'TestValue'],
+            'X-Malformed-Header: TestValue',
+        ]);
 
         $translation = new EmailTranslation();
         $translation->setLang('fr');

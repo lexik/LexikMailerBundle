@@ -17,16 +17,16 @@ class LayoutTranslationType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('body', null, array(
-            'attr'  => array('rows' => 20),
+        $builder->add('body', null, [
+            'attr' => ['rows' => 20],
             'label' => 'lexik_mailer.translations.subject',
-        ));
+        ]);
 
         if ($options['with_language']) {
-            $builder->add('lang', LanguageType::class, array(
+            $builder->add('lang', LanguageType::class, [
                 'preferred_choices' => $options['preferred_languages'],
-                'label'             => 'lexik_mailer.translations.subject',
-            ));
+                'label' => 'lexik_mailer.translations.subject',
+            ]);
         }
     }
 
@@ -35,12 +35,12 @@ class LayoutTranslationType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class'          => 'Lexik\Bundle\MailerBundle\Entity\LayoutTranslation',
-            'with_language'       => true,
-            'preferred_languages' => array('en', 'fr', 'es', 'de', 'it', 'pt', 'ja', 'zh'),
-            'translation_domain'  => 'LexikMailerBundle',
-        ));
+        $resolver->setDefaults([
+            'data_class' => 'Lexik\Bundle\MailerBundle\Entity\LayoutTranslation',
+            'with_language' => true,
+            'preferred_languages' => ['en', 'fr', 'es', 'de', 'it', 'pt', 'ja', 'zh'],
+            'translation_domain' => 'LexikMailerBundle',
+        ]);
     }
 
     /**

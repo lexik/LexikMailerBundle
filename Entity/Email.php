@@ -4,12 +4,10 @@ namespace Lexik\Bundle\MailerBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-
+use Lexik\Bundle\MailerBundle\Exception\NoTranslationException;
+use Lexik\Bundle\MailerBundle\Model\EmailInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
 use Symfony\Component\Validator\Constraints as Assert;
-
-use Lexik\Bundle\MailerBundle\Model\EmailInterface;
-use Lexik\Bundle\MailerBundle\Exception\NoTranslationException;
 
 /**
  * @ORM\Entity
@@ -98,7 +96,7 @@ class Email implements EmailInterface
     private $headers;
 
     /**
-     * Use Layout's default locale if set
+     * Use Layout's default locale if set.
      *
      * @var bool
      *
@@ -107,13 +105,13 @@ class Email implements EmailInterface
     private $useFallbackLocale;
 
     /**
-     * __construct
+     * __construct.
      */
     public function __construct()
     {
         $this->translations = new ArrayCollection();
-        $this->headers      = array();
-        $this->spool        = false;
+        $this->headers = [];
+        $this->spool = false;
     }
 
     /**
@@ -121,11 +119,11 @@ class Email implements EmailInterface
      */
     public function __toString()
     {
-        return $this->reference?:'';
+        return $this->reference ?: '';
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return string
      */
@@ -135,7 +133,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * Get reference
+     * Get reference.
      *
      * @return string
      */
@@ -145,7 +143,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * Set reference
+     * Set reference.
      *
      * @param string $reference
      */
@@ -155,7 +153,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -165,7 +163,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      */
@@ -175,7 +173,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * Get bcc
+     * Get bcc.
      *
      *
      * @return string
@@ -186,7 +184,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * Set bcc
+     * Set bcc.
      *
      * @param string $bcc
      */
@@ -196,7 +194,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * Get spool
+     * Get spool.
      *
      * @return string
      */
@@ -206,7 +204,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * Set spool
+     * Set spool.
      *
      * @param string $spool
      */
@@ -216,7 +214,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * Set layout
+     * Set layout.
      *
      * @param Layout $layout
      */
@@ -226,7 +224,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * Get layout
+     * Get layout.
      *
      * @return Layout
      */
@@ -236,7 +234,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * Get translations
+     * Get translations.
      *
      * @return ArrayCollection
      */
@@ -246,7 +244,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * Add a translation
+     * Add a translation.
      *
      * @param EmailTranslation $translation
      */
@@ -257,7 +255,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * Remove a translation
+     * Remove a translation.
      *
      * @param EmailTranslation $translation
      */
@@ -268,7 +266,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * Get EmailTranslation for a given lang, if not exist it will be created
+     * Get EmailTranslation for a given lang, if not exist it will be created.
      *
      * @param string $lang
      *
@@ -298,22 +296,23 @@ class Email implements EmailInterface
      * Set the current translation.
      *
      * @throws \Lexik\Bundle\MailerBundle\Exception\NoTranslationException
+     *
      * @internal param string $locale
      */
     protected function setCurrentTranslation()
     {
-        if (!($this->currentTranslation instanceof EmailTranslation) || $this->currentTranslation->getLang() != $this->locale) {
+        if (!($this->currentTranslation instanceof EmailTranslation) || $this->currentTranslation->getLang() !== $this->locale) {
             $i = 0;
             $end = count($this->translations);
             $found = false;
 
-            while ($i<$end && !$found) {
-                $found = ($this->translations[$i]->getLang() == $this->locale);
-                $i++;
+            while ($i < $end && !$found) {
+                $found = ($this->translations[$i]->getLang() === $this->locale);
+                ++$i;
             }
 
             if ($found) {
-                $this->currentTranslation = $this->translations[$i-1];
+                $this->currentTranslation = $this->translations[$i - 1];
             } else {
                 throw new NoTranslationException($this->locale, sprintf('No translation found for email "%s" and locale "%s".', $this->reference, $this->locale));
             }
@@ -396,9 +395,9 @@ class Email implements EmailInterface
         // multiple
         if (strpos($this->bcc, ';')) {
             $bccs = preg_split('/\s*;\s*/', $this->bcc, -1, PREG_SPLIT_NO_EMPTY);
-        // single
+            // single
         } else {
-            $bccs = $this->bcc ? array(trim($this->bcc)) : array();
+            $bccs = $this->bcc ? [trim($this->bcc)] : [];
         }
 
         return $bccs;
@@ -411,7 +410,7 @@ class Email implements EmailInterface
     {
         $date = $this->currentTranslation->getUpdatedAt();
 
-        if ( ! $date instanceof \DateTime ) {
+        if (!$date instanceof \DateTime) {
             $date = new \DateTime('now');
         }
 
@@ -427,7 +426,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * Set headers
+     * Set headers.
      *
      * @param array $headers
      *
@@ -441,7 +440,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * Get headers
+     * Get headers.
      *
      * @return array
      */
@@ -451,7 +450,7 @@ class Email implements EmailInterface
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isUseFallbackLocale()
     {
@@ -459,12 +458,14 @@ class Email implements EmailInterface
     }
 
     /**
-     * @param boolean $useFallbackLocale
+     * @param bool $useFallbackLocale
+     *
      * @return Email
      */
     public function setUseFallbackLocale($useFallbackLocale)
     {
         $this->useFallbackLocale = $useFallbackLocale;
+
         return $this;
     }
 }

@@ -2,11 +2,9 @@
 
 namespace Lexik\Bundle\MailerBundle\Tests\Unit;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\DefaultQuoteStrategy;
 use Doctrine\Common\DataFixtures\Executor\ORMExecutor;
 use Doctrine\Common\DataFixtures\Purger\ORMPurger;
-use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 use Lexik\Bundle\MailerBundle\Tests\Fixtures\TestData;
 
@@ -42,12 +40,12 @@ abstract class BaseUnitTestCase extends \PHPUnit_Framework_TestCase
         $purger = new ORMPurger();
         $executor = new ORMExecutor($em, $purger);
 
-        $executor->execute(array(new TestData()), false);
+        $executor->execute([new TestData()], false);
     }
 
     /**
      * EntityManager mock object together with annotation mapping driver and
-     * pdo_sqlite database in memory
+     * pdo_sqlite database in memory.
      *
      * @return EntityManager
      */
@@ -55,9 +53,9 @@ abstract class BaseUnitTestCase extends \PHPUnit_Framework_TestCase
     {
         $cache = new \Doctrine\Common\Cache\ArrayCache();
 
-        $config = Setup::createAnnotationMetadataConfiguration(array(
+        $config = Setup::createAnnotationMetadataConfiguration([
             __DIR__.'/../../Entity',
-        ), false, null, null, false);
+        ], false, null, null, false);
 
         $config->setMetadataCacheImpl($cache);
         $config->setQueryCacheImpl($cache);
@@ -67,10 +65,10 @@ abstract class BaseUnitTestCase extends \PHPUnit_Framework_TestCase
         $config->setClassMetadataFactoryName('Doctrine\ORM\Mapping\ClassMetadataFactory');
         $config->setDefaultRepositoryClassName('Doctrine\ORM\EntityRepository');
 
-        $conn = array(
+        $conn = [
             'driver' => 'pdo_sqlite',
             'memory' => true,
-        );
+        ];
 
         $em = \Doctrine\ORM\EntityManager::create($conn, $config);
 

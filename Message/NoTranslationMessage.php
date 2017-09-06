@@ -8,7 +8,7 @@ namespace Lexik\Bundle\MailerBundle\Message;
 class NoTranslationMessage extends \Swift_Message implements ErrorMessageInterface
 {
     /**
-     * Construct
+     * Construct.
      *
      * @param string $reference
      * @param string $locale

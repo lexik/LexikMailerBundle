@@ -23,8 +23,8 @@ class LayoutTranslationTest extends \PHPUnit_Framework_TestCase
 
     public function testSuccessAddingFrenchTranslationLayout()
     {
-        $entity = new LayoutTranslation("fr");
-        $entity->setBody("blablabla {{title}} {% block content %}{% endblock %} blablabla");
+        $entity = new LayoutTranslation('fr');
+        $entity->setBody('blablabla {{title}} {% block content %}{% endblock %} blablabla');
         $entity->setLayout($this->layout);
 
         $errors = $this->validator->validate($entity);
@@ -34,8 +34,8 @@ class LayoutTranslationTest extends \PHPUnit_Framework_TestCase
 
     public function testSuccessAddingChineseTranslationLayout()
     {
-        $entity = new LayoutTranslation("zh_CN");
-        $entity->setBody("blablabla {{title}} {% block content %}{% endblock %} blablabla");
+        $entity = new LayoutTranslation('zh_CN');
+        $entity->setBody('blablabla {{title}} {% block content %}{% endblock %} blablabla');
         $entity->setLayout($this->layout);
 
         $errors = $this->validator->validate($entity);

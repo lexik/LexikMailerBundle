@@ -7,7 +7,7 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Route\RouteCollection;
 
 /**
- * EmailTranslationAdmin
+ * EmailTranslationAdmin.
  *
  * @author Nicolas Cabot <n.cabot@lexik.fr>
  */
@@ -32,10 +32,10 @@ class EmailTranslationAdmin extends Admin
             ->add(
                 'lang',
                 'language',
-                array(
-                    'required'          => true,
-                    'preferred_choices' => array('fr')
-                )
+                [
+                    'required' => true,
+                    'preferred_choices' => ['fr'],
+                ]
             )
             ->add('fromAddress')
             ->add('fromName')
@@ -43,16 +43,16 @@ class EmailTranslationAdmin extends Admin
             ->add(
                 'body',
                 null,
-                array(
-                    'attr' => array('rows' => 20, 'data-editor' => 'html')
-                )
+                [
+                    'attr' => ['rows' => 20, 'data-editor' => 'html'],
+                ]
             )
             ->add(
                 'bodyText',
                 null,
-                array(
-                    'attr' => array('rows' => 20)
-                )
+                [
+                    'attr' => ['rows' => 20],
+                ]
             );
     }
 }

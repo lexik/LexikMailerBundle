@@ -21,7 +21,7 @@ class NoTranslationException extends \Exception
     }
 
     /**
-     * Get lang
+     * Get lang.
      *
      * @return string
      */

@@ -18,7 +18,7 @@ class Annotation
     protected $reader;
 
     /**
-     * Construct
+     * Construct.
      *
      * @param Reader $reader
      */
@@ -28,9 +28,10 @@ class Annotation
     }
 
     /**
-     * Get email from a class
+     * Get email from a class.
      *
      * @param mixed $obj
+     *
      * @return string
      */
     public function getEmail($obj)
@@ -39,9 +40,10 @@ class Annotation
     }
 
     /**
-     * Get name from a class
+     * Get name from a class.
      *
      * @param mixed $obj
+     *
      * @return string
      */
     public function getName($obj)
@@ -50,10 +52,11 @@ class Annotation
     }
 
     /**
-     * Get value
+     * Get value.
      *
-     * @param mixed $obj
+     * @param mixed  $obj
      * @param string $className
+     *
      * @return string
      */
     private function findValue($obj, $className)
@@ -64,7 +67,7 @@ class Annotation
         if ($obj instanceof Proxy) {
             $reflClass = $reflClass->getParentClass();
         }
-        
+
         // Find on property
         foreach ($reflClass->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
             if ($this->reader->getPropertyAnnotation($property, $className)) {

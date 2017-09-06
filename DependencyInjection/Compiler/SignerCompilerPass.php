@@ -2,19 +2,19 @@
 
 namespace Lexik\Bundle\MailerBundle\DependencyInjection\Compiler;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * SignerCompilerPass
- * 
+ * SignerCompilerPass.
+ *
  * @author Sébastien Dieunidou <sebastien@bedycasa.com>
  */
 class SignerCompilerPass implements CompilerPassInterface
 {
     /**
-     * Process
+     * Process.
      *
      * @param ContainerBuilder $container
      */
@@ -25,7 +25,7 @@ class SignerCompilerPass implements CompilerPassInterface
 
             foreach ($container->findTaggedServiceIds('lexik_mailer.signer') as $id => $attributes) {
                 if (!empty($attributes[0]['label'])) {
-                    $definition->addMethodCall('addSigner', array($attributes[0]['label'], new Reference($id)));
+                    $definition->addMethodCall('addSigner', [$attributes[0]['label'], new Reference($id)]);
                 }
             }
         }

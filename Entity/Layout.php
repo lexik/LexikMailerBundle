@@ -4,12 +4,10 @@ namespace Lexik\Bundle\MailerBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-
-use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
-use Symfony\Component\Validator\Constraints as Assert;
-
 use Lexik\Bundle\MailerBundle\Exception\NoTranslationException;
 use Lexik\Bundle\MailerBundle\Model\LayoutInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -22,7 +20,7 @@ use Lexik\Bundle\MailerBundle\Model\LayoutInterface;
 class Layout implements LayoutInterface
 {
     /**
-     * @var integer
+     * @var int
      *
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -64,6 +62,7 @@ class Layout implements LayoutInterface
      * is no locale for the selected email context.
      *
      * @ORM\Column(type="string", nullable=true)
+     *
      * @var string
      */
     private $defaultLocale;
@@ -76,7 +75,7 @@ class Layout implements LayoutInterface
     private $currentTranslation;
 
     /**
-     * __construct
+     * __construct.
      */
     public function __construct()
     {
@@ -84,7 +83,7 @@ class Layout implements LayoutInterface
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return string
      */
@@ -94,7 +93,7 @@ class Layout implements LayoutInterface
     }
 
     /**
-     * Get reference
+     * Get reference.
      *
      * @return string
      */
@@ -104,7 +103,7 @@ class Layout implements LayoutInterface
     }
 
     /**
-     * Set reference
+     * Set reference.
      *
      * @param string $reference
      */
@@ -114,7 +113,7 @@ class Layout implements LayoutInterface
     }
 
     /**
-     * Get description
+     * Get description.
      *
      * @return string
      */
@@ -124,7 +123,7 @@ class Layout implements LayoutInterface
     }
 
     /**
-     * Set description
+     * Set description.
      *
      * @param string $description
      */
@@ -134,7 +133,7 @@ class Layout implements LayoutInterface
     }
 
     /**
-     * Get translations
+     * Get translations.
      *
      * @return ArrayCollection
      */
@@ -144,7 +143,7 @@ class Layout implements LayoutInterface
     }
 
     /**
-     * Add a translation
+     * Add a translation.
      *
      * @param LayoutTranslation $translation
      */
@@ -155,7 +154,7 @@ class Layout implements LayoutInterface
     }
 
     /**
-     * Remove a translation
+     * Remove a translation.
      *
      * @param LayoutTranslation $translation
      */
@@ -166,7 +165,7 @@ class Layout implements LayoutInterface
     }
 
     /**
-     * Get LayoutTranslation for a given lang, if not exist it will be created
+     * Get LayoutTranslation for a given lang, if not exist it will be created.
      *
      * @param string $lang
      *
@@ -193,13 +192,13 @@ class Layout implements LayoutInterface
     }
 
     /**
-     * __toString
+     * __toString.
      *
      * @return string
      */
     public function __toString()
     {
-        return $this->reference?:'';
+        return $this->reference ?: '';
     }
 
     /**
@@ -209,20 +208,20 @@ class Layout implements LayoutInterface
      */
     protected function setCurrentTranslation($fallback = false)
     {
-        if (!($this->currentTranslation instanceof LayoutTranslation) || $this->currentTranslation->getLang() != $this->locale) {
+        if (!($this->currentTranslation instanceof LayoutTranslation) || $this->currentTranslation->getLang() !== $this->locale) {
             $i = 0;
             $end = count($this->translations);
             $found = false;
 
-            while ($i<$end && !$found) {
-                $found = ($this->translations[$i]->getLang() == $this->locale);
-                $i++;
+            while ($i < $end && !$found) {
+                $found = ($this->translations[$i]->getLang() === $this->locale);
+                ++$i;
             }
 
             if ($found) {
-                $this->currentTranslation = $this->translations[$i-1];
+                $this->currentTranslation = $this->translations[$i - 1];
             } else {
-                if($fallback && $this->getDefaultLocale()) {
+                if ($fallback && $this->getDefaultLocale()) {
                     $this->setLocale($this->getDefaultLocale());
                     $this->setCurrentTranslation();
                 } else {
@@ -267,7 +266,7 @@ class Layout implements LayoutInterface
     {
         $date = $this->currentTranslation->getUpdatedAt();
 
-        if ( ! $date instanceof \DateTime ) {
+        if (!$date instanceof \DateTime) {
             $date = new \DateTime('now');
         }
 

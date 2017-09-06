@@ -3,7 +3,6 @@
 namespace Lexik\Bundle\MailerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -98,7 +97,7 @@ class EmailTranslation
     protected $email;
 
     /**
-     * __construct
+     * __construct.
      *
      * @param string $lang
      */
@@ -114,7 +113,7 @@ class EmailTranslation
      */
     public function __toString()
     {
-        return $this->lang?:'';
+        return $this->lang ?: '';
     }
 
     /**
@@ -126,7 +125,7 @@ class EmailTranslation
     }
 
     /**
-     * Get id
+     * Get id.
      *
      * @return string
      */
@@ -136,7 +135,7 @@ class EmailTranslation
     }
 
     /**
-     * Get lang
+     * Get lang.
      *
      * @return string
      */
@@ -146,7 +145,7 @@ class EmailTranslation
     }
 
     /**
-     * Set lang
+     * Set lang.
      *
      * @param string $lang
      */
@@ -156,7 +155,7 @@ class EmailTranslation
     }
 
     /**
-     * Get subject
+     * Get subject.
      *
      * @return string
      */
@@ -166,7 +165,7 @@ class EmailTranslation
     }
 
     /**
-     * Set subject
+     * Set subject.
      *
      * @param string $subject
      */
@@ -176,7 +175,7 @@ class EmailTranslation
     }
 
     /**
-     * Get body
+     * Get body.
      *
      * @return string
      */
@@ -186,7 +185,7 @@ class EmailTranslation
     }
 
     /**
-     * Set body
+     * Set body.
      *
      * @param string $body
      */
@@ -196,7 +195,7 @@ class EmailTranslation
     }
 
     /**
-     * Get bodyText
+     * Get bodyText.
      *
      * @return string
      */
@@ -206,7 +205,7 @@ class EmailTranslation
     }
 
     /**
-     * Set bodyText
+     * Set bodyText.
      *
      * @param string $bodyText
      */
@@ -216,7 +215,7 @@ class EmailTranslation
     }
 
     /**
-     * Get from address
+     * Get from address.
      *
      * @return string
      */
@@ -226,7 +225,7 @@ class EmailTranslation
     }
 
     /**
-     * Set from address
+     * Set from address.
      *
      * @param string $fromAddress
      */
@@ -236,7 +235,7 @@ class EmailTranslation
     }
 
     /**
-     * Get from name
+     * Get from name.
      *
      * @return string
      */
@@ -246,7 +245,7 @@ class EmailTranslation
     }
 
     /**
-     * Set from name
+     * Set from name.
      *
      * @param string $fromName
      */
@@ -256,7 +255,7 @@ class EmailTranslation
     }
 
     /**
-     * Get createdAt
+     * Get createdAt.
      *
      * @return \DateTime
      */
@@ -266,7 +265,7 @@ class EmailTranslation
     }
 
     /**
-     * Set createdAt
+     * Set createdAt.
      *
      * @param \DateTime $createdAt
      */
@@ -276,7 +275,7 @@ class EmailTranslation
     }
 
     /**
-     * Get updatedAt
+     * Get updatedAt.
      *
      * @return \DateTime
      */
@@ -286,7 +285,7 @@ class EmailTranslation
     }
 
     /**
-     * Set updatedAt
+     * Set updatedAt.
      *
      * @param \DateTime $updatedAt
      */
@@ -296,7 +295,7 @@ class EmailTranslation
     }
 
     /**
-     * Get email
+     * Get email.
      *
      * @return Email
      */
@@ -306,7 +305,7 @@ class EmailTranslation
     }
 
     /**
-     * Set email
+     * Set email.
      *
      * @param Email $email
      */
@@ -316,7 +315,7 @@ class EmailTranslation
     }
 
     /**
-     * Display language
+     * Display language.
      *
      * @return string
      */
