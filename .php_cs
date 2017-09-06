@@ -2,12 +2,6 @@
 <?php
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
-    ->exclude('var')
-    ->exclude('web/bundles')
-    ->exclude('web/css')
-    ->exclude('web/fonts')
-    ->exclude('web/js')
-    ->notPath('web/config.php')
 ;
 return PhpCsFixer\Config::create()
     ->setRiskyAllowed(true)
