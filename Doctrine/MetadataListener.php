@@ -17,12 +17,11 @@ class MetadataListener
         $charset = '';
         if (isset($params['charset'])) {
             $charset = $params['charset'];
-        }
-        else if (isset($params['master']['charset'])) {
+        } elseif (isset($params['master']['charset'])) {
             $charset = $params['master']['charset'];
         }
 
-        if ('utf8mb4' !== strtolower($charset)) {
+        if ('utf8mb4' !== mb_strtolower($charset)) {
             return;
         }
 
