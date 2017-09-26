@@ -9,7 +9,7 @@ use Lexik\Bundle\MailerBundle\Model\EmailInterface;
  *
  * @author Cédric Girard <c.girard@lexik.fr>
  */
-class EmailLoader implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface, \  Twig_SourceContextLoaderInterface
+class EmailLoader implements \Twig_LoaderInterface 
 {
     /**
      * @var array
