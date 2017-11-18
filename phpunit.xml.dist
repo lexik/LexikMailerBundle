@@ -29,5 +29,6 @@
 
     <php>
         <server name="ROOT_DIR" value="../../../../.." />
+        <server name="KERNEL_CLASS" value="AppKernel" />
     </php>
 </phpunit>
