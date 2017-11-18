@@ -45,6 +45,6 @@ before_install:
     - composer require doctrine/orm:~2.4 --no-update
     - composer require doctrine/data-fixtures:~1.0 --no-update
 
-install: composer install --prefer-dist --no-interaction
+install: composer install --prefer-dist --no-interaction $COMPOSER_FLAGS
 
 script: phpunit
