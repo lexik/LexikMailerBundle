@@ -37,6 +37,9 @@
     </parameters>
 
     <services>
+
+        <defaults public="true" />
+
         <service id="lexik_mailer.doctrine.metadata_listener" class="Lexik\Bundle\MailerBundle\Doctrine\MetadataListener">
             <tag name="doctrine.event_listener" event="loadClassMetadata" />
         </service>
