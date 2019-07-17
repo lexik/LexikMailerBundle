@@ -61,7 +61,7 @@
             </tbody>
         </table>
 
-        {{ include('LexikMailerBundle::_pagination.html.twig', {'route': 'lexik_mailer.email_list', 'page': page, 'maxPage': maxPage}) }}
+        {{ include('@LexikMailer/_pagination.html.twig', {'route': 'lexik_mailer.email_list', 'page': page, 'maxPage': maxPage}) }}
     </div>
 </div>
 {% endblock %}

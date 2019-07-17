@@ -88,7 +88,7 @@ class LayoutFormHandler implements FormHandlerInterface
         $valid = false;
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $model = $form->getData();
             $model->getEntity()->addTranslation($model->getTranslation());
 
