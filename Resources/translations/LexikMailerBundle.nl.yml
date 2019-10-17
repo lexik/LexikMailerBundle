@@ -1,0 +1,75 @@
+lexik_mailer:
+    email:
+        id:                       "Id"
+        description:              "Beschrijving"
+        reference:                "Verwijzing"
+        bcc:                      "Verborgen kopie"
+        languages:                "Talen"
+        actions:                  "Acties"
+        list:                     "E-mail Lijst"
+        delete_confirm:           "Weet u zeker dat u deze template wilt verwijderen ?"
+        layout:                   "Layout"
+        spool:                    "Spoel ?"
+        use_fallback_locale:      "Gebruik fallback taal"
+        action:
+            edit:                 "Updaten"
+            delete:               "Verwijderen"
+
+    new:
+        group_common:             "Algemene opties"
+        group_translation:        "Vertalingen"
+        submit:                   "Opslaan"
+        group_languages:          "Beheer talen"
+        default_lang:             "Standaard taal"
+        email_headers:            "Headers"
+
+    edit:
+        action_delete:            "Verwijderen"
+        table:
+            lang:                 "Taal"
+            subject:              "Onderwerp"
+            action:               "Actie"
+        lang:                     "Talen"
+
+    link:
+        new:                      "Nieuw"
+        list:                     "Terug naar lijst"
+        preview:                  "Voorproef"
+
+    list:
+        from:                     "Van: %from%"
+
+    layout:
+        id:                       "Id"
+        description:              "Beschrijving"
+        reference:                "Verwijzen"
+        list:                     "Layout Lijst"
+        languages:                "Talen"
+        actions:                  "Acties"
+        delete_confirm:           "Weet u zeker dat u deze layout wilt verwijderen ?"
+        default_locale:           "Standaard taal"
+        action:
+            edit:                 "Updaten"
+            delete:               "Verwijderen"
+
+    translation_delete:
+        confirm:                  "Bevestigd u de verwijdering van de taal ?"
+
+    preview:
+        subject:                  "Onderwerp"
+        from_name:                "Verstuurder"
+        body:                     "Body"
+
+    headers:
+        key:                      "sleutel"
+        value:                    "Waarde"
+        add:                      "Toevoegen"
+        delete:                   "Verwijderen"
+
+    translations:
+        language:                 "Taal"
+        from_address:             "Verzender e-mail"
+        from_name:                "Verzender naam"
+        subject:                  "Onderwerp"
+        body:                     "Body (HTML)"
+        body_text:                "Body (text)"
