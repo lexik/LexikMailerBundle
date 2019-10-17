@@ -1,0 +1,18 @@
+list:
+    label_reference:    Verwijzing
+    label_description:  Beschrijving
+    label__action:      Actie
+
+filter:
+    label_reference: Verwijzing
+
+breadcrumb:
+    link_layout_list: Layouts
+
+form:
+    label_description: Beschrijving
+    label_reference:   Verwijzing
+    label_bcc:         BCC
+    label_spool:       Spoel
+
+create_translation: Niewe vertaling
