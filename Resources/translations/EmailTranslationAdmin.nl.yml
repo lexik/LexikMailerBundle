@@ -1,0 +1,11 @@
+breadcrumb:
+    link_email_translation_list:    Vertalingen
+    link_email_translation_create:  Nieuw
+
+form:
+    label_lang:         Taal
+    label_from_address: Van address
+    label_from_name:    Van naam
+    label_subject:      Onderwerp
+    label_body :        Inhoud (html)
+    label_body_text:    Inhoud (onbewerkte tekst)
