@@ -1,0 +1,7 @@
+breadcrumb:
+    link_layout_translation_list:   Vertalingen
+    link_layout_translation_create: Nieuw
+
+form:
+    label_lang: Taal
+    label_body: Inhoud
