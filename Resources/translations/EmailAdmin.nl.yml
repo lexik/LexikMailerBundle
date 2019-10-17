@@ -1,0 +1,21 @@
+list:
+    label_reference:    Verwijzing
+    label_layout:       Layout
+    label_description:  Beschrijving
+    label__action:      Actie
+
+filter:
+    label_reference: Verwijzing
+    label_layout:    Layout
+
+breadcrumb:
+    link_email_list: E-mails
+
+form:
+    label_layout:      Layout
+    label_description: Beschrijving
+    label_reference:   Verwijzing
+    label_bcc:         BCC
+    label_spool:       spoel
+
+create_translation: Nieuwe vertaling
