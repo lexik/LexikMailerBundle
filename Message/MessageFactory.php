@@ -155,7 +155,7 @@ class MessageFactory
         }
 
         $fromEmail = $this->renderFromAddress($email, $parameters);
-        $fromName = $this->renderFromAddress($email, $parameters);
+        $fromName = $this->renderTemplate('from_name', $parameters, $email->getChecksum());
 
         try {
             $email->setLocale($locale);
