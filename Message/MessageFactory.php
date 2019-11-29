@@ -154,13 +154,16 @@ class MessageFactory
             $to = $this->getRecipient($to);
         }
 
+        $fromEmail = $this->renderFromAddress($email, $parameters);
+        $fromName = $this->renderFromAddress($email, $parameters);
+
         try {
             $email->setLocale($locale);
             $this->renderer->loadTemplates($email);
 
             $message = $this->createMessageInstance()
                             ->setSubject($this->renderTemplate('subject', $parameters, $email->getChecksum()))
-                            ->setFrom($this->renderFromAddress($email, $parameters), $this->renderTemplate('from_name', $parameters, $email->getChecksum()))
+                            ->setFrom($fromEmail, $fromName)
                             ->setTo($to)
                             ->setBody($this->renderTemplate('html_content', $parameters, $email->getChecksum()), 'text/html');
 
@@ -185,17 +188,17 @@ class MessageFactory
 
         } catch (NoTranslationException $e) {
             $message = new NoTranslationMessage($email->getReference(), $locale);
-            $message->setFrom($this->options['admin_email']);
+            $message->setFrom($fromEmail, $fromName);
             $message->setTo($this->options['admin_email']);
 
         } catch (\Twig_Error_Runtime $e) {
             $message = new UndefinedVariableMessage($e->getMessage(), $email->getReference());
-            $message->setFrom($this->options['admin_email']);
+            $message->setFrom($fromEmail, $fromName);
             $message->setTo($this->options['admin_email']);
 
         } catch (\Twig_Error $e) {
             $message = new TwigErrorMessage($e->getRawMessage(), $email->getReference());
-            $message->setFrom($this->options['admin_email']);
+            $message->setFrom($fromEmail, $fromName);
             $message->setTo($this->options['admin_email']);
         }
 
